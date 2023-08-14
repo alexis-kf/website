@@ -1,8 +1,0 @@
-name: Carousel Item Feature
-type: module
-description: "Provides carousel item feature."
-package: Ignite Paragraphs
-core_version_requirement: '^8 || ^9 || ^10'
-dependencies:
-  - ignite_paragraphs
-  - ignite_tags

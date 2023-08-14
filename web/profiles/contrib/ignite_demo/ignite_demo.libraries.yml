@@ -1,9 +1,0 @@
-demo-popup:
-  version: 1.x
-  js:
-    js/demo-popup.es6.js: {
-      attributes: {
-        async: true,
-        defer: true
-      }
-    }

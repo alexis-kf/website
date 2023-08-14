@@ -1,8 +1,0 @@
-uuid: 182b3ead-24a6-423f-847d-f2b29b70c6e8
-langcode: en
-status: true
-dependencies: {  }
-id: cta
-label: CTA
-revision: 0
-description: 'Stand-alone call-to-action link.'

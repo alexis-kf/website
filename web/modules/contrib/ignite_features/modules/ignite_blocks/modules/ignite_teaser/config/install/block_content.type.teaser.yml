@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: teaser
-label: '50/50 Teaser'
-revision: 0
-description: 'A teaser to a piece of content, local or external.'

@@ -1,5 +1,0 @@
-name: Tags Feature
-type: module
-description: 'Provides tags taxonomy.'
-package: Ignite Taxonomy
-core_version_requirement: '^8 || ^9 || ^10'
