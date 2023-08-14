@@ -1,5 +1,0 @@
-name: Resource Type Feature
-type: module
-description: 'Provides resource taxonomy.'
-package: Ignite Taxonomy
-core_version_requirement: '^8 || ^9 || ^10'

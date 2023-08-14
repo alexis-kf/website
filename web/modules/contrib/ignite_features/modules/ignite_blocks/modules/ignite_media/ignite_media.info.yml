@@ -1,7 +1,0 @@
-name: Ignite Media Block Feature
-type: module
-description: 'Provides the media block type.'
-package: Ignite Blocks
-core_version_requirement: '^8 || ^9 || ^10'
-dependencies:
-  - ignite_blocks

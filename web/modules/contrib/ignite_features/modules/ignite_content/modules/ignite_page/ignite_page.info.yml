@@ -1,9 +1,0 @@
-name: Page Feature
-type: module
-description: 'Provides basic page content type.'
-package: Ignite Content
-core_version_requirement: '^8 || ^9 || ^10'
-dependencies:
-  - media
-  - ignite_content
-  - search_api_exclude_entity

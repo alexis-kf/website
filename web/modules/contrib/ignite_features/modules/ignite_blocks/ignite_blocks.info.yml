@@ -1,9 +1,0 @@
-name: Ignite Blocks Feature
-type: module
-description: 'Base fields for block features.'
-package: Ignite Blocks
-core_version_requirement: '^8 || ^9 || ^10'
-dependencies:
-  - block_content
-  - auto_entitylabel
-  - block_content_template

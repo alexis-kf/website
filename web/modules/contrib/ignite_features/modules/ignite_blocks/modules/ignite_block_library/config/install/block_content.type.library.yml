@@ -1,8 +1,0 @@
-uuid: d7e9b394-d253-463e-ad76-9a0c29a16fa7
-langcode: en
-status: true
-dependencies: {  }
-id: library
-label: 'Block Library'
-revision: 0
-description: 'Reference for existing custom blocks.'
