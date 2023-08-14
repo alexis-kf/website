@@ -1,0 +1,39 @@
+/*!
+ * Bootstrap Utilities v5.2.3 (https://getbootstrap.com/)
+ * Copyright 2011-2022 The Bootstrap Authors
+ * Copyright 2011-2022 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+.site-footer .logo {
+  display: block;
+  max-width: 300px;
+  margin-bottom: 2rem;
+}
+@media (min-width: 992px) {
+  .site-footer .logo {
+    margin-bottom: 0;
+  }
+}
+.site-footer a {
+  color: #000;
+}
+.site-footer.bg-black a {
+  color: #fff;
+}
+.site-footer .list-unstyled {
+  margin-bottom: 2rem;
+}
+.site-footer .list-unstyled li {
+  margin-right: 2rem;
+}
+.site-footer .list-unstyled li:last-child {
+  margin-right: 0;
+}
+@media (min-width: 992px) {
+  .site-footer .list-unstyled {
+    margin-bottom: 0;
+  }
+  .site-footer .list-unstyled li {
+    display: inline-block;
+  }
+}

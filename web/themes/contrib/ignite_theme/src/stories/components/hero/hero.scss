@@ -1,0 +1,32 @@
+@import '../../global/bootstrap-init';
+
+// Make the image fit as a cover to limit the total height.
+.hero {
+  border-radius: 0;
+
+  // Add a mask to the overlay.
+  .card-img-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    text-align: center;
+  }
+
+  .heading {
+
+    strong {
+      color: $secondary;
+      text-transform: uppercase;
+      font-weight: inherit;
+    }
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.overlay {
+
+  img {
+    object-fit: cover;
+  }
+}
