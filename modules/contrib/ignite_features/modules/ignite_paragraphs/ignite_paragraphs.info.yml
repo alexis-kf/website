@@ -1,0 +1,12 @@
+name: Paragraphs Feature
+type: module
+description: 'Provides common fundamental paragraph types.'
+package: Ignite Paragraphs
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - paragraphs
+  - paragraphs_features
+  - media
+  - svg_image
+  - allowed_formats
+  - ignite_styles

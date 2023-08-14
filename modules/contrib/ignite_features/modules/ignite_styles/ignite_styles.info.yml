@@ -1,0 +1,8 @@
+name: Ignite Styles Feature
+type: module
+description: 'Provides standard responsive image styles.'
+package: Ignite 
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - image
+  - responsive_image

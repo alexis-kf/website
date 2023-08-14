@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Contains ignite_cta methods.
+ */
+
+use Drupal\block_content\Entity\BlockContent;
+
+/**
+ * Implements hook_ignite_demo_block().
+ */
+function ignite_cta_ignite_demo_block() {
+  $block = BlockContent::create([
+    'type' => 'cta',
+    'field_link' => [
+      'uri' => 'https://www.drupal.org',
+      'title' => 'Read more',
+    ],
+  ]);
+
+  $block->save();
+
+  return $block;
+}

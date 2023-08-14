@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Contains ignite_form methods.
+ */
+
+use Drupal\block_content\Entity\BlockContent;
+use Drupal\media\Entity\Media;
+
+/**
+ * Implements hook_ignite_demo_block().
+ */
+function ignite_gallery_ignite_demo_block() {
+  $block = BlockContent::create([
+    'type' => 'gallery',
+    'field_title' => 'Optional Title',
+    'body' => 'Optional summary text, turpis at luctus finibus, erat lectus convallis velit, at sodales purus lacus quis magna. Curabitur imperdiet sapien libero, fringilla ullamcorper nibh ullamcorper vitae. Proin sed luctus augue.',
+  ]);
+
+  $block->save();
+
+  $data = file_get_contents('https://source.unsplash.com/PhYq704ffdA/640x360');
+  $file = \Drupal::service('file.repository')->writeData($data, 'public://gallery-item.jpg');
+  $media = Media::create([
+    'bundle' => 'image',
+    'name' => 'Gallery Image',
+    'field_image' => [
+      'target_id' => $file->id(),
+      'alt' => 'Gallery Image',
+      'title' => 'Gallery Image',
+    ],
+  ]);
+  $media->save();
+
+  for ($i = 0; $i < 3; $i++) {
+    $block->get('field_media_item')->appendItem($media);
+  }
+
+  $block->save();
+
+  return $block;
+}

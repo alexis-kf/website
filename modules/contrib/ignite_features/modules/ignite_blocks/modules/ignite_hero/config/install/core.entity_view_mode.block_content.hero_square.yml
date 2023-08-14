@@ -1,0 +1,10 @@
+uuid: df0f12b1-2103-469f-9e85-21711c002e01
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+id: block_content.hero_square
+label: 'Hero Square'
+targetEntityType: block_content
+cache: true

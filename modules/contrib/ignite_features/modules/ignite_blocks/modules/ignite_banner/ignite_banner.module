@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains ignite_banner methods.
+ */
+
+use Drupal\block_content\Entity\BlockContent;
+use Drupal\media\Entity\Media;
+
+/**
+ * Implements hook_ignite_demo_block().
+ */
+function ignite_banner_ignite_demo_block() {
+  $data = file_get_contents('https://source.unsplash.com/PhYq704ffdA/640x360');
+  $file = \Drupal::service('file.repository')->writeData($data, 'public://banner.jpg');
+  $media = Media::create([
+    'bundle' => 'image',
+    'name' => 'Banner Image',
+    'field_image' => [
+      'target_id' => $file->id(),
+      'alt' => 'Banner Image',
+      'title' => 'Banner Image',
+    ],
+  ]);
+  $media->save();
+
+  $block = BlockContent::create([
+    'type' => 'banner',
+    'field_title' => 'Banner Block',
+    'field_summary' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus auctor, turpis at luctus finibus, erat lectus convallis velit, at sodales purus lacus quis magna. Curabitur imperdiet sapien libero, fringilla ullamcorper nibh ullamcorper vitae. Proin sed luctus augue. Nam fringilla enim leo, non sodales ante gravida ac.',
+    'field_eyebrow' => 'Eyebrow',
+    'field_link' => [
+      'uri' => 'https://www.drupal.org',
+      'title' => 'Read more',
+    ],
+    'field_media' => [
+      'target_id' => $media->id(),
+    ],
+  ]);
+
+  $block->save();
+
+  return $block;
+}

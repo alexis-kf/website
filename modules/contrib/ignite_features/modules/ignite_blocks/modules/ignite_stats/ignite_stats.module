@@ -1,0 +1,115 @@
+<?php
+
+/**
+ * @file
+ * Contains ignite_stats methods.
+ */
+
+use Drupal\block_content\Entity\BlockContent;
+use Drupal\media\Entity\Media;
+use Drupal\paragraphs\Entity\Paragraph;
+
+/**
+ * Implements hook_ignite_demo_block().
+ */
+function ignite_stats_ignite_demo_block() {
+  $media_items = [];
+
+  $image_names = [
+    'features-stats.png',
+    'figma.svg',
+    'storybook.svg',
+  ];
+
+  foreach ($image_names as $image_name) {
+    $image_path = \Drupal::service('extension.list.profile')->getPath('ignite_demo') . '/images/' . $image_name;
+    $data = file_get_contents($image_path);
+    $file = \Drupal::service('file.repository')->writeData($data, 'public://' . $image_name);
+
+    $media = Media::create([
+      'bundle' => 'image',
+      'name' => $image_name,
+      'field_image' => [
+        'target_id' => $file->id(),
+        'alt' => $image_name,
+        'title' => $image_name,
+      ],
+    ]);
+
+    $media->save();
+
+    $media_items[$image_name] = $media;
+  }
+
+  $block = BlockContent::create([
+    'type' => 'stats',
+    'field_eyebrow' => "What's Included",
+    'field_title' => 'Complete Starter Pack',
+    'field_summary' => 'Ignite is a design system with 15 pre-built editorial components and 36 base site elements. It includes a Figma UI kit and Drupal back-end documentation. Ignite also has a customizable Storybook instance for real-time previewing and full documentation to support the design process.',
+    'field_media' => [
+      'target_id' => $media_items['features-stats.png']->id(),
+    ],
+    'field_stats_layout' => 'dark',
+  ]);
+
+  $stats = [
+    [
+      'icon' => 'table_rows',
+      'title' => '36 pre-built base site elements',
+      'summary' => 'These pieces make up the foundational basics of the site — think buttons, the footer or breadcrumbs.',
+    ],
+    [
+      'icon' => 'table_chart',
+      'title' => '15 pre-built editorial components',
+      'summary' => 'These are components site editors can drag and drop to build new pages, such as body copy or a carousel.',
+    ],
+    [
+      'custom icon' => $media_items['figma.svg']->id(),
+      'title' => 'Figma UI kit',
+      'summary' => 'Our Figma community file has all the base elements and editorial components for designers to start styling and using to build site pages.',
+    ],
+    [
+      'icon' => 'humidity_low',
+      'title' => 'Drupal back-end documentation',
+      'summary' => 'This documentation provides guidance for developers to create and maintain an Ignite-powered website on Drupal.',
+    ],
+    [
+      'custom icon' => $media_items['storybook.svg']->id(),
+      'title' => 'Customizable Storybook instance',
+      'summary' => 'With our existing Storybook setup, developers are able to re-style and test UI components for use on your site.',
+    ],
+    [
+      'icon' => 'text_snippet',
+      'title' => 'Documentation for designers and developers',
+      'summary' => 'We’ve created documentation to make all parts of Ignite easy and straightforward to get started with.',
+    ],
+  ];
+
+  foreach ($stats as $item) {
+    $paragraph = Paragraph::create([
+      'type' => 'stats_item',
+      'field_title' => $item['title'],
+      'field_summary' => $item['summary'],
+    ]);
+
+    if (!empty($item['custom icon'])) {
+      $paragraph->set('field_custom_icon', [
+        'target_id' => $item['custom icon'],
+      ]);
+    }
+    else {
+      $paragraph->set('field_icon', [
+        'icon' => $item['icon'],
+        'family' => 'outlined',
+      ]);
+    }
+
+    $paragraph->save();
+
+    $block->get('field_stats')->appendItem($paragraph);
+  }
+
+  $block->save();
+
+  return $block;
+}

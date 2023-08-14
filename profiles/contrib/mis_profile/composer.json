@@ -1,0 +1,6 @@
+{
+  "name": "mediacurrent/mis_profile",
+  "description": "MC example profile template",
+  "type": "drupal-profile",
+  "license": "GPL-2.0-or-later"
+}

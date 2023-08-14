@@ -1,0 +1,21 @@
+uuid: db78e89b-7817-45ab-bdf8-cdc310c915eb
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.stats
+    - field.storage.block_content.field_stats_layout
+  module:
+    - options
+id: block_content.stats.field_stats_layout
+field_name: field_stats_layout
+entity_type: block_content
+bundle: stats
+label: 'Stats layout'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

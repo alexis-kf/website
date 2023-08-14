@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Contains ignite_map methods.
+ */
+
+use Drupal\block_content\Entity\BlockContent;
+
+/**
+ * Implements hook_ignite_demo_block().
+ */
+function ignite_map_ignite_demo_block() {
+  $block = BlockContent::create([
+    'type' => 'map',
+    'field_title' => 'Location Name Lorem Ipsum',
+    'field_eyebrow' => 'Optional eyebrow',
+    'body' => [
+      'value' => '<p>1234567 Address Street<br />Cityname, ST 12345</p>',
+      'format' => 'basic_html',
+    ],
+    'field_location' => [
+      'address_line1' => '1600 Pennsylvania Ave NW',
+      'locality' => 'Washington',
+      'administrative_area' => 'DC',
+      'postal_code' => '20500',
+      'country_code' => 'US',
+    ],
+    'field_link' => [
+      'uri' => 'https://www.drupal.org',
+      'title' => 'Optional link',
+    ],
+  ]);
+
+  $block->save();
+
+  return $block;
+}
