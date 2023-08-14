@@ -1,0 +1,8 @@
+uuid: 9efedc31-778e-4644-8bac-6d4696e25e70
+langcode: en
+status: true
+dependencies: {  }
+id: stats
+label: Stats
+revision: 0
+description: 'The stats block combines a card with a list of title + summary items on the side.'

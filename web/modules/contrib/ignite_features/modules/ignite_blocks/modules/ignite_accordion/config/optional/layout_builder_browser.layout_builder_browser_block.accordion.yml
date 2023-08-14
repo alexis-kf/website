@@ -1,0 +1,11 @@
+uuid: 48930de1-f936-45c5-a0ee-3a1e0e9c9472
+langcode: en
+status: true
+dependencies: {  }
+id: accordion
+block_id: 'inline_block:accordion'
+category: content
+label: Accordion
+weight: -1
+image_path: /modules/contrib/ignite_features/modules/ignite_blocks/modules/ignite_accordion/images/accordion.png
+image_alt: ''

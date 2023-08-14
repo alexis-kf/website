@@ -1,0 +1,10 @@
+name: Article Feature
+type: module
+description: 'Provides article content type.'
+package: Ignite Content
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - media
+  - ignite_content
+  - ignite_authors
+  - ignite_tags

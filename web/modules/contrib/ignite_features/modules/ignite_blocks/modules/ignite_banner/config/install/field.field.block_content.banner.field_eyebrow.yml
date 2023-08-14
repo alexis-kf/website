@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.banner
+    - field.storage.block_content.field_eyebrow
+id: block_content.banner.field_eyebrow
+field_name: field_eyebrow
+entity_type: block_content
+bundle: banner
+label: Eyebrow
+description: 'Add label that adds additonal information.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
