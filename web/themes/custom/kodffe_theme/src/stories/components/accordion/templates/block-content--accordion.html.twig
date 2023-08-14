@@ -1,0 +1,40 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block content.
+ *
+ * @see template_preprocess_block_content_template()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'block-content',
+    'block-content--type-' ~ bundle|clean_class,
+    'block-content--' ~ id,
+    'block-content--view-mode-' ~ view_mode|clean_class,
+    'bg-light mt-5 mt-lg-12 pt-5 pb-5 pt-lg-12 pb-lg-12 p-md-2',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+  {% block content %}
+    {% if content.field_title %}
+      {%
+        include '@kodffe_theme/heading/heading.twig' with {
+          "heading": {
+            "title": content.field_title|field_value,
+            "heading_level": "2",
+            "modifier": "text-dark mb-4 container-fluid",
+          },
+        } only
+      %}
+    {% endif %}
+    {% embed '@kodffe_theme/accordion/accordion.twig' with { content: content, modifier: "container-fluid" } only %}
+      {% block accordion_items %}
+        {{ content.field_accordion_item }}
+      {% endblock accordion_items %}
+    {% endembed %}
+  {% endblock %}
+</div>

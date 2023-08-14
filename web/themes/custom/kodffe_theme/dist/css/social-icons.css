@@ -1,0 +1,21 @@
+/*!
+ * Bootstrap Utilities v5.2.3 (https://getbootstrap.com/)
+ * Copyright 2011-2022 The Bootstrap Authors
+ * Copyright 2011-2022 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+.social-icons {
+  margin-bottom: 0;
+}
+.social-icons .list-inline-item {
+  margin-right: 3rem;
+}
+.social-icons .list-inline-item:last-child {
+  margin-right: 0;
+}
+.social-icons .list-inline-item a.social-icon-dark svg {
+  fill: #fff;
+}
+.social-icons .list-inline-item a.social-icon-dark svg path {
+  fill: #fff;
+}
