@@ -1,0 +1,25 @@
+/*!
+ * Bootstrap Utilities v5.2.3 (https://getbootstrap.com/)
+ * Copyright 2011-2022 The Bootstrap Authors
+ * Copyright 2011-2022 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+.hero {
+  border-radius: 0;
+}
+.hero .card-img-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+.hero .heading strong {
+  color: #2E3590;
+  font-weight: inherit;
+}
+.hero img {
+  width: 100%;
+}
+
+.overlay img {
+  -o-object-fit: cover;
+  object-fit: cover;
+}

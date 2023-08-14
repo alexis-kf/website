@@ -1,0 +1,12 @@
+name: Ignite Content Feature
+type: module
+description: 'Provides shared node fields for other node-based features.'
+package: Ignite Content
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - datetime_range
+  - field_group
+  - node_revision_delete
+  - ignite_paragraphs
+  - paragraphs_features
+  - scheduler

@@ -1,0 +1,10 @@
+name: Ignite Media
+type: module
+description: 'Provides media features and common bundles.'
+package: Ignite
+core_version_requirement: ^9 || ^10
+dependencies:
+  - media
+  - media_library
+  - svg_image
+  - svg_image_responsive

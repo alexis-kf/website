@@ -1,0 +1,16 @@
+// Import site utilities.
+@import '../../global/bootstrap-init';
+
+// Reposition close button
+.modal-dialog {
+
+  .btn-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  .btn {
+    font-size: $font-size-sm;
+  }
+}

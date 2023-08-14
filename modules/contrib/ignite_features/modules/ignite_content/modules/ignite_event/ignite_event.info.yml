@@ -1,0 +1,17 @@
+name: Event Feature
+type: module
+description: "Provides event content type, list view and details page."
+package: Ignite Content
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - datetime_range
+  - media_library
+  - link
+  - ignite_content
+  - ignite_paragraphs
+  - ignite_card
+  - path
+  - pathauto
+  - scheduler
+  - text
+  - views

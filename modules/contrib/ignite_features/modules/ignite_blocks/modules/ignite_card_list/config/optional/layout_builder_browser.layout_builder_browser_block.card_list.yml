@@ -1,0 +1,11 @@
+uuid: a4d90105-9816-4422-b830-4e644b3c3bd4
+langcode: en
+status: true
+dependencies: {  }
+id: card_list
+block_id: 'inline_block:card_list'
+category: content
+label: 'Card List'
+weight: -2
+image_path: /modules/contrib/ignite_features/modules/ignite_blocks/modules/ignite_card_list/images/card-list.png
+image_alt: ''

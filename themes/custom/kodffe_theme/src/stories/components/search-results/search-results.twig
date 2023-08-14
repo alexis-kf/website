@@ -1,0 +1,11 @@
+<div class="container-fluid">
+  {% for item in items %}
+    {% block search_item %}
+      {%
+        include '@kodffe_theme/search-results/search-results.item.twig' with {
+          item: item
+        } only
+      %}
+    {% endblock %}
+  {% endfor %}
+</div>

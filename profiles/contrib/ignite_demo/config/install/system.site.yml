@@ -1,0 +1,11 @@
+name: Ignite Demo
+mail: admin@example.com
+slogan: ''
+page:
+  403: /page/access-denied
+  404: /page/page-not-found
+  front: /node/9
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en

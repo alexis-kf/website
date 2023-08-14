@@ -1,0 +1,21 @@
+uuid: 398f8e12-ac13-4dc1-8fa1-a16a5324f7b6
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.hero
+    - field.storage.block_content.field_hero_layout
+  module:
+    - options
+id: block_content.hero.field_hero_layout
+field_name: field_hero_layout
+entity_type: block_content
+bundle: hero
+label: 'Hero Layout'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

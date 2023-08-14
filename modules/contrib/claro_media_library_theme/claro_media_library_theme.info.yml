@@ -1,0 +1,13 @@
+name: Add Claro Media Library to Theme
+type: module
+description: Add Claro Media Library templates to active theme registry so that Claro templates and hooks are used when loading a Media Library in whatever theme.
+core_version_requirement: ^8 || ^9 || ^10
+package: Theme
+
+dependencies:
+  - drupal:media_library
+
+# Information added by Drupal.org packaging script on 2023-05-02
+version: '1.0.0-alpha7'
+project: 'claro_media_library_theme'
+datestamp: 1683018507

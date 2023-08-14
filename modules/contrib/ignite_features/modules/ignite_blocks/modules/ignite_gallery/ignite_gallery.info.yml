@@ -1,0 +1,9 @@
+name: Ignite Gallery Block Feature
+type: module
+description: 'Provides the gallery block type.'
+package: Ignite Blocks
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - ignite_blocks
+  - ignite_media
+  - ignite_styles

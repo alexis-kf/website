@@ -1,0 +1,13 @@
+{{ attach_library('ignite_theme/accordion') }}
+
+<div class="{{ modifier }}">
+  <div class="accordion">
+    {% block accordion_items %}
+      {% for item in items %}
+        {%
+          include '@ignite_theme/accordion/accordion-item.twig' with { item: item } only
+        %}
+      {% endfor %}
+    {% endblock %}
+  </div>
+</div>
