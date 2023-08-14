@@ -1,0 +1,19 @@
+name: Mediacurrent Profile
+type: profile
+description: 'Rename this profile to the appropriate client or project name.'
+core_version_requirement: '^8 || ^9 || ^10'
+
+dependencies:
+# Required modules
+# Installs Guardr recommended modules and configuration.
+ - ignite_core
+ - ignite_media_bundle
+ - ignite_features
+
+# List any themes that should be installed as part of the installation
+# profile installation.
+# Note that this will not set any theme as the default theme.
+themes:
+  - stable9
+  - ignite_theme
+  - gin

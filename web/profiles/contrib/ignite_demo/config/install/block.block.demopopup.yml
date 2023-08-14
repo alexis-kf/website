@@ -1,0 +1,25 @@
+uuid: abad04b4-8c62-483a-8878-95a9e25328df
+langcode: en
+status: true
+dependencies:
+  module:
+    - ignite_demo
+    - system
+  theme:
+    - ignite_theme
+id: demopopup
+theme: ignite_theme
+region: content
+weight: 2
+provider: null
+plugin: ignite_demo_popup
+settings:
+  id: ignite_demo_popup
+  label: 'Demo Pop-up'
+  label_display: '0'
+  provider: ignite_demo
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'
