@@ -1,0 +1,8 @@
+name: Ignite Features
+type: module
+description: 'Provides Drush commands for Ignite Features and theme dependencies.'
+package: Ignite Features
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - "twig_tweak"
+  - "twig_field_value"

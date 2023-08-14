@@ -1,0 +1,26 @@
+uuid: 11b2a3e3-3855-4fd4-8657-5d1ff687c14f
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.stats
+    - field.storage.block_content.field_summary
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    allowed_formats:
+      - basic_html
+id: block_content.stats.field_summary
+field_name: field_summary
+entity_type: block_content
+bundle: stats
+label: Summary
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

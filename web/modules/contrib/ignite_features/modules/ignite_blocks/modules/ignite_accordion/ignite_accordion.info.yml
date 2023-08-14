@@ -1,0 +1,8 @@
+name: Ignite Accordion Block Feature
+type: module
+description: 'Provides the accordion block type.'
+package: Ignite Blocks
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - ignite_blocks
+  - ignite_accordion_item

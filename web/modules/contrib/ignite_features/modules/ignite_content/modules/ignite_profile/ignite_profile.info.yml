@@ -1,0 +1,10 @@
+name: Profile Feature
+type: module
+description: 'Provides profile content type.'
+package: Ignite Content
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - paragraphs
+  - media
+  - ignite_content
+  - ignite_paragraphs

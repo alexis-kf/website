@@ -1,0 +1,5 @@
+name: Authors Feature
+type: module
+description: 'Provides authors taxonomy.'
+package: Ignite Taxonomy
+core_version_requirement: '^8 || ^9 || ^10'

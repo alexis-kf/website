@@ -1,0 +1,11 @@
+uuid: 24a8c022-2313-4dcc-b66d-169a3855f514
+langcode: en
+status: true
+dependencies: {  }
+id: stats
+block_id: 'inline_block:stats'
+category: content
+label: Stats
+weight: -3
+image_path: /modules/contrib/ignite_features/modules/ignite_blocks/modules/ignite_stats/images/stats.png
+image_alt: ''

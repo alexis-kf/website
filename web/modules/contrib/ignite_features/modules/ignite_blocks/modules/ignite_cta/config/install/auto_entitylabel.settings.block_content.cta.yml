@@ -1,0 +1,9 @@
+status: 1
+pattern: 'CTA: [block_content:field_link:uri]'
+escape: false
+preserve_titles: false
+save: false
+chunk: 50
+dependencies:
+  config:
+    - block_content.type.cta

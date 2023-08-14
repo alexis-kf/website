@@ -1,0 +1,5 @@
+services:
+  ignite_features.commands:
+    class: \Drupal\ignite_features\Commands\IgniteFeaturesCommands
+    tags:
+      - { name: drush.command }

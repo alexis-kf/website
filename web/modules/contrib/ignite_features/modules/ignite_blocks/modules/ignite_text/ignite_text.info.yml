@@ -1,0 +1,7 @@
+name: Ignite Text Block Feature
+type: module
+description: 'Simple text custom block type.'
+package: Ignite Blocks
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - ignite_blocks

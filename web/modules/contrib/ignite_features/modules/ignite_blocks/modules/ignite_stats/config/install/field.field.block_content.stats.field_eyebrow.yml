@@ -1,0 +1,19 @@
+uuid: dbc41624-143c-401e-a353-d10d13a5c6e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.stats
+    - field.storage.block_content.field_eyebrow
+id: block_content.stats.field_eyebrow
+field_name: field_eyebrow
+entity_type: block_content
+bundle: stats
+label: Eyebrow
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

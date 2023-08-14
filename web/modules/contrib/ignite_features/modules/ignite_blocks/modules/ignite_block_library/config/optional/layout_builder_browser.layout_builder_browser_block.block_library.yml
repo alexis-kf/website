@@ -1,0 +1,10 @@
+uuid: f8fce0f4-a0c3-4747-a112-356d872cefd2
+langcode: en
+status: true
+dependencies: {  }
+id: block_library
+block_id: 'inline_block:library'
+category: other
+label: 'Block Library'
+image_path: /modules/contrib/ignite_features/modules/ignite_blocks/modules/ignite_block_library/images/block.svg
+weight: -7

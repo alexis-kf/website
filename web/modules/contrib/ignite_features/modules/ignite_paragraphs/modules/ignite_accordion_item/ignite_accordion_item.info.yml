@@ -1,0 +1,7 @@
+name: Accordion Item Feature
+type: module
+description: 'Provides accordion item feature to be used with accordion blocks.'
+package: Ignite Paragraphs
+core_version_requirement: '^8 || ^9 || ^10'
+dependencies:
+  - ignite_paragraphs
