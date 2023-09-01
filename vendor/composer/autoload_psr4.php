@@ -77,7 +77,6 @@ return array(
     'Prophecy\\PhpUnit\\' => array($vendorDir . '/phpspec/prophecy-phpunit/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src/Prophecy'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
-    'Peast\\test\\' => array($vendorDir . '/mck89/peast/test/Peast'),
     'Peast\\' => array($vendorDir . '/mck89/peast/lib/Peast'),
     'PHPStan\\PhpDocParser\\' => array($vendorDir . '/phpstan/phpdoc-parser/src'),
     'PHPStan\\ExtensionInstaller\\' => array($vendorDir . '/phpstan/extension-installer/src'),
