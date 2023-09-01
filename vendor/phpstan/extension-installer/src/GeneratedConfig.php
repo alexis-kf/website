@@ -35,7 +35,7 @@ final class GeneratedConfig
         1 => 'rules.neon',
       ),
     ),
-    'version' => '1.1.37',
+    'version' => '1.2.0',
   ),
   'phpstan/phpstan-deprecation-rules' => 
   array (
@@ -48,7 +48,7 @@ final class GeneratedConfig
         0 => 'rules.neon',
       ),
     ),
-    'version' => '1.1.3',
+    'version' => '1.1.4',
   ),
   'phpstan/phpstan-phpunit' => 
   array (
@@ -62,7 +62,7 @@ final class GeneratedConfig
         1 => 'rules.neon',
       ),
     ),
-    'version' => '1.3.13',
+    'version' => '1.3.14',
   ),
 );
 
