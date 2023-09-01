@@ -1,0 +1,21 @@
+uuid: 3150f2a9-1b77-4f34-adec-08d2425cb4f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.teaser
+    - field.storage.block_content.field_eyebrow
+_core:
+  default_config_hash: aFAOwii8hzM72aIoXqRULGnRIGv0M9JKLxFkwpr-NnM
+id: block_content.teaser.field_eyebrow
+field_name: field_eyebrow
+entity_type: block_content
+bundle: teaser
+label: Eyebrow
+description: 'Provide a short label for this content.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

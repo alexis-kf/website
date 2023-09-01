@@ -1,0 +1,11 @@
+_core:
+  default_config_hash: cxVCHmn12RlcOfZhLxlyfY5Z4g41L5pDUcfXXm3U0pM
+status: 1
+pattern: 'Stats: [block_content:field_title]'
+escape: false
+preserve_titles: false
+save: false
+chunk: 50
+dependencies:
+  config:
+    - block_content.type.stats

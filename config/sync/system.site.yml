@@ -1,0 +1,14 @@
+_core:
+  default_config_hash: LtQ9OQRb4aufKCjInXInYBl1qnPo1j1KuvbPDD9rP_w
+langcode: en
+uuid: 547b91a8-b526-44ae-b305-9074e2828251
+name: Kodffe
+mail: hello@kodffe.com
+slogan: 'Reliable Software Solutions'
+page:
+  403: /node/5
+  404: /node/4
+  front: /node/9
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en

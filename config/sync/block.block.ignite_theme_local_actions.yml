@@ -1,0 +1,20 @@
+uuid: 8fc73016-1a05-43e9-a058-0c4d52d22d5a
+langcode: en
+status: true
+dependencies:
+  theme:
+    - ignite_theme
+_core:
+  default_config_hash: PuyCP_F3vrmc7Kg0yZgcNRfZheg2lKIN9zif-M-RBiw
+id: ignite_theme_local_actions
+theme: ignite_theme
+region: content
+weight: -20
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

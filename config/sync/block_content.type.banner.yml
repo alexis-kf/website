@@ -1,0 +1,10 @@
+uuid: a8d7337e-d451-4388-8ec6-4231aa3de0c2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: Fjt4cJkSbpRH8IAOhJmUMLyxs-OY81tdTf3sARXJbTs
+id: banner
+label: Banner
+revision: 0
+description: 'A full width card featuring or highlighting a piece of content.'

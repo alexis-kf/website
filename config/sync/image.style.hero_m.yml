@@ -1,0 +1,19 @@
+uuid: eef5a5e3-c5bc-4f2e-9577-e71d53e0e5f3
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+_core:
+  default_config_hash: G36gNqoHLnbX7Cxk6EsQJPFc91HGAkSxrYYkxTu60lE
+name: hero_m
+label: hero_m
+effects:
+  00cc710f-7410-48ca-98d8-a5cce1fcf9fd:
+    uuid: 00cc710f-7410-48ca-98d8-a5cce1fcf9fd
+    id: focal_point_scale_and_crop
+    weight: 2
+    data:
+      width: 980
+      height: 535
+      crop_type: focal_point

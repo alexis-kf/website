@@ -1,0 +1,10 @@
+uuid: 2e5027ae-d36a-48dd-9a13-750ade9b82d6
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: a4y9SUPGd4XUS3b7CUPdl8j8MdjgToB0CwGEfsuiQVE
+id: text
+label: Text
+revision: 1
+description: 'Basic text block.'

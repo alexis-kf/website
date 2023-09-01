@@ -1,0 +1,22 @@
+uuid: c2348649-76d0-4bd4-b202-0216cc9568e7
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - ignite_theme
+_core:
+  default_config_hash: x5PcKs8oi13ldBBKi9Vx4JtJ3uuKVX02fn3o0OzxJeA
+id: ignite_theme_help
+theme: ignite_theme
+region: content
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

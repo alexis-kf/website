@@ -1,0 +1,25 @@
+uuid: 691fedef-a924-4c1a-aa82-257537be4adf
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.banner
+    - field.storage.block_content.field_link
+  module:
+    - link
+_core:
+  default_config_hash: hb9ZP4vvQfuL2KW2UHEl2OpH-vrbMgrFMg2UEcqdZQY
+id: block_content.banner.field_link
+field_name: field_link
+entity_type: block_content
+bundle: banner
+label: Link
+description: 'Provide an internal or external link.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

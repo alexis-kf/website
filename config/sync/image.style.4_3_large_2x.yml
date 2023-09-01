@@ -1,0 +1,19 @@
+uuid: 80a62b0b-6dc8-407a-974d-0b7d7f46cbc0
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+_core:
+  default_config_hash: oROvJ1mezpnl6_Gos5SLm1inISQTPNrKdP8JZRv0a20
+name: 4_3_large_2x
+label: '4:3 Large 2x (1280 x 960)'
+effects:
+  0c7a5e80-fd2e-495e-bd22-c9f996c820cf:
+    uuid: 0c7a5e80-fd2e-495e-bd22-c9f996c820cf
+    id: focal_point_scale_and_crop
+    weight: 2
+    data:
+      width: 1280
+      height: 960
+      crop_type: focal_point

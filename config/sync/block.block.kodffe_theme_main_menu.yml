@@ -1,0 +1,27 @@
+uuid: 2e08ca62-b2e3-4b5a-b951-a58d4f7bfb3e
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - kodffe_theme
+_core:
+  default_config_hash: udCxvkqQS6k-lNLRZu0aOD-DEVIdOtn4-3hZzMZdPGI
+id: kodffe_theme_main_menu
+theme: kodffe_theme
+region: primary_menu
+weight: -4
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility: {  }

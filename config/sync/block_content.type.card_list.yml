@@ -1,0 +1,10 @@
+uuid: 94abd32f-5df5-434b-a47c-f7b6346d108d
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: pOpMkRU4E2YBqopiwP6WoDmhmnFeAWZt3uyN90sdNIM
+id: card_list
+label: 'Card List'
+revision: 0
+description: 'Gives editors a way to feature a list of card content.'

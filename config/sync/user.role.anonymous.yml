@@ -1,0 +1,24 @@
+uuid: e044848d-ad3f-4c27-b495-5600794503a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.authors
+    - taxonomy.vocabulary.tags
+  module:
+    - media
+    - search_api_page
+    - system
+    - taxonomy_access_fix
+_core:
+  default_config_hash: ZefCZPmA0gsD8m8pcU2Py0xhMskqlKwxL9kmhLbYdZ0
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'view media'
+  - 'view search api pages'
+  - 'view terms in authors'
+  - 'view terms in tags'

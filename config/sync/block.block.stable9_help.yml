@@ -1,0 +1,22 @@
+uuid: 365684e5-1c39-49a7-9909-58665f47afc2
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - stable9
+_core:
+  default_config_hash: x5PcKs8oi13ldBBKi9Vx4JtJ3uuKVX02fn3o0OzxJeA
+id: stable9_help
+theme: stable9
+region: content
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

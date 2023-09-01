@@ -1,0 +1,27 @@
+uuid: 55a230c8-3205-4b2f-ae23-4e4898844140
+langcode: en
+status: false
+dependencies:
+  module:
+    - ignite_demo
+    - system
+  theme:
+    - kodffe_theme
+_core:
+  default_config_hash: zB0n37ksLqG0n0k656rd5r0XrimvElOAHeyQD_FMY5M
+id: kodffe_theme_demopopup
+theme: kodffe_theme
+region: content
+weight: -1
+provider: null
+plugin: ignite_demo_popup
+settings:
+  id: ignite_demo_popup
+  label: 'Demo Pop-up'
+  label_display: '0'
+  provider: ignite_demo
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

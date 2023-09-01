@@ -1,0 +1,21 @@
+uuid: c4073c96-3c12-4d75-b40d-bedbfaf0aa74
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.teaser
+    - field.storage.block_content.field_title
+_core:
+  default_config_hash: 1makfRrPAnXyXQnnh62nqwxQRJD04T7mXVCo6SMWfYU
+id: block_content.teaser.field_title
+field_name: field_title
+entity_type: block_content
+bundle: teaser
+label: Title
+description: 'Provide the primary heading for the teaser.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

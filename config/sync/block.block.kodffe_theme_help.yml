@@ -1,0 +1,22 @@
+uuid: 331f1203-b703-46fb-b273-aa6133751067
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - kodffe_theme
+_core:
+  default_config_hash: x5PcKs8oi13ldBBKi9Vx4JtJ3uuKVX02fn3o0OzxJeA
+id: kodffe_theme_help
+theme: kodffe_theme
+region: content
+weight: -4
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

@@ -1,0 +1,20 @@
+uuid: a84c57f0-d356-41b9-b19e-e47ed88ea838
+langcode: en
+status: true
+dependencies:
+  theme:
+    - kodffe_theme
+_core:
+  default_config_hash: JKzK497pS8ccUfa3NeCBkTCM6D4VUzg97-NMXN9sjoU
+id: kodffe_theme_page_title
+theme: kodffe_theme
+region: content
+weight: -6
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }
