@@ -1,0 +1,22 @@
+uuid: 1a42194f-5e2e-42bc-889d-fe4685214306
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - kodffe_theme
+_core:
+  default_config_hash: 9bLxSXiRLi1Ydkoj3gUMWsghr7oInVR7n75_LgR0zw4
+id: kodffe_theme_breadcrumbs
+theme: kodffe_theme
+region: primary_menu
+weight: -4
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

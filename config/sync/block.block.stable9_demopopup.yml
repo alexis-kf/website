@@ -1,0 +1,27 @@
+uuid: 46193593-559d-40e3-9aaa-c91c3a89d40b
+langcode: en
+status: true
+dependencies:
+  module:
+    - ignite_demo
+    - system
+  theme:
+    - stable9
+_core:
+  default_config_hash: zB0n37ksLqG0n0k656rd5r0XrimvElOAHeyQD_FMY5M
+id: stable9_demopopup
+theme: stable9
+region: content
+weight: 2
+provider: null
+plugin: ignite_demo_popup
+settings:
+  id: ignite_demo_popup
+  label: 'Demo Pop-up'
+  label_display: '0'
+  provider: ignite_demo
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

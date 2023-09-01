@@ -1,0 +1,20 @@
+uuid: d822fea1-4f22-468f-a8d0-1fc37b70499d
+langcode: en
+status: true
+dependencies:
+  theme:
+    - kodffe_theme
+_core:
+  default_config_hash: PuyCP_F3vrmc7Kg0yZgcNRfZheg2lKIN9zif-M-RBiw
+id: kodffe_theme_local_actions
+theme: kodffe_theme
+region: content
+weight: -3
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

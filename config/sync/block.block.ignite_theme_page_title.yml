@@ -1,0 +1,20 @@
+uuid: 0aab1c7c-94a1-472c-a70a-ce00c8ec4f32
+langcode: en
+status: true
+dependencies:
+  theme:
+    - ignite_theme
+_core:
+  default_config_hash: JKzK497pS8ccUfa3NeCBkTCM6D4VUzg97-NMXN9sjoU
+id: ignite_theme_page_title
+theme: ignite_theme
+region: content
+weight: -50
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

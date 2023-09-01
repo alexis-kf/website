@@ -1,0 +1,32 @@
+uuid: 009591e2-a7fa-4ce1-a2e0-607e6710810d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  theme:
+    - ignite_theme
+_core:
+  default_config_hash: 5wVaSGuxORAeL9Xp_H95uykelwTkFYbx3ZkzfUSqAIs
+id: newsletter
+theme: ignite_theme
+region: content
+weight: 99
+provider: null
+plugin: 'block_content:affdecfe-f74e-45cb-b4b1-2f527341bc8b'
+settings:
+  id: 'block_content:affdecfe-f74e-45cb-b4b1-2f527341bc8b'
+  label: Newsletter
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      article: article

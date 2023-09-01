@@ -1,0 +1,25 @@
+uuid: e19f94ba-6b36-4c8d-a3b1-006a5129215d
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.card_list
+    - field.storage.block_content.field_link
+  module:
+    - link
+_core:
+  default_config_hash: 5Y_w28QuSu73yXkqgOnDXDBJkNL1m0RMuoZUnYDgTzg
+id: block_content.card_list.field_link
+field_name: field_link
+entity_type: block_content
+bundle: card_list
+label: Link
+description: 'Add an optional call-to-action link.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

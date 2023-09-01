@@ -1,0 +1,21 @@
+uuid: 384058b0-0b98-4095-aec2-4823918165ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.index.default_site_search
+_core:
+  default_config_hash: qHX1wd29_mtIXFiEij-CwoLP3Wa_el-Cl3IlrviuSVs
+id: search_results
+label: 'Search Results'
+path: search
+clean_url: true
+show_all_when_no_keys: false
+index: default_site_search
+limit: 10
+searched_fields:
+  rendered_item: rendered_item
+style: search_results
+view_mode_configuration: {  }
+show_search_form: true
+parse_mode: direct

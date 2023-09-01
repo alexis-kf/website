@@ -1,0 +1,13 @@
+uuid: 4ce15213-ae8e-48c1-882e-99e787d5672d
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: rMmz-Yhp4xtZXYaKb9UGgDBaZsPOJKkoTi3Zl7I0pCM
+id: cta
+block_id: 'inline_block:cta'
+category: content
+label: CTA
+weight: -2
+image_path: /modules/contrib/ignite_features/modules/ignite_blocks/modules/ignite_cta/images/cta.png
+image_alt: ''

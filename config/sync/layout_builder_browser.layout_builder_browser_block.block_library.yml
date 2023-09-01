@@ -1,0 +1,13 @@
+uuid: f8fce0f4-a0c3-4747-a112-356d872cefd2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: O_f2levaX5eINT6Zqg52rAk1rKsu_AD93V50KoO8KCA
+id: block_library
+block_id: 'inline_block:library'
+category: other
+label: 'Block Library'
+weight: -7
+image_path: /modules/contrib/ignite_features/modules/ignite_blocks/modules/ignite_block_library/images/block.svg
+image_alt: null

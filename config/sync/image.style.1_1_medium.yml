@@ -1,0 +1,19 @@
+uuid: 962b2682-61b6-40c7-a511-1460f68ebec2
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+_core:
+  default_config_hash: k3KKpzX_TWVpdr_C8gxEObGmSAuVZZkS4rE4J-BY0TM
+name: 1_1_medium
+label: '1:1 Medium (400 x 400)'
+effects:
+  b253d21d-2324-49ed-91c2-52ea5397ef06:
+    uuid: b253d21d-2324-49ed-91c2-52ea5397ef06
+    id: focal_point_scale_and_crop
+    weight: 2
+    data:
+      width: 400
+      height: 400
+      crop_type: focal_point

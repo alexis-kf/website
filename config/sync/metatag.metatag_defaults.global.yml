@@ -1,0 +1,21 @@
+uuid: 35b34e3b-89ad-4d63-a3c8-b4b8ef28bfa2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: r6bViZmjrGrrxOxWR3VikFfFWZXn8qpBMclUdm7Xtbc
+id: global
+label: Global
+tags:
+  canonical_url: '[current-page:url]'
+  description: 'Enhance your tech teams and projects by leveraging the expertise of Nearshore Software Development Professionals.'
+  og_country_name: Ecuador
+  og_description: '[node:field_summary]'
+  og_email: hello@kodffe.com
+  og_image: '[node:field_thumbnail:entity:field_image]'
+  og_postal_code: '100201'
+  og_site_name: '[current-page:title] | [site:name]'
+  og_title: '[current-page:title]'
+  og_url: '[current-page:url]'
+  robots: 'max-image-preview:standard'
+  title: '[current-page:title] | [site:name]'

@@ -1,0 +1,13 @@
+uuid: 63d4d19b-74f8-4435-a5d9-425a0c8226bf
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.card_list
+_core:
+  default_config_hash: CtvbwS24LQet2F6tXznFR-nRwN84ewMzlIJii9PmtQE
+id: block_content.card_list
+target_entity_type_id: block_content
+target_bundle: card_list
+default_langcode: site_default
+language_alterable: false

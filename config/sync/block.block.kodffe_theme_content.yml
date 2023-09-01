@@ -1,0 +1,22 @@
+uuid: 428ff9dc-a750-4ed9-a9fb-00279e4fcb23
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - kodffe_theme
+_core:
+  default_config_hash: 3fd_8FaPyEmqcEDOw1NUnEmNQ2hqQ4bXti9yvEh_w7I
+id: kodffe_theme_content
+theme: kodffe_theme
+region: content
+weight: -2
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

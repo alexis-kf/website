@@ -1,0 +1,33 @@
+uuid: 7ab2b0e4-c7ad-41a7-b81f-b12ac9d93dfc
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:newsletter:cefaa65a-8389-486f-ab7e-0f3a46fb9fbc'
+  module:
+    - block_content
+    - node
+  theme:
+    - kodffe_theme
+id: kodffe_theme_newsletterkodffe
+theme: kodffe_theme
+region: content
+weight: 2
+provider: null
+plugin: 'block_content:cefaa65a-8389-486f-ab7e-0f3a46fb9fbc'
+settings:
+  id: 'block_content:cefaa65a-8389-486f-ab7e-0f3a46fb9fbc'
+  label: 'Newsletter Kodffe'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      article: article

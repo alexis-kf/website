@@ -1,0 +1,22 @@
+uuid: 397709d0-c4dc-4ef4-86f0-5bbddb842671
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - ignite_theme
+_core:
+  default_config_hash: u23HEGPoRVgliEivQMbhglBHLwqtHUKxKO7qx6luf6o
+id: ignite_theme_messages
+theme: ignite_theme
+region: highlighted
+weight: -4
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

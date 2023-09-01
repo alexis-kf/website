@@ -1,0 +1,13 @@
+uuid: 09e94bfe-b17a-4f73-bd79-82630c174ecd
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.teaser
+_core:
+  default_config_hash: Gmsv-ARdtGY5xSoMq6Y5ut-sPK9E7WZaJ5s5PB7tZ7Y
+id: block_content.teaser
+target_entity_type_id: block_content
+target_bundle: teaser
+default_langcode: site_default
+language_alterable: false

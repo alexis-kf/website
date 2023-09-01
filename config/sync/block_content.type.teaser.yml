@@ -1,0 +1,10 @@
+uuid: fbbda1cf-1549-4438-abbb-b7a13890bf83
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: bRItxVK0wQ6FfrqnsHJfDTMDEMUl6TKnBEzYh7nlM_Y
+id: teaser
+label: '50/50 Teaser'
+revision: 0
+description: 'A teaser to a piece of content, local or external.'

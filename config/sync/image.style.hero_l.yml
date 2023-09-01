@@ -1,0 +1,19 @@
+uuid: 507c6936-ce53-4594-98f0-b1793d819e75
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+_core:
+  default_config_hash: BcBmSXg_6J_pXQxpLDT1qyvnp6sKEIzoXmmEGo6CGxw
+name: hero_l
+label: hero_l
+effects:
+  b8321876-4af4-48b3-96fa-4074bd1c482a:
+    uuid: b8321876-4af4-48b3-96fa-4074bd1c482a
+    id: focal_point_scale_and_crop
+    weight: 2
+    data:
+      width: 766
+      height: 247
+      crop_type: focal_point

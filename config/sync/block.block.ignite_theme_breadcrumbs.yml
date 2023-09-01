@@ -1,0 +1,22 @@
+uuid: de8ed2cb-b05d-4064-a924-22cc3c1ce323
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - ignite_theme
+_core:
+  default_config_hash: 9bLxSXiRLi1Ydkoj3gUMWsghr7oInVR7n75_LgR0zw4
+id: ignite_theme_breadcrumbs
+theme: ignite_theme
+region: primary_menu
+weight: -4
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

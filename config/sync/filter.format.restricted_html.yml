@@ -1,0 +1,26 @@
+uuid: 5743fb73-b0b4-4ddf-8422-0fa10e5de134
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: alAXBUqIm45DdHBk2UE9fg3mQjpgsSm4aQyyeUkK_4c
+name: 'Restricted HTML'
+format: restricted_html
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<em> <strong>'
+      filter_html_help: true
+      filter_html_nofollow: false
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: 0
+    settings:
+      filter_url_length: 72

@@ -1,0 +1,19 @@
+uuid: bba576df-22dc-4493-9d6b-d6fee7223672
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+_core:
+  default_config_hash: jsxrU6sCQ2sVWo2QpUQYW0tPcGzeMGcNgLxBOU950Ps
+name: 16_9_xlarge
+label: '16:9 Extra Large (720 x 405)'
+effects:
+  83276a03-eeb3-4c41-aa76-3a4e35b5bf0e:
+    uuid: 83276a03-eeb3-4c41-aa76-3a4e35b5bf0e
+    id: focal_point_scale_and_crop
+    weight: 2
+    data:
+      width: 720
+      height: 405
+      crop_type: focal_point
