@@ -2,3 +2,4 @@
 .idea
 .DS_Store
 /sites/default/files
+/themes/custom/kodffe_theme/node_modules
