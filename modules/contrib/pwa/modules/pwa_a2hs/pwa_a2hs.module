@@ -45,5 +45,4 @@ function pwa_a2hs_theme() {
 function template_preprocess_pwa_add_to_home_screen(&$variables) {
   $variables['attributes']['class'][] = 'pwa-a2hs';
   $variables['attributes']['class'][] = 'hidden';
-  $variables['attributes']['name'] = 'pwa-a2hs-button-target';
 }

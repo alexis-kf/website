@@ -2,31 +2,35 @@
 
 /**
  * @file
- * Contains pwa_extras.module
+ * Contains pwa_extras.module.
  */
 
 /**
  * Implements hook_page_attachments().
  */
 function pwa_extras_page_attachments(array &$attachments) {
-  if (!\Drupal::currentUser()->hasPermission('access content')) {
+  if (!\Drupal::currentUser()->hasPermission('access pwa')) {
     return;
   }
 
-  $site_name = \Drupal::config('pwa.config')->get('site_name') ?: \Drupal::config('system.site')->get('name');
+  $site_name = \Drupal::config('pwa.config')->get('name') ?: \Drupal::config('system.site')->get('name');
   $config = \Drupal::config('pwa_extras.settings.apple');
   $mask_color = $config->get('mask_color') ?: '#0678be';
   $status_color = $config->get('color_select') ?: 'default';
   $tag_list = pwa_extras_tag_list($site_name, $mask_color, $status_color);
 
   $meta_tags = $config->get('touch_icons') + $config->get('meta_tags') + $config->get('home_screen_icons');
-  if (empty($meta_tags)) return;
+  if (empty($meta_tags)) {
+    return;
+  }
 
   foreach ($meta_tags as $key => $value) {
-    if (!$value) continue;
+    if (!$value) {
+      continue;
+    }
 
     $string_tag = $tag_list[$key];
-    $dom = new DOMDocument;
+    $dom = new DOMDocument();
     $dom->loadHTML($string_tag);
     $data = $dom->documentElement->firstChild->firstChild;
     $tag_name = $data->tagName;
@@ -44,26 +48,38 @@ function pwa_extras_page_attachments(array &$attachments) {
         '#tag' => $tag_name,
         '#attributes' => $tag_attributes,
       ];
-      $attachments['#attached']['html_head'][] = [$tag_data, $tag_attributes['name']];
+      $attachments['#attached']['html_head'][] = [
+        $tag_data,
+        $tag_attributes['name'],
+      ];
     }
   }
 }
 
+/**
+ * Merges the pwa_extra meta-data.
+ */
 function pwa_extras_tag_list($site_name, $mask_color, $status_color) {
-  $touch_icons = pwa_extras_apple_touch_icons($mask_color);
+  $touch_icons = pwa_extras_apple_touch_icons();
   $meta_tags = pwa_extras_apple_meta_tags($site_name, $status_color);
   $homescreen_icons = pwa_extras_apple_home_screen_icons();
   return array_merge($touch_icons, $meta_tags, $homescreen_icons);
 }
 
+/**
+ * Fetches the apple touch icon link array.
+ */
 function pwa_extras_apple_touch_icons() {
   $config = \Drupal::config('pwa.config');
 
   return [
-    'touch-icon-default' => '<link rel="apple-touch-icon" sizes="192x192" href="' . $config->get('image_small') . '">',
+    'touch-icon-default' => '<link rel="apple-touch-icon" sizes="192x192" href="' . $config->get('image_small_fid') . '">',
   ];
 }
 
+/**
+ * Fetches apple specific meta data.
+ */
 function pwa_extras_apple_meta_tags($site_name = '', $status_color = '') {
   return [
     'meta-capable' => '<meta name="apple-mobile-web-app-capable" content="yes">',
@@ -72,6 +88,9 @@ function pwa_extras_apple_meta_tags($site_name = '', $status_color = '') {
   ];
 }
 
+/**
+ * Fetches apple specific home screen icon data.
+ */
 function pwa_extras_apple_home_screen_icons() {
   return [
     'iphone5-splash' => '<link href="' . base_path() . 'iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',

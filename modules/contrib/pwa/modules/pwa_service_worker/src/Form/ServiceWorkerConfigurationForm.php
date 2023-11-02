@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pwa\Form;
+namespace Drupal\pwa_service_worker\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -15,45 +15,45 @@ class ServiceWorkerConfigurationForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'pwa_serviceworker_configuration_form';
+    return 'pwa_service_worker_configuration_form';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['pwa.config'];
+    return ['pwa_service_worker.config'];
   }
 
   /**
    * {@inheritdoc}
-    */
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $config = $this->config('pwa.config');
+    $config = $this->config('pwa_service_worker.config');
 
     $form['urls_to_cache'] = [
       '#type' => 'textarea',
       '#title' => $this->t('URLs to cache on install'),
-      '#description' => $this->t('These will serve the page offline even if they have not been visited. Make sure the URL is not a 404. Make sure are these are relative URLs, tokens or regex are not supported. Because we cache these, you may need to flush your cache when changing this value.'),
+      '#description' => $this->t('These will serve the page offline even if they have not been visited. Define one per line. Examples would be "/" for everything, or "/myCachedSite".<br>Make sure the URL is not a 404. Make sure these are relative URLs, tokens or regex are not supported. Because we cache these, you may need to flush your cache when changing this value.'),
       '#default_value' => $config->get('urls_to_cache'),
-      '#rows' => 7
     ];
 
     $form['urls_to_exclude'] = [
       '#type' => 'textarea',
       '#title' => $this->t('URLs to exclude'),
-      '#description' => $this->t('Takes a regex, these URLs will use network-only, default config should be, admin/.* and user/reset/.*.'),
+      '#description' => $this->t('Takes regexes. These URLs will use network-only, default config should be, <code>admin/.*</code> and <code>user/reset/.*</code>.'),
       '#default_value' => $config->get('urls_to_exclude'),
-      '#rows' => 7
     ];
 
+    // @todo This setting is quite mysterious, the default path "/offline" is
+    // also used in the "pwa_service_worker.phone_home" route.
     $form['offline_page'] = [
       '#type' => 'textfield',
-      '#title' => t('Offline page'),
+      '#title' => $this->t('Offline page'),
       '#default_value' => $config->get('offline_page') ?: '/offline',
       '#size' => 40,
-      '#description' => t('This page is displayed when the user is offline and the requested page is not cached. It is automatically added to the "URLs to cache". Use <code>/offline</code> for a generic "You are offline" page.'),
+      '#description' => $this->t('This page is displayed when the user is offline and the requested page is not cached. It is automatically added to the "URLs to cache". Use <code>/offline</code> for a generic "You are offline" page.'),
     ];
 
     $form['cache_version'] = [
@@ -67,7 +67,7 @@ class ServiceWorkerConfigurationForm extends ConfigFormBase {
     $form['skip_waiting'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Skip waiting'),
-      '#description' => $this->t("If enabled, an updated service worker will not wait, but instead activates as soon as it's finished installing"),
+      '#description' => $this->t("If enabled, an updated service worker will not wait, but instead activates as soon as it is installed."),
       '#title_display' => 'after',
       '#default_value' => $config->get('skip_waiting'),
     ];
@@ -81,20 +81,20 @@ class ServiceWorkerConfigurationForm extends ConfigFormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
 
-    // Check urls format
+    // Check urls format.
     $urls_to_cache = pwa_str_to_list($form_state->getValue('urls_to_cache'));
     foreach ($urls_to_cache as $page) {
       // If link is internal.
       try {
-         $url = Url::fromUserInput($page);
-       }
-       catch(\Exception $e) {
-         $form_state->setErrorByName('urls_to_cache', $this->t("The user-entered URL '{$page}' must begin with a '/', '?', or '#'."));
-       }
-       // If link does not exist.
-       if (isset($url) && !$url->isRouted()) {
-         $form_state->setErrorByName('urls_to_cache', $this->t('Error "' . $page . '" URL to Cache is a 404.'));
-       }
+        $url = Url::fromUserInput($page);
+      }
+      catch (\Exception $e) {
+        $form_state->setErrorByName('urls_to_cache', $this->t("The user-entered URL '@page' must begin with a '/', '?', or '#'.", ['@page' => $page]));
+      }
+      // If link does not exist.
+      if (isset($url) && !$url->isRouted()) {
+        $form_state->setErrorByName('urls_to_cache', $this->t('Error "@page" URL to Cache is a 404.', ['@page' => $page]));
+      }
     }
 
     parent::validateForm($form, $form_state);
@@ -106,9 +106,9 @@ class ServiceWorkerConfigurationForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
-    $config = $this->config('pwa.config');
+    $config = $this->config('pwa_service_worker.config');
 
-    // Save new config data
+    // Save new config data.
     $config
       ->set('urls_to_cache', $form_state->getValue('urls_to_cache'))
       ->set('urls_to_exclude', $form_state->getValue('urls_to_exclude'))

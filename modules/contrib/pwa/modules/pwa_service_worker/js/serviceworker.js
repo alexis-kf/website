@@ -52,13 +52,13 @@ const CACHE_CURRENT = CACHE_PREFIX + CACHE_VERSION;
 let CACHE_ACTIVE = true;
 
 // Phone-home URL.
-const PWA_PHONE_HOME_URL = '/pwa/module-active';
+const PWA_SERVICE_WORKER_PHONE_HOME_URL = '/pwa/phone-home';
 
 // Phone-home should only happen once per life of the SW. This is initialized to
 // FALSE and will be set to TRUE during phone-home. When the service worker goes
 // idle it will reset the variable and the next time it activates, it will once
 // again phone-home.
-let PWA_PHONE_HOME_ALREADY = false;
+let PWA_SERVICE_WORKER_PHONE_HOME_ALREADY = false;
 
 // If enabled, an updated service worker will not wait, but instead activates as
 // soon as it's finished installing.
@@ -407,11 +407,6 @@ self.addEventListener('fetch', function (event) {
     if (isCacheableAsset(url)) {
       event.respondWith(makeRequest.staleWhileRevalidate(event.request));
     }
-    else if (!isCacheableAsset(url)) {
-      // This networkWithCacheFallback does not work with excluded paths.
-      event.respondWith(makeRequest.networkWithCacheFallback(event.request));
-    }
-
     // Check for save-data Header and avoid caching when present.
     else if (isImageUrl(url)) {
       if (event.request.headers.get('save-data')) {
@@ -421,6 +416,10 @@ self.addEventListener('fetch', function (event) {
       else {
         event.respondWith(makeRequest.staleWhileRevalidateImage(event.request));
       }
+    }
+    else if (!isCacheableAsset(url)) {
+      // This networkWithCacheFallback does not work with excluded paths.
+      event.respondWith(makeRequest.networkWithCacheFallback(event.request));
     }
   }
   else {
@@ -443,37 +442,37 @@ self.addEventListener('fetch', function (event) {
 function phoneHome() {
   // Avoid constant phoning-home. Once this function has run, don't run again
   // until SW goes idle.
-  if (PWA_PHONE_HOME_ALREADY) {
+  if (PWA_SERVICE_WORKER_PHONE_HOME_ALREADY) {
     console.debug('PWA: Phone-home - Last check was recent. Aborting.');
     return Promise.resolve();
   }
   else {
     // Enable flag to suppress future phone-homes until SW goes idle.
-    PWA_PHONE_HOME_ALREADY = true;
+    PWA_SERVICE_WORKER_PHONE_HOME_ALREADY = true;
   }
 
   // Fetch phone-home URL and process response.
-  let phoneHomeUrl = fetch(PWA_PHONE_HOME_URL)
-  .then(function (response) {
-    // if no network, don't try to phone-home.
-    if (!navigator.onLine) {
-      console.debug('PWA: Phone-home - Network not detected.');
-    }
+  fetch(PWA_SERVICE_WORKER_PHONE_HOME_URL)
+    .then(function (response) {
+      // if no network, don't try to phone-home.
+      if (!navigator.onLine) {
+        console.debug('PWA: Phone-home - Network not detected.');
+      }
 
-    // If network + 200, do nothing.
-    if (response.status === 200) {
-      console.debug('PWA: Phone-home - Network detected, module detected.');
-    }
+      // If network + 200, do nothing.
+      if (response.status === 200) {
+        console.debug('PWA: Phone-home - Network detected, module detected.');
+      }
 
-    // If network + 404, uninstall.
-    if (response.status === 404) {
-      console.debug('PWA: Phone-home - Network detected, module NOT detected. UNINSTALLING.');
+      // If network + 404, uninstall.
+      if (response.status === 404) {
+        console.debug('PWA: Phone-home - Network detected, module NOT detected. UNINSTALLING.');
 
-      // Let SW attempt to unregister itself.
-      Promise.resolve(pwaUninstallServiceWorker());
-    }
+        // Let SW attempt to unregister itself.
+        Promise.resolve(pwaUninstallServiceWorker());
+      }
 
-    return Promise.resolve();
+      return Promise.resolve();
   })
   .catch(function(error) {
     console.error('PWA: Phone-home - ', error);

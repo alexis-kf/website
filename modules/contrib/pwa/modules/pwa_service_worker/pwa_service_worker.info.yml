@@ -1,11 +1,12 @@
-name: Progressive Web App Extras
-description: Builds on top of Progressive Web App to deliver extra functionality.
+name: 'PWA Service Worker'
 type: module
+description: 'Enables the service worker for the creation of an effective offline experience for your pwa.'
 package: PWA
 core_version_requirement: ^9.3 || ^10
-configure: pwa_extras.settings
+php: ^8
+configure:
 dependencies:
-  - pwa
+  - pwa:pwa
 
 # Information added by Drupal.org packaging script on 2023-09-25
 version: '2.1.0-beta2'

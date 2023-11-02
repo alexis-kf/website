@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\pwa\EventSubscriber;
+namespace Drupal\pwa_service_worker\EventSubscriber;
 
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -32,12 +32,12 @@ class ResponseSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Clear serviceworker cache on user change.
+   * Clear service worker cache on user change.
    *
    * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
    *   The event to process.
    *
-   * @see pwa_user_login()
+   * @see pwa_service_worker_user_login()
    */
   public function processResponse(ResponseEvent $event) {
     $response = $event->getResponse();
@@ -53,11 +53,11 @@ class ResponseSubscriber implements EventSubscriberInterface {
 
     $session = $event->getRequest()->getSession();
 
-    if ($session && $session->get('pwa_reset', FALSE)) {
+    if ($session && $session->get('pwa_service_worker_reset', FALSE)) {
       $response->headers->add(static::HEADERS);
 
       // Only once.
-      $session->remove('pwa_reset');
+      $session->remove('pwa_service_worker_reset');
     }
   }
 
