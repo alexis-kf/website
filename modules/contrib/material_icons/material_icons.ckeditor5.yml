@@ -20,4 +20,5 @@ material_icons_icons:
         label: Material Icons
     library: material_icons/editor
     elements:
+      - <span>
       - <span class>

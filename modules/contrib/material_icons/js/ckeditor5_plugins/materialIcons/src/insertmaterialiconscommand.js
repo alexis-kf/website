@@ -10,9 +10,17 @@ export default class InsertMaterialIconsCommand extends Command {
   execute(settings) {
     this.editor.model.change((writer) => {
 
-      let classes = 'material-icons'
+      let classes = 'material-icons';
+
+      const fontClassName = (fontFamily) => {
+        const familySplit = fontFamily.split('__');
+        const fontSet = (familySplit.length > 1) ? familySplit[0] : 'icons';
+        const fontFamilyType = familySplit.pop();
+        return `material-${fontSet}-${fontFamilyType}`;
+      }
+
       if (settings.family !== 'baseline') {
-        classes += ' material-icons-' + settings.family;
+        classes += ' ' + fontClassName(settings.family);
       }
 
       if (settings.classes !== '') {

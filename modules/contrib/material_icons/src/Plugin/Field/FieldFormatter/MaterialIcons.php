@@ -4,6 +4,7 @@ namespace Drupal\material_icons\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\material_icons\Traits\MaterialIconsSettings;
 
 /**
  * Implementation of Material Icon formatter.
@@ -18,6 +19,8 @@ use Drupal\Core\Field\FormatterBase;
  */
 class MaterialIcons extends FormatterBase {
 
+  use MaterialIconsSettings;
+
   /**
    * {@inheritDoc}
    */
@@ -25,8 +28,7 @@ class MaterialIcons extends FormatterBase {
     $element = [];
 
     foreach ($items as $delta => $item) {
-      $family_value = $item->get('family')->getValue();
-      $family = $family_value === 'baseline' ? 'material-icons' : 'material-icons-' . $family_value;
+      $family = ($this->getFontFamilyClass($item->get('family')->getValue()));
       $element[$delta] = [
         '#theme' => 'material_icon',
         '#icon' => $item->get('icon')->getValue(),

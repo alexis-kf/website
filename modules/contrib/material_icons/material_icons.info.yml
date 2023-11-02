@@ -6,7 +6,7 @@ configure: material_icons.settings
 dependencies:
   - drupal:editor
 
-# Information added by Drupal.org packaging script on 2022-12-19
-version: '2.0.1'
+# Information added by Drupal.org packaging script on 2023-09-07
+version: '2.0.2'
 project: 'material_icons'
-datestamp: 1671494149
+datestamp: 1694104576
