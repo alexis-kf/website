@@ -11,6 +11,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\material_icons\Traits\MaterialIconsSettings;
 
 /**
  * Plugin implementation of the 'Material Icons' widget.
@@ -24,6 +25,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class MaterialIcons extends WidgetBase implements ContainerFactoryPluginInterface {
+
+  use MaterialIconsSettings;
 
   /**
    * Drupal configuration service container.
@@ -50,7 +53,7 @@ class MaterialIcons extends WidgetBase implements ContainerFactoryPluginInterfac
       $configuration['field_definition'],
       $configuration['settings'],
       $configuration['third_party_settings'],
-      $container->get('config.factory')
+      $container->get('config.factory'),
     );
   }
 
@@ -108,6 +111,19 @@ class MaterialIcons extends WidgetBase implements ContainerFactoryPluginInterfac
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
 
+    // Gets font family from $form_state, if available.
+    $font_family = $this->getFormStateFontFamily($form_state)
+      ??
+      ($items[$delta]->get('family')->getValue()
+        ??
+        $this->getSetting('default_style'));
+
+    // Unique Id layer wrapper.
+    $form_id = $form_state->getBuildInfo()['form_id'];
+    $field_name = $items->getName();
+    $field_wrapper_id = "{$form_id}__{$field_name}__{$delta}";
+
+    // Icon autocomplete.
     $element['icon'] = [
       '#type' => 'textfield',
       '#title' => $cardinality == 1 ? $this->fieldDefinition->getLabel() : $this->t('Icon Name'),
@@ -120,16 +136,28 @@ class MaterialIcons extends WidgetBase implements ContainerFactoryPluginInterfac
         )->toString(),
       ]),
       '#autocomplete_route_name' => 'material_icons.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'font_family' => $font_family,
+      ],
+      '#prefix' => "<div id=\"{$field_wrapper_id}\">",
+      '#suffix' => '</div>',
     ];
 
+    // Family dropdown.
     $element['family'] = [
       '#title' => $this->t('Icon Style'),
       '#type' => 'select',
-      '#default_value' => $items[$delta]->get('family')->getValue() ?? $this->getSetting('default_style'),
+      '#default_value' => $font_family,
       '#options' => $this->getStyleOptions(),
       '#disabled' => !$this->getSetting('allow_style'),
+      '#ajax' => [
+        'callback' => [$this, 'handleIconStyleUpdated'],
+        'event' => 'change',
+        'wrapper' => $field_wrapper_id,
+      ],
     ];
 
+    // Field classes, if activated.
     if ($this->getSetting('allow_classes')) {
       $element['classes'] = [
         '#title' => $this->t('Additional Classes'),
@@ -143,18 +171,72 @@ class MaterialIcons extends WidgetBase implements ContainerFactoryPluginInterfac
   }
 
   /**
+   * Updated the value of the Icon Style field.
+   * @param array $form
+   *   The form where the settings form is being included in.
+   * @param FormStateInterface $form_state
+   *   The form state of the (entire) configuration form.
+   * @return array
+   */
+  public function handleIconStyleUpdated(array &$form, FormStateInterface $form_state) {
+    return $this->getFormIconField($form, $form_state);
+  }
+
+  /**
+   * Gets the underlying field name of the triggering element.
+   * @param array $form
+   *   The form where the settings form is being included in.
+   * @param FormStateInterface $form_state
+   *   The form state of the (entire) configuration form.
+   * @return array|Null
+   */
+  private function getFormIconField(array $form, FormStateInterface $form_state):array|Null {
+    $parents = $this->getFormStateStructure($form_state);
+    return (!is_null($parents)) ? $form[$parents[3]][$parents[2]][$parents[1]]['icon'] : NULL;
+  }
+
+  /**
+   * Gets the selected value of the font family.
+   * @param FormStateInterface $form_state
+   *   The form state of the (entire) configuration form.
+   * @return string|Null
+   */
+  private function getFormStateFontFamily(FormStateInterface $form_state):string|Null {
+    $parents = $this->getFormStateStructure($form_state);
+    return (!is_null($parents)) ? $form_state->getValue($parents[3])[$parents[1]]['family'] : NULL;
+  }
+
+  /**
+   * Gets the selected value of the font family.
+   * @param FormStateInterface $form_state
+   *   The form state of the (entire) configuration form.
+   * @return array|Null
+   *   This is the array structure being delivered:
+   *     0 => 'family'
+   *     1 => [delta integer]
+   *     2 => 'widget'
+   *     3 => [original field name]
+   */
+  private function getFormStateStructure(FormStateInterface $form_state):array|Null {
+    $triggering_element = $form_state->getTriggeringElement();
+
+    if (empty($triggering_element)) {
+      return NULL;
+    }
+
+    $parents = array_reverse($triggering_element['#array_parents']);
+    return (array_key_exists(1, $parents) && array_key_exists(3, $parents)) ? $parents : NULL;
+  }
+
+  /**
    * Helper to produce a list of available icon styles.
    *
    * @return array
    *   The available options.
    */
   protected function getStyleOptions() {
-    $settings = $this->configFactory->get('material_icons.settings');
-    $options = [];
-    foreach ($settings->get('families') as $type) {
-      $options[$type] = ucfirst($type);
-    }
-    return $options;
+    $available_families = $this->configFactory->get('material_icons.settings')->get('families');
+    return array_intersect_key($this->getFontFamilies(), array_flip($available_families));
   }
 
 }

@@ -27,11 +27,18 @@
 
             var container = new CKEDITOR.dom.element('i', editor.document);
 
+            const fontClassName = (fontFamily) => {
+              const familySplit = fontFamily.split('__');
+              const fontSet = (familySplit.length > 1) ? familySplit[0] : 'icons';
+              const fontFamilyType = familySplit.pop();
+              return `material-${fontSet}-${fontFamilyType}`;
+            }
+
             if (settings.family === 'baseline') {
               container.addClass('material-icons');
             }
             else {
-              container.addClass('material-icons-' + settings.family);
+              container.addClass(fontClassName(settings.family));
             }
 
             // Add other classes.

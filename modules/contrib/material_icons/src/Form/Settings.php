@@ -2,8 +2,11 @@
 
 namespace Drupal\material_icons\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\material_icons\Traits\MaterialIconsSettings;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Admin settings for Material Icons.
@@ -11,6 +14,8 @@ use Drupal\Core\Form\FormStateInterface;
  * @package Drupal\material_icons\Form
  */
 class Settings extends ConfigFormBase {
+
+  use MaterialIconsSettings;
 
   /**
    * {@inheritdoc}
@@ -39,13 +44,7 @@ class Settings extends ConfigFormBase {
       '#type' => 'checkboxes',
       '#required' => TRUE,
       '#default_value' => $config->get('families') ?? [],
-      '#options' => [
-        'baseline' => $this->t('Baseline'),
-        'outlined' => $this->t('Outlined'),
-        'two-tone' => $this->t('Two-Tone'),
-        'round' => $this->t('Round'),
-        'sharp' => $this->t('Sharp'),
-      ],
+      '#options' => $this->getFontFamilies(),
     ];
 
     return $form;

@@ -8,6 +8,7 @@ use Drupal\Component\Utility\Tags;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\material_icons\Traits\MaterialIconsSettings;
 use GuzzleHttp\Client;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,8 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Autocomplete extends ControllerBase {
 
-  // @todo Check how reliable this is.
-  const META_URL = 'https://fonts.google.com/metadata/icons';
+  use MaterialIconsSettings;
 
   /**
    * The cache backend.
@@ -73,6 +73,9 @@ class Autocomplete extends ControllerBase {
    * Handler for autocomplete request.
    */
   public function handleAutocomplete(Request $request) {
+    $font_family = $request->query->get('font_family');
+    $font_set = $this->getFontSetFromFamily($font_family) ?? $this->getDefaultFontSet();
+
     $results = [];
 
     // Get the typed string from the URL, if it exists.
@@ -81,7 +84,7 @@ class Autocomplete extends ControllerBase {
       $typed_string = mb_strtolower(array_pop($typed_string));
 
       // Load the icon data so we can check for a valid icon.
-      $iconData = $this->getIconMeta();
+      $iconData = $this->getIconMeta($request, $font_set);
 
       // Check each icon to see if it starts with the typed string.
       if (!empty($iconData['icons'])) {
@@ -92,7 +95,7 @@ class Autocomplete extends ControllerBase {
           if (strpos($icon, $typed_string) === 0) {
             $results[$icon] = [
               'value' => $icon,
-              'label' => $this->getRenderableLabel($icon),
+              'label' => $this->getRenderableLabel($icon, $font_set),
               'weight' => 1,
             ];
           }
@@ -100,7 +103,7 @@ class Autocomplete extends ControllerBase {
           elseif (strpos($icon, $typed_string) === 0) {
             $results[$icon] = [
               'value' => $icon,
-              'label' => $this->getRenderableLabel($icon),
+              'label' => $this->getRenderableLabel($icon, $font_set),
               'weight' => 2,
             ];
           }
@@ -116,7 +119,7 @@ class Autocomplete extends ControllerBase {
               if (strpos($tag, $typed_string) === 0) {
                 $results[$icon] = [
                   'value' => $icon,
-                  'label' => $this->getRenderableLabel($icon),
+                  'label' => $this->getRenderableLabel($icon, $font_set),
                   'weight' => 3,
                 ];
               }
@@ -137,20 +140,28 @@ class Autocomplete extends ControllerBase {
   }
 
   /**
-   * Grabs icons from google.
+   * Grabs icons from Google.
    *
    * @todo create a fallback.
-   *
+   * @param $request
+   *    The current request.
+   * @param $font_set
+   *    The active font set being used.
    * @return array
    *   The icon list.
    */
-  protected function getIconMeta() {
+  protected function getIconMeta($request, $font_set) {
+
+    // Gets default font set information.
+    $cache_string = $this->getCacheString($font_set);
+    $meta_url = $this->getFontSetMetaUrl($font_set);
+
     // Check for cached icons.
-    if (!$icons = $this->cache->get('materialicons.icons')) {
+    if (!$icons = $this->cache->get($cache_string)) {
       // Parse the metadata file and use it to generate the icon list.
       $icons = [];
       // @todo fix handling exeptions here.
-      $response = $this->client->get(self::META_URL);
+      $response = $this->client->get($meta_url);
       $status_code = $response->getStatusCode();
       if ($status_code === 200) {
         $body = $response->getBody()->getContents();
@@ -162,7 +173,7 @@ class Autocomplete extends ControllerBase {
         }
 
         if ($icons = JSON::decode($body)) {
-          $this->cache->set('materialicons.icons', $icons, strtotime('+1 week'), [
+          $this->cache->set($cache_string, $icons, strtotime('+1 week'), [
             'materialicons',
             'iconlist',
           ]);
@@ -185,17 +196,20 @@ class Autocomplete extends ControllerBase {
    * @return \Drupal\Component\Render\FormattableMarkup
    *   A renderable markup object.
    */
-  protected function getRenderableLabel($icon) {
+  protected function getRenderableLabel($icon, $font_set) {
     $families = $this->configFactory->get('material_icons.settings')
       ->get('families');
 
+    $font_set_families = array_keys($this->getFontSetFamilies($font_set));
+    $font_families_intersect = array_intersect($families, $font_set_families);
+
     $icons_html = '';
-    foreach ($families as $family) {
-      $family_text = $family === 'baseline' ? '' : '-' . $family;
-      $icons_html .= '<i class="material-icons' . $family_text . '" title="' . $family . '">:icon</i>';
+    foreach ($font_families_intersect as $family) {
+      $class_name = $this->getFontFamilyClass($family);
+      $icons_html .= '<i class="' . $class_name . '" title="' . $family . '">:icon</i>';
     }
 
-    return new FormattableMarkup('<div class="mi-result">' . $icons_html . '<span>:icon</span></div>', [
+      return new FormattableMarkup('<div class="mi-result">' . $icons_html . '<span>:icon</span></div>', [
       ':icon' => $icon,
     ]);
   }

@@ -16,7 +16,7 @@ function material_icons_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.material_icons':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Material Icons suuport for fields and CKEditor') . '</p>';
+      $output .= '<p>' . t('Material Icons support for fields and CKEditor') . '</p>';
       return $output;
 
     default:
