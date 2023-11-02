@@ -51,12 +51,12 @@
 }
 
 .alert-secondary {
-  --bs-alert-color: #1c2056;
-  --bs-alert-bg: #d5d7e9;
-  --bs-alert-border-color: #c0c2de;
+  --bs-alert-color: #13795b;
+  --bs-alert-bg: #d2f4ea;
+  --bs-alert-border-color: #bcefe0;
 }
 .alert-secondary .alert-link {
-  color: #161a45;
+  color: #0f6149;
 }
 
 .alert-success {
