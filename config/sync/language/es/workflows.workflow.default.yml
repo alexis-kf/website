@@ -1,0 +1,18 @@
+label: 'Por defecto'
+type_settings:
+  states:
+    archived:
+      label: Archivado
+    draft:
+      label: Borrador
+    published:
+      label: Publicado
+  transitions:
+    create_new_draft:
+      label: 'Crear nuevo borrador'
+    publish:
+      label: Publicar
+    published_archive:
+      label: Archivo
+    review_published:
+      label: Publicar

@@ -1,0 +1,22 @@
+description: 'Contenido reciente.'
+display:
+  default:
+    display_title: Máster
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Restablecer
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      fields:
+        field_summary:
+          separator: ', '
+        field_subhead:
+          separator: ', '
+        field_thumbnail:
+          separator: ', '
+      use_more_text: Más
+  block_1:
+    display_title: Bloque

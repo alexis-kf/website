@@ -1,0 +1,8 @@
+third_party_settings:
+  field_group:
+    group_basic:
+      label: Básico
+    group_summary:
+      label: Resumen
+    group_content:
+      label: Contenido
