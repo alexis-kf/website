@@ -1,0 +1,25 @@
+uuid: 61e33233-7871-46da-bf65-733e9f3ab204
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.social-media
+  module:
+    - system
+  theme:
+    - kodffe_theme
+id: kodffe_theme_socialmedia
+theme: kodffe_theme
+region: content
+weight: 0
+provider: null
+plugin: 'system_menu_block:social-media'
+settings:
+  id: 'system_menu_block:social-media'
+  label: 'Social Media'
+  label_display: visible
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }
