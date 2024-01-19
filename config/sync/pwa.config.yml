@@ -1,21 +1,25 @@
 _core:
   default_config_hash: oMro5cfiGHdynGc5hzRBCm08SOzSWpGXf7X5h13R16Q
-site_name: 'Kodffe Software'
+name: 'Kodffe Software'
 short_name: Kodffe
 description: 'Stay in touch!'
 start_url: /
 scope: /
 lang: en
+dir: auto
+orientation: portrait
+categories: {  }
 theme_color: '#0069f6'
 background_color: '#000000'
 display: fullscreen
-default_image: '0'
-urls_to_cache: ''
-urls_to_exclude: "admin/.*\r\nuser/.*"
-offline_page: /offline
-cache_version: 1.0.1
 cross_origin: false
-skip_waiting: false
-image: /sites/default/files/pwa/kodffe_manifest.png
-image_small: /sites/default/files/pwa/kodffe_manifest.pngcopy.png
-image_very_small: /sites/default/files/pwa/kodffe_manifest.pngcopy2.png
+image_fid: 74
+image_small_fid: 86
+image_very_small_fid: 87
+manifest_path_mode: all_except_listed
+manifest_paths: |-
+  /admin
+  /admin/*
+  /batch
+  /node/add*
+  /node/*/*
