@@ -34,11 +34,13 @@
 
       <div class="justify-content-end d-lg-none mt-3 mt-lg-0">
         {{ menus.cta_btn() }}
+        {{ drupal_block('language_block:language_interface', wrapper=false) }}
       </div>
     </div>
 
-    <div class="justify-content-end d-none d-lg-block">
+    <div class="justify-content-end d-none d-lg-flex align-items-lg-center">
       {{ menus.cta_btn() }}
+      {{ drupal_block('language_block:language_interface', wrapper=false) }}
     </div>
   </div>
 </nav>
