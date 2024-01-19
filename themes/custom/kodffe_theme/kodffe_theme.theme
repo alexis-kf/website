@@ -236,3 +236,14 @@ function kodffe_theme_preprocess_menu(&$variables) {
   $variables['site_name'] = $config->get('name');
   $variables['site_logo'] = theme_get_setting('logo.url');
 }
+
+/**
+ * Use language code for the language switcher
+ */
+function kodffe_theme_preprocess_links__language_block(&$variables) {
+  foreach ($variables['links'] as $i => $link) {
+    // @var \Drupal\language\Entity\ConfigurableLanguage $link_language
+    $link_language = $link['link']['#options']['language'];
+    $variables['links'][$i]['link']['#title'] = strtoupper($linkLanguage->get('id'));
+  }
+}

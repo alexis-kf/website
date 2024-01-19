@@ -4,6 +4,22 @@
 @import 'bootstrap/scss/nav';
 @import 'bootstrap/scss/navbar';
 
+.navbar {
+
+  ul.language-switcher-language-url {
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .navbar-collapse .language-switcher-language-url {
+    padding-left: 0;
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+}
+
 .navbar-brand {
 
   .logo {

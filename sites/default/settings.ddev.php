@@ -2,7 +2,7 @@
 
 /**
  * @file
- * #ddev-generated: Automatically generated Drupal settings file.
+ * Automatically generated Drupal settings file.
  * ddev manages this file and may delete or overwrite the file unless this
  * comment is removed.  It is recommended that you leave this file alone.
  */
@@ -11,21 +11,14 @@ $host = "db";
 $port = 3306;
 $driver = "mysql";
 
-// If DDEV_PHP_VERSION is not set but IS_DDEV_PROJECT *is*, it means we're running (drush) on the host,
-// so use the host-side bind port on docker IP
-if (empty(getenv('DDEV_PHP_VERSION') && getenv('IS_DDEV_PROJECT') == 'true')) {
-  $host = "127.0.0.1";
-  $port = 58296;
-}
-
 $databases['default']['default']['database'] = "db";
 $databases['default']['default']['username'] = "db";
 $databases['default']['default']['password'] = "db";
 $databases['default']['default']['host'] = $host;
-$databases['default']['default']['driver'] = $driver;
 $databases['default']['default']['port'] = $port;
+$databases['default']['default']['driver'] = $driver;
 
-$settings['hash_salt'] = 'keAHsaVzceLazSdtmUQrWLEGSEkbGmCqPctpfmTdaAYOUrtnfHtHsyDzKblUxsJZ';
+$settings['hash_salt'] = '93b6f1a94b85ada780ef7e3600f8324283995e133cfc6dd5a0f432f4acb49e25';
 
 // This will prevent Drupal from setting read-only permissions on sites/default.
 $settings['skip_permissions_hardening'] = TRUE;
@@ -40,10 +33,10 @@ $settings['class_loader_auto_detect'] = FALSE;
 
 // Set $settings['config_sync_directory'] if not set in settings.php.
 if (empty($settings['config_sync_directory'])) {
-  $settings['config_sync_directory'] = 'sites/default/files/sync';
+  $settings['config_sync_directory'] = 'config/sync';
 }
 
-// Override drupal/symfony_mailer default config to use Mailhog
+// Override drupal/symfony_mailer default config to use Mailpit
 $config['symfony_mailer.mailer_transport.sendmail']['plugin'] = 'smtp';
 $config['symfony_mailer.mailer_transport.sendmail']['configuration']['user']='';
 $config['symfony_mailer.mailer_transport.sendmail']['configuration']['pass']='';

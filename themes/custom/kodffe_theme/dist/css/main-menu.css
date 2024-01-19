@@ -924,6 +924,18 @@
   --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+.navbar ul.language-switcher-language-url {
+  list-style: none;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.navbar .navbar-collapse .language-switcher-language-url {
+  padding-left: 0;
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
 .navbar-brand .logo {
   display: block;
   width: 166px;
