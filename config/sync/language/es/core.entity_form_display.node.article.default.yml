@@ -1,0 +1,14 @@
+third_party_settings:
+  field_group:
+    group_taxonomy:
+      label: Taxonomía
+    group_basic:
+      label: Básico
+    group_content:
+      label: Contenido
+    group_summary:
+      label: Resumen
+    group_taxonomy_tabs:
+      label: Taxonomía
+    group_tags:
+      label: Etiquetas
