@@ -244,6 +244,6 @@ function kodffe_theme_preprocess_links__language_block(&$variables) {
   foreach ($variables['links'] as $i => $link) {
     // @var \Drupal\language\Entity\ConfigurableLanguage $link_language
     $link_language = $link['link']['#options']['language'];
-    $variables['links'][$i]['link']['#title'] = strtoupper($linkLanguage->get('id'));
+    $variables['links'][$i]['link']['#title'] = strtoupper($link_language->get('id'));
   }
 }
