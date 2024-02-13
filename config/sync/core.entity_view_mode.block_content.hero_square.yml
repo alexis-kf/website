@@ -8,5 +8,6 @@ _core:
   default_config_hash: YKe1ty2MCCRI3rnKK1dZg8NillZWDC8zjS_JwetXbEc
 id: block_content.hero_square
 label: 'Hero Square'
+description: ''
 targetEntityType: block_content
 cache: true

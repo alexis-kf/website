@@ -2,7 +2,10 @@ uuid: 209289af-9422-4d60-b63e-28bf62c63441
 langcode: en
 status: true
 dependencies:
+  config:
+    - filter.format.webform_default
   module:
+    - filter
     - media
     - pwa
     - system
@@ -15,4 +18,5 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access pwa'
+  - 'use text format webform_default'
   - 'view media'
