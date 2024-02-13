@@ -7,7 +7,7 @@ dependencies:
   - drupal:layout_builder
 configure: layout_builder_browser.admin_blocklisting
 
-# Information added by Drupal.org packaging script on 2023-03-23
-version: '8.x-1.5'
+# Information added by Drupal.org packaging script on 2023-12-06
+version: '8.x-1.6'
 project: 'layout_builder_browser'
-datestamp: 1679607225
+datestamp: 1701860590

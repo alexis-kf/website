@@ -20,7 +20,7 @@ use Drupal\layout_builder\SectionStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class BrowserController.
+ * Controller class responsible for managing browser functionality.
  */
 class BrowserController extends ControllerBase {
 
@@ -172,7 +172,7 @@ class BrowserController extends ControllerBase {
         // Only add the information if the category has links.
         $block_categories[$blockcat->id()]['#type'] = 'details';
         $block_categories[$blockcat->id()]['#attributes']['class'][] = 'js-layout-builder-category';
-        $block_categories[$blockcat->id()]['#open'] = TRUE;
+        $block_categories[$blockcat->id()]['#open'] = $blockcat->getOpened();
         $block_categories[$blockcat->id()]['#title'] = Html::escape($blockcat->label());
       }
       else {
@@ -210,7 +210,7 @@ class BrowserController extends ControllerBase {
           $block_categories[$bundle_label]['links'] = $block_links;
           $block_categories[$bundle_label]['#type'] = 'details';
           $block_categories[$bundle_label]['#attributes']['class'][] = 'js-layout-builder-category';
-          $block_categories[$bundle_label]['#open'] = TRUE;
+          $block_categories[$bundle_label]['#open'] = $blockcat->getOpened();
           $block_categories[$bundle_label]['#title'] = $this->t('Reusable @block_type_label', ['@block_type_label' => $bundle_label]);
         }
       }
@@ -228,7 +228,7 @@ class BrowserController extends ControllerBase {
     $contexts = [
       'section_storage' => $section_storage,
       'delta' => $delta,
-      'region' => $region
+      'region' => $region,
     ];
     $this->moduleHandler->alter('layout_builder_browser', $build, $contexts);
 

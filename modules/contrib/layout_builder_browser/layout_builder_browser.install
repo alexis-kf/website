@@ -1,10 +1,16 @@
 <?php
 
-use Drupal\Core\Entity\EntityTypeInterface;
+/**
+ * @file
+ * Install, update, and uninstall functions for the layout builder browser.
+ */
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
 /**
+ * Implements hook_update().
+ *
  * Migrate layout builder blocks to be config entities on their own.
  */
 function layout_builder_browser_update_8001() {
@@ -38,7 +44,7 @@ function layout_builder_browser_update_8001() {
               'id' => $lBBlockEntityId,
               'block_id' => $config_block['block_id'],
               'category' => $category_id,
-              'label' => (string)$blockdefinition['admin_label'],
+              'label' => (string) $blockdefinition['admin_label'],
               'weight' => $config_block['weight'] ?: 0,
               'image_path' => $config_block['image_path'] ?: '',
               'image_alt' => $config_block['image_alt'] ?: '',
@@ -55,6 +61,8 @@ function layout_builder_browser_update_8001() {
 }
 
 /**
+ * Implements hook_update().
+ *
  * #3184784: Ensure block config entity is installed on existing sites.
  */
 function layout_builder_browser_update_8002() {

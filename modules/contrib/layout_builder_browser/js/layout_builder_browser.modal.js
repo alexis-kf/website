@@ -1,4 +1,4 @@
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   var debounce = Drupal.debounce,
       announce = Drupal.announce,
       formatPlural = Drupal.formatPlural;
@@ -46,10 +46,8 @@
             }
           };
 
-          $('input.js-layout-builder-filter', context).once('block-filter-text').on('keyup', debounce(filterBlockList, 200));
+          $(once('input.js-layout-builder-filter', context)).on('keyup', debounce(filterBlockList, 200));
         }
     }
   };
-
-
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

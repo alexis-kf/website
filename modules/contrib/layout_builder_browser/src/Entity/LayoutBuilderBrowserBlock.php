@@ -18,6 +18,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *       "edit" = "Drupal\layout_builder_browser\Form\BlockForm",
  *       "delete" =
  *   "Drupal\layout_builder_browser\Form\BlockDeleteConfirmForm",
+ *       "enable" = "Drupal\layout_builder_browser\Form\BlockEnableForm",
+ *       "disable" = "Drupal\layout_builder_browser\Form\BlockDisableForm",
  *     }
  *   },
  *   config_prefix = "layout_builder_browser_block",
@@ -26,6 +28,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "id" = "id",
  *     "block_id" = "block_id",
  *     "label" = "label",
+ *     "status" = "status",
  *     "weight" = "weight",
  *   },
  *   config_export = {
@@ -34,6 +37,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "category",
  *     "label",
  *     "weight",
+ *     "status",
  *     "image_path",
  *     "image_alt",
  *   },
@@ -42,6 +46,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   "/admin/config/content/layout-builder-browser/blocks/{layout_builder_browser_block}",
  *     "delete-form" =
  *   "/admin/config/content/layout-builder-browser/blocks/{layout_builder_browser_block}/delete",
+ *     "enable" = "/admin/config/content/layout-builder-browser/blocks/{layout_builder_browser_block}/enable",
+ *     "disable" = "/admin/config/content/layout-builder-browser/blocks/{layout_builder_browser_block}/disable",
  *   }
  * )
  */
@@ -88,6 +94,5 @@ class LayoutBuilderBrowserBlock extends ConfigEntityBase {
    * @var string
    */
   public $image_alt;
-
 
 }

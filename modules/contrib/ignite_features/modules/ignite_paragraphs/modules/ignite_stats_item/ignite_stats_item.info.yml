@@ -5,5 +5,4 @@ package: Ignite Paragraphs
 core_version_requirement: '^8 || ^9 || ^10'
 dependencies:
   - ignite_paragraphs
-  - material_icons
   - svg_image_responsive

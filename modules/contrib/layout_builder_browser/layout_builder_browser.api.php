@@ -10,13 +10,12 @@
  * @{
  */
 
-
 /**
  * Alter the browser render array.
  *
  * @param array $build
  *   The render array to alter.
- * @param array context
+ * @param array $context
  *   Contextual information like the section storage, delta and region.
  */
 function hook_layout_builder_browser_alter(array &$build, array $context) {

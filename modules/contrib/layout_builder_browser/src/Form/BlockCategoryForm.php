@@ -58,6 +58,13 @@ class BlockCategoryForm extends EntityForm {
       '#disabled' => !$layout_builder_browser->isNew(),
     ];
 
+    $form['opened'] = [
+      '#title' => $this->t('Opened'),
+      '#description' => $this->t('Indicates whether the category fieldset should be open by default.'),
+      '#type' => 'checkbox',
+      '#default_value' => $layout_builder_browser->getOpened(),
+    ];
+
     $form['status'] = [
       '#title' => $this->t('Enabled'),
       '#type' => 'checkbox',

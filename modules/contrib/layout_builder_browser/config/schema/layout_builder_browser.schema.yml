@@ -11,3 +11,9 @@ layout_builder_browser.settings:
     use_modal:
       type: boolean
       label: 'Use modal'
+    auto_added_reusable_block_content_bundles:
+      type: sequence
+      label: 'Reusable block content bundles'
+      sequence:
+        type: string
+        label: 'Block content bundle'

@@ -8,7 +8,7 @@ configure: pwa.config_manifest
 dependencies:
   - drupal:file
 
-# Information added by Drupal.org packaging script on 2023-09-25
-version: '2.1.0-beta2'
+# Information added by Drupal.org packaging script on 2024-02-08
+version: '2.1.0-beta5'
 project: 'pwa'
-datestamp: 1695646236
+datestamp: 1707398204

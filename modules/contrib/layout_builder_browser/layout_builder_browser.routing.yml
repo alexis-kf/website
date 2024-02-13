@@ -34,6 +34,20 @@ entity.layout_builder_browser_block.edit_form:
   requirements:
     _permission: 'administer site configuration'
 
+entity.layout_builder_browser_block.enable_form:
+  path: '/admin/config/content/layout-builder-browser/blocks/{layout_builder_browser_block}/enable'
+  defaults:
+    _entity_form: 'layout_builder_browser_block.enable'
+  requirements:
+    _permission: 'administer site configuration'
+
+entity.layout_builder_browser_block.disable_form:
+  path: '/admin/config/content/layout-builder-browser/blocks/{layout_builder_browser_block}/disable'
+  defaults:
+    _entity_form: 'layout_builder_browser_block.disable'
+  requirements:
+    _permission: 'administer site configuration'
+
 entity.layout_builder_browser_block.delete_form:
   path: '/admin/config/content/layout-builder-browser/blocks/{layout_builder_browser_block}/delete'
   defaults:
@@ -70,6 +84,20 @@ entity.layout_builder_browser_blockcat.collection:
   defaults:
     _entity_list: 'layout_builder_browser_blockcat'
     _title: 'Block categories'
+  requirements:
+    _permission: 'administer site configuration'
+
+entity.layout_builder_browser_blockcat.enable:
+  path: '/admin/config/content/layout-builder-browser/categories/{layout_builder_browser_blockcat}/enable'
+  defaults:
+    _entity_form: 'layout_builder_browser_blockcat.enable'
+  requirements:
+    _permission: 'administer site configuration'
+
+entity.layout_builder_browser_blockcat.disable:
+  path: '/admin/config/content/layout-builder-browser/categories/{layout_builder_browser_blockcat}/disable'
+  defaults:
+    _entity_form: 'layout_builder_browser_blockcat.disable'
   requirements:
     _permission: 'administer site configuration'
 

@@ -212,7 +212,7 @@ class ManifestConfigurationForm extends ConfigFormBase {
     $form['lang'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Language'),
-      '#description' => $this->t('The primary language of this web application (e.g. "en", "EN-gb", "DE-de").<br>See the w3c definition <a href="@link" target="_blank">here</a>.', ['@link' => 'https://w3c.github.io/manifest/#lang-member']),
+      '#description' => $this->t('The primary language of this web application (e.g. "en", "en-GB", "de-DE").<br>See the w3c definition <a href="@link" target="_blank">here</a>.', ['@link' => 'https://w3c.github.io/manifest/#lang-member']),
       '#default_value' => $config->get('lang'),
       '#required' => FALSE,
     ];
@@ -305,20 +305,21 @@ class ManifestConfigurationForm extends ConfigFormBase {
       '#title' => $this->t('Icon'),
     ];
 
-    $imageConfig = !empty($config->get('image_fid')) ? [$config->get('image_fid')] : [];
+    $imageFid = !empty($config->get('image_fid')) ? [$config->get('image_fid')] : [];
     $form['icons']['image_fid'] = [
+      '#title' => $this->t('Upload app icon'),
       '#type' => 'managed_file',
       '#description' => $this->t('This image is your application icon (png files only, format: 512x512, transparent background, padding 20-30%). The padding is needed, so the icons are not getting cropped on Android phone Home-Screens (To verify an Icon, you can visit <a href="@link">Maskable App</a>).<br><strong>Note</strong>, that this uses the icons in "pwa/assets" as a fallback, if no icon is uploaded.', ['@link' => 'https://maskable.app/']),
       '#upload_validators' => [
         'file_validate_extensions' => ['png'],
         'file_validate_image_resolution' => ['512x512', '512x512'],
       ],
-      '#default_value' => $imageConfig,
+      '#default_value' => $imageFid,
       '#upload_location' => 'public://pwa/',
     ];
 
-    if (!empty($imageConfig)) {
-      $imageId = reset($imageConfig);
+    if (!empty($imageFid)) {
+      $imageId = reset($imageFid);
       $imageFile = $this->fileStorage->load($imageId);
       if ($imageFile !== NULL) {
         $imagePreviewPath = $imageFile->createFileUrl();
@@ -363,7 +364,8 @@ class ManifestConfigurationForm extends ConfigFormBase {
       ->set('manifest_paths', $form_state->getValue('manifest_paths'));
 
     $imageFormValue = $form_state->getValue('image_fid');
-    $imageId = reset($imageFormValue);
+    // $ImageId is always expected as int:
+    $imageId = (int) reset($imageFormValue);
 
     // If a new image is uploaded, we need to delete the old ones:
     if ($config->get('image_fid') !== $imageId) {
@@ -380,10 +382,10 @@ class ManifestConfigurationForm extends ConfigFormBase {
       $imageFile->setPermanent();
       $imageFile->save();
 
-      // @todo Drupal core currently doesn't support linking images to config
-      // entries nor routes, so we can not add a file usage here
-      // (see https://www.drupal.org/project/pwa/issues/3389076):
-      // $fileUsage->add($imageId, 'pwa', 'TODO', 'image_fid');
+      // Note, that this will throw an error when checking for file usage on
+      // the given file. But this is a core issue. See
+      // https://www.drupal.org/project/drupal/issues/3187396
+      $this->fileUsage->add($imageFile, 'pwa', 'pwa.config', 'icons');
       $publicScheme = $this->streamWrapperManager->getViaScheme('public');
       $pwaDirectory = $publicScheme->realpath() . '/pwa/';
       $filePath = $pwaDirectory . $imageFile->getFilename();
@@ -415,10 +417,10 @@ class ManifestConfigurationForm extends ConfigFormBase {
         $imageCopy->setPermanent();
         $imageCopy->save();
 
-        // @todo Drupal core currently doesn't support linking images to config
-        // entries nor routes, so we can not add a file usage here
-        // (see https://www.drupal.org/project/pwa/issues/3389076):
-        // $fileUsage->add($imageCopy->id(), 'pwa', 'TODO', 'image_small_fid');
+        // Note, that this will throw an error when checking for file usage on
+        // the given file. But this is a core issue. See
+        // https://www.drupal.org/project/drupal/issues/3187396
+        $this->fileUsage->add($imageCopy, 'pwa', 'pwa.config', 'icons');
         $config->set('image_small_fid', $imageCopy->id());
       }
 
@@ -447,10 +449,10 @@ class ManifestConfigurationForm extends ConfigFormBase {
         $imageCopy->setPermanent();
         $imageCopy->save();
 
-        // @todo Drupal core currently doesn't support linking images to config
-        // entries nor routes, so we can not add a file usage here
-        // (see https://www.drupal.org/project/pwa/issues/3389076):
-        // @codingStandardsIgnoreLine $fileUsage->add($imageCopy->id(), 'pwa', 'TODO', 'image_very_small_fid');
+        // Note, that this will throw an error when checking for file usage on
+        // the given file. But this is a core issue. See
+        // https://www.drupal.org/project/drupal/issues/3187396
+        $this->fileUsage->add($imageCopy, 'pwa', 'pwa.config', 'icons');
         $config->set('image_very_small_fid', $imageCopy->id());
       }
     }

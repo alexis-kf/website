@@ -190,7 +190,7 @@ class BlockListingForm extends FormBase {
       'title' => $this->t('ID: @name', ['@name' => $block['id']]),
       'class' => [
         'block-wrapper',
-        'draggable'
+        'draggable',
       ],
     ];
 
@@ -211,19 +211,46 @@ class BlockListingForm extends FormBase {
     ];
 
     $row['operations'] = [
-      '#type' => 'link',
-      '#title' => $this->t('Edit'),
-      '#url' => Url::fromRoute('entity.layout_builder_browser_block.edit_form', ['layout_builder_browser_block' => $block['id']]),
-      '#attributes' => [
-        'class' => ['use-ajax', 'button', 'button--small'],
-        'data-dialog-type' => 'modal',
-        'data-dialog-options' => Json::encode([
-          'width' => 700,
-        ]),
+      '#type' => 'operations',
+      '#links' => [
+        'edit' => [
+          'title' => $this->t('Edit'),
+          'url' => Url::fromRoute('entity.layout_builder_browser_block.edit_form', ['layout_builder_browser_block' => $block['id']]),
+          'weight' => 10,
+          'attributes' => [
+            'class' => ['use-ajax', 'button', 'button--small'],
+            'data-dialog-type' => 'modal',
+            'data-dialog-options' => Json::encode([
+              'width' => 700,
+            ]),
+          ],
+        ],
+        'delete' => [
+          'title' => $this->t('Delete'),
+          'url' => Url::fromRoute('entity.layout_builder_browser_block.delete_form', ['layout_builder_browser_block' => $block['id']]),
+          'weight' => 100,
+        ],
       ],
     ];
-    return $row;
 
+    if ($block['status']) {
+      $row['operations']['#links']['disable'] = [
+        'title' => $this->t('Disable'),
+        'url' => Url::fromRoute('entity.layout_builder_browser_block.disable_form', ['layout_builder_browser_block' => $block['id']]),
+        'weight' => 40,
+      ];
+    }
+    else {
+      $row['operations']['#links']['enable'] = [
+        'title' => $this->t('Enable'),
+        'url' => Url::fromRoute('entity.layout_builder_browser_block.enable_form', ['layout_builder_browser_block' => $block['id']]),
+        'weight' => -10,
+      ];
+    }
+
+    uasort($row['operations']['#links'], '\Drupal\Component\Utility\SortArray::sortByWeightElement');
+
+    return $row;
   }
 
   /**
@@ -235,7 +262,12 @@ class BlockListingForm extends FormBase {
       'title' => [
         '#theme_wrappers' => [
           'container' => [
-            '#attributes' => ['class' => ['block-category-title', 'region-title__action']],
+            '#attributes' => [
+              'class' => [
+                'block-category-title',
+                'region-title__action',
+              ],
+            ],
           ],
         ],
         '#type' => 'link',
@@ -305,7 +337,7 @@ class BlockListingForm extends FormBase {
       $block_categories_group[$key]['category'] = $block_category;
       $block_categories_group[$key]['blocks'] = [];
 
-      $blocks = \Drupal::entityTypeManager()
+      $blocks = $this->entityTypeManager
         ->getStorage('layout_builder_browser_block')
         ->loadByProperties(['category' => $key]);
       uasort($blocks, [
@@ -315,7 +347,7 @@ class BlockListingForm extends FormBase {
 
       foreach ($blocks as $block) {
         try {
-          $block_definition = \Drupal::service('plugin.manager.block')->getDefinition($block->block_id);
+          $block_definition = $this->blockManager->getDefinition($block->block_id);
 
           $item = [];
           $item['id'] = $block->id;

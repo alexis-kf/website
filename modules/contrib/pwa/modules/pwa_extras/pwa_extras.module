@@ -5,6 +5,8 @@
  * Contains pwa_extras.module.
  */
 
+use Drupal\Component\Utility\Html;
+
 /**
  * Implements hook_page_attachments().
  */
@@ -71,37 +73,55 @@ function pwa_extras_tag_list($site_name, $mask_color, $status_color) {
  */
 function pwa_extras_apple_touch_icons() {
   $config = \Drupal::config('pwa.config');
-
-  return [
+  $touchIcons = [
     'touch-icon-default' => '<link rel="apple-touch-icon" sizes="192x192" href="' . $config->get('image_small_fid') . '">',
   ];
+
+  foreach ($touchIcons as &$touchIcon) {
+    $touchIcon = Html::escape($touchIcon);
+  }
+
+  return $touchIcons;
 }
 
 /**
  * Fetches apple specific meta data.
  */
 function pwa_extras_apple_meta_tags($site_name = '', $status_color = '') {
-  return [
+
+  $metaTags = [
     'meta-capable' => '<meta name="apple-mobile-web-app-capable" content="yes">',
     'meta-status-bar-style' => '<meta name="apple-mobile-web-app-status-bar-style" content="' . $status_color . '">',
     'meta-app-title' => '<meta name="apple-mobile-web-app-title" content="' . $site_name . '">',
   ];
+
+  foreach ($metaTags as &$metaTag) {
+    $metaTag = Html::escape($metaTag);
+  }
+
+  return $metaTags;
 }
 
 /**
  * Fetches apple specific home screen icon data.
  */
 function pwa_extras_apple_home_screen_icons() {
-  return [
-    'iphone5-splash' => '<link href="' . base_path() . 'iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
-    'iphone6-splash' => '<link href="' . base_path() . 'iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
-    'iphoneplus-splash' => '<link href="' . base_path() . 'iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />',
-    'iphonex-splash' => '<link href="' . base_path() . 'iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />',
-    'iphonexr-splash' => '<link href="' . base_path() . 'iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
-    'iphonexsmax-splash' => '<link href="' . base_path() . 'iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />',
-    'ipad-splash' => '<link href="' . base_path() . 'ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
-    'ipadpro1-splash' => '<link href="' . base_path() . 'ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
-    'ipadpro2-splash' => '<link href="' . base_path() . 'ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
-    'ipadpro3-splash' => '<link href="' . base_path() . 'ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
+  $homeScreenItems = [
+    'iphone5-splash' => '<link href="' . base_path() . 'iphone5_splash.png" media="(width: 320px) and (height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
+    'iphone6-splash' => '<link href="' . base_path() . 'iphone6_splash.png" media="(width: 375px) and (height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
+    'iphoneplus-splash' => '<link href="' . base_path() . 'iphoneplus_splash.png" media="(width: 621px) and (height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />',
+    'iphonex-splash' => '<link href="' . base_path() . 'iphonex_splash.png" media="(width: 375px) and (height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />',
+    'iphonexr-splash' => '<link href="' . base_path() . 'iphonexr_splash.png" media="(width: 414px) and (height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
+    'iphonexsmax-splash' => '<link href="' . base_path() . 'iphonexsmax_splash.png" media="(width: 414px) and (height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />',
+    'ipad-splash' => '<link href="' . base_path() . 'ipad_splash.png" media="(width: 768px) and (height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
+    'ipadpro1-splash' => '<link href="' . base_path() . 'ipadpro1_splash.png" media="(width: 834px) and (height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
+    'ipadpro2-splash' => '<link href="' . base_path() . 'ipadpro2_splash.png" media="(width: 1024px) and (height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
+    'ipadpro3-splash' => '<link href="' . base_path() . 'ipadpro3_splash.png" media="(width: 834px) and (height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />',
   ];
+
+  foreach ($homeScreenItems as &$homeScreenItem) {
+    $homeScreenItem = Html::escape($homeScreenItem);
+  }
+
+  return $homeScreenItems;
 }

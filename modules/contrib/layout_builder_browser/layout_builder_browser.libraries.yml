@@ -9,6 +9,7 @@ modal:
     js/layout_builder_browser.modal.js: { }
   dependencies:
     - layout_builder/drupal.layout_builder
+    - core/once
 admin:
   version: VERSION
   css:

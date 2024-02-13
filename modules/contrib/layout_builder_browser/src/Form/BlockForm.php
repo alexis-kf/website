@@ -2,26 +2,54 @@
 
 namespace Drupal\layout_builder_browser\Form;
 
+use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Form handler for the block add and edit forms.
  */
 class BlockForm extends EntityForm {
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * The block manager.
+   *
+   * @var \Drupal\Core\Block\BlockManagerInterface
+   */
+  protected $blockManager;
+
+  /**
+   * The request object.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
 
   /**
    * Constructs an layout_builder_browserForm object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entityTypeManager.
+   *   The entity type manager service.
+   * @param \Drupal\Core\Block\BlockManagerInterface $blockManager
+   *   The block manager service.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   The request stack object.
    */
-  public function __construct(EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(EntityTypeManagerInterface $entityTypeManager, BlockManagerInterface $blockManager, RequestStack $requestStack) {
     $this->entityTypeManager = $entityTypeManager;
+    $this->blockManager = $blockManager;
+    $this->requestStack = $requestStack;
   }
 
   /**
@@ -29,7 +57,9 @@ class BlockForm extends EntityForm {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('plugin.manager.block'),
+      $container->get('request_stack')
     );
   }
 
@@ -39,7 +69,7 @@ class BlockForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    $definitions = \Drupal::service('plugin.manager.block')
+    $definitions = $this->blockManager
       ->getFilteredDefinitions('layout_builder', NULL, ['list' => 'inline_blocks']);
 
     $blocks = [];
@@ -66,7 +96,7 @@ class BlockForm extends EntityForm {
     $browser_block = $this->entity;
 
     $block_id = $browser_block->block_id;
-    $provider = isset($provider_options['Inline blocks']) ? 'Inline blocks' : '';
+    $provider = isset($provider_options['Inline blocks']) ? 'Inline blocks' : array_key_first($provider_options);
     if ($block_id) {
       $provider = $block_provider_map[$block_id];
     }
@@ -74,7 +104,8 @@ class BlockForm extends EntityForm {
       $provider = $form_state->getValue('provider');
     }
 
-    // When no custom block types are defined the provider is empty, pick the first option as fallback.
+    // When no custom block types are defined the provider is empty, pick the
+    // first option as fallback.
     if (empty($block_provider_map)) {
       reset($block_provider_map);
       $provider = key($block_provider_map);
@@ -89,7 +120,7 @@ class BlockForm extends EntityForm {
       '#ajax' => [
         'callback' => '::providerChanged',
         'event' => 'change',
-        'wrapper' => 'block-id-wrapper'
+        'wrapper' => 'block-id-wrapper',
       ],
     ];
 
@@ -120,7 +151,6 @@ class BlockForm extends EntityForm {
       '#disabled' => !$browser_block->isNew(),
     ];
 
-
     $form['image_path'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Image path'),
@@ -135,8 +165,10 @@ class BlockForm extends EntityForm {
       '#default_value' => $browser_block->image_alt,
     ];
 
-
-    $blockcat_prefill = \Drupal::request()->query->get('blockcat');
+    $blockcat_prefill = $this->requestStack
+      ->getCurrentRequest()
+      ->query
+      ->get('blockcat');
     $block_categories = $this->entityTypeManager
       ->getStorage('layout_builder_browser_blockcat')
       ->loadMultiple();
@@ -206,6 +238,9 @@ class BlockForm extends EntityForm {
     return (bool) $entity;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function providerChanged(array &$form, FormStateInterface $form_state) {
     return $form['block_id'];
   }
