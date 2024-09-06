@@ -6,5 +6,5 @@ _core:
   default_config_hash: GUgux5XrNiI2XmiKkLsp2gMLpUAFP6ThaooTBzHIfQk
 id: gallery
 label: Gallery
-revision: 0
+revision: false
 description: 'Media gallery that can include images.'

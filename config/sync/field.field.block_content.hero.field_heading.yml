@@ -5,13 +5,9 @@ dependencies:
   config:
     - block_content.type.hero
     - field.storage.block_content.field_heading
+    - filter.format.restricted_html
   module:
-    - allowed_formats
     - text
-third_party_settings:
-  allowed_formats:
-    allowed_formats:
-      - restricted_html
 _core:
   default_config_hash: f_c9ozxYPcv0R4w91qK_UFJZPy4XLndgLoQCb9dFVY8
 id: block_content.hero.field_heading
@@ -25,5 +21,6 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  allowed_formats: {  }
+  allowed_formats:
+    - restricted_html
 field_type: text

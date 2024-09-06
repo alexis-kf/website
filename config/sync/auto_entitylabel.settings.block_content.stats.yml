@@ -9,3 +9,4 @@ chunk: 50
 dependencies:
   config:
     - block_content.type.stats
+new_content_behavior: 1

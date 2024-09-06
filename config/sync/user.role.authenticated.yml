@@ -8,6 +8,7 @@ dependencies:
     - filter
     - media
     - pwa
+    - statistics
     - system
 _core:
   default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
@@ -20,3 +21,4 @@ permissions:
   - 'access pwa'
   - 'use text format webform_default'
   - 'view media'
+  - 'view post access counter'

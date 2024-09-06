@@ -6,5 +6,5 @@ _core:
   default_config_hash: pOpMkRU4E2YBqopiwP6WoDmhmnFeAWZt3uyN90sdNIM
 id: card_list
 label: 'Card List'
-revision: 0
+revision: false
 description: 'Gives editors a way to feature a list of card content.'

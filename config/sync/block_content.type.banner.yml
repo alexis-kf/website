@@ -6,5 +6,5 @@ _core:
   default_config_hash: Fjt4cJkSbpRH8IAOhJmUMLyxs-OY81tdTf3sARXJbTs
 id: banner
 label: Banner
-revision: 0
+revision: false
 description: 'A full width card featuring or highlighting a piece of content.'

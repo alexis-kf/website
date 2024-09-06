@@ -6,5 +6,5 @@ _core:
   default_config_hash: IHzbNGY67vAsOXYjC36KH8-oNaWBbqoftPxUIeXZB-8
 id: stats
 label: Stats
-revision: 0
+revision: false
 description: 'The stats block combines a card with a list of title + summary items on the side.'

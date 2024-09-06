@@ -6,5 +6,5 @@ _core:
   default_config_hash: JLjyfOjfGyuZUpN6gjKQVIOdGe5B_2hNWC7dMUX8Mf4
 id: cta
 label: CTA
-revision: 0
+revision: false
 description: 'Stand-alone call-to-action link.'

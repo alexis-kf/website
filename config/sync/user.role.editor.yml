@@ -12,10 +12,12 @@ dependencies:
     - file
     - filter
     - layout_builder
+    - locale
     - media
     - node
     - path
     - scheduler
+    - statistics
     - system
     - taxonomy
     - toolbar
@@ -42,8 +44,10 @@ permissions:
   - 'configure any layout'
   - 'create and edit custom blocks'
   - 'create url aliases'
+  - 'translate interface'
   - 'use text format basic_html'
   - 'use text format full_html'
   - 'use text format scripts'
+  - 'view post access counter'
   - 'view scheduled content'
   - 'view the administration theme'

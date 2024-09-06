@@ -33,7 +33,7 @@ _core:
 name: Article
 type: article
 description: 'An article is a piece of writing that is published in a newspaper or magazine.'
-help: ''
+help: null
 new_revision: true
 preview_mode: 0
 display_submitted: false

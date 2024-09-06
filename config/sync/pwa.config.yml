@@ -1,5 +1,6 @@
 _core:
   default_config_hash: oMro5cfiGHdynGc5hzRBCm08SOzSWpGXf7X5h13R16Q
+langcode: en
 name: 'Kodffe Software'
 short_name: Kodffe
 description: 'Stay in touch!'

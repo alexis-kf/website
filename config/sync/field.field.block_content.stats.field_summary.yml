@@ -5,13 +5,9 @@ dependencies:
   config:
     - block_content.type.stats
     - field.storage.block_content.field_summary
+    - filter.format.basic_html
   module:
-    - allowed_formats
     - text
-third_party_settings:
-  allowed_formats:
-    allowed_formats:
-      - basic_html
 _core:
   default_config_hash: k_uQouFhFURZK3JepE8Pvxm25XZU3s7xy1Twa7940mo
 id: block_content.stats.field_summary
@@ -25,5 +21,6 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  allowed_formats: {  }
+  allowed_formats:
+    - basic_html
 field_type: text_long

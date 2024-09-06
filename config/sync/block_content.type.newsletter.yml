@@ -6,5 +6,5 @@ _core:
   default_config_hash: HnDk5UajGgMvVp8igMIKkKBJkPYcvrsCTXo-965jILA
 id: newsletter
 label: Newsletter
-revision: 0
+revision: false
 description: 'Custom newsletter form.'
