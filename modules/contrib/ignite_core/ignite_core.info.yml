@@ -9,6 +9,7 @@ dependencies:
   - automated_cron
   - block
   - breakpoint
+  - ckeditor
   - components
   - config
   - content_moderation

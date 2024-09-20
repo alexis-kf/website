@@ -12,8 +12,14 @@ type: list_string
 settings:
   allowed_values:
     -
+      value: stat_list
+      label: 'Stat List'
+    -
+      value: stat_grid
+      label: 'Stat Grid with Image'
+    -
       value: dark
-      label: Dark
+      label: 'Stat Grid with Image (Dark)'
   allowed_values_function: ''
 module: options
 locked: false

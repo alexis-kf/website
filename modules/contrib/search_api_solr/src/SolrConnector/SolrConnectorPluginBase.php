@@ -2,7 +2,7 @@
 
 namespace Drupal\search_api_solr\SolrConnector;
 
-use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -23,6 +23,8 @@ use Solarium\Core\Client\Request;
 use Solarium\Core\Client\Response;
 use Solarium\Core\Query\QueryInterface;
 use Solarium\Exception\HttpException;
+use Solarium\QueryType\Analysis\Query\AbstractQuery;
+use Solarium\QueryType\Analysis\Query\Field;
 use Solarium\QueryType\Extract\Result as ExtractResult;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Update\Query\Query as UpdateQuery;
@@ -66,7 +68,7 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
   /**
    * The event dispatcher.
    *
-   * @var \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher
+   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
    */
   protected $eventDispatcher;
 
@@ -80,7 +82,7 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
   /**
    * {@inheritdoc}
    */
-  public function setEventDispatcher(ContainerAwareEventDispatcher $eventDispatcher) : SolrConnectorInterface {
+  public function setEventDispatcher(EventDispatcherInterface $eventDispatcher) : SolrConnectorInterface {
     $this->eventDispatcher = $eventDispatcher;
     return $this;
   }
@@ -136,8 +138,8 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
       '#description' => $this->t('The HTTP protocol to use for sending queries.'),
       '#default_value' => $this->configuration['scheme'] ?? 'http',
       '#options' => [
-        'http' => 'http',
-        'https' => 'https',
+        'http' => $this->t('http'),
+        'https' => $this->t('https'),
       ],
     ];
 
@@ -235,6 +237,7 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
         '6' => '6.x',
         '7' => '7.x',
         '8' => '8.x',
+        '9' => '9.x',
       ],
       '#default_value' => $this->configuration['solr_version'] ?? '',
     ];
@@ -246,8 +249,8 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
       '#default_value' => $this->configuration['http_method'] ?? 'AUTO',
       '#options' => [
         'AUTO' => $this->t('AUTO'),
-        'POST' => 'POST',
-        'GET' => 'GET',
+        'POST' => $this->t('POST'),
+        'GET' => $this->t('GET'),
       ],
     ];
 
@@ -266,7 +269,7 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
     $form['advanced']['jmx'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable JMX'),
-      '#description' => $this->t('Enable JMX based monitoring.'),
+      '#description' => $this->t('Enable JMX based monitoring. Note: Only valid for Solr versions before Solr 9.'),
       '#default_value' => $this->configuration['jmx'] ?? FALSE,
     ];
 
@@ -481,6 +484,54 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
   /**
    * {@inheritdoc}
    */
+  public function getLuceneVersion(): string {
+    $info = [];
+    try {
+      $info = $this->getCoreInfo();
+    }
+    catch (\Exception $e) {
+      try {
+        $info = $this->getServerInfo();
+      }
+      catch (SearchApiSolrException $e) {
+      }
+    }
+
+    // If the APIs used above aren't blocked, we can use their result to get
+    // the exact lucene version.
+    if (isset($info['lucene']['lucene-spec-version'])) {
+      if (preg_match('/^(\d+\.\d+\.\d+)/', $info['lucene']['lucene-spec-version'], $matches)) {
+        return $matches[1];
+      }
+    }
+
+    // Before Solr 9, the lucene and the Solr versions were in sync. If we don't
+    // have access to the exact lucene version above, we just can assume a
+    // lucene version.
+    $version = $this->getSolrVersion();
+    if (version_compare($version, '9.0.0', '<')) {
+      [$major, $minor] = explode('.', $version);
+      return $major . '.' . $minor;
+    }
+    else {
+      if (version_compare($version, '9.2.0', '>=')) {
+        if (version_compare($version, '9.4.0', '<')) {
+          return '9.4.2';
+        }
+        if (version_compare($version, '9.6.0', '<')) {
+          return '9.8.0';
+        }
+        // Solr 9.6.0 uses lucene 9.10.0.
+        return '9.10.0';
+      }
+    }
+
+    return '9.1.0';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getSolrMajorVersion($version = ''): int {
     [$major] = explode('.', $version ?: $this->getSolrVersion());
     return (int) $major;
@@ -496,9 +547,13 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
   /**
    * {@inheritdoc}
    */
-  public function getLuceneMatchVersion($version = '') {
-    [$major, $minor] = explode('.', $version ?: $this->getSolrVersion());
-    return $major . '.' . $minor;
+  public function getLuceneMatchVersion($minimal_version = '') {
+    $preferred_version = $this->getLuceneVersion();
+    if ($minimal_version && version_compare($preferred_version, $minimal_version, '<=')) {
+      return $minimal_version;
+    }
+
+    return $preferred_version;
   }
 
   /**
@@ -750,6 +805,7 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
    * @param string $command_json
    *   The command to send encoded as JSON.
    * @param \Solarium\Core\Client\Endpoint|null $endpoint
+   *   The endpoint.
    *
    * @return array
    *   The decoded response.
@@ -853,6 +909,14 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getAnalysisQueryField(): Field {
+    $this->connect();
+    return $this->solr->createAnalysisField();
+  }
+
+  /**
    * Creates a CustomizeRequest object.
    *
    * @return \Solarium\Plugin\CustomizeRequest\CustomizeRequest|\Solarium\Core\Plugin\PluginInterface
@@ -878,8 +942,9 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
     // Use the 'postbigrequest' plugin if no specific http method is
     // configured. The plugin needs to be loaded before the request is
     // created.
+    $plugin = NULL;
     if ($this->configuration['http_method'] === 'AUTO') {
-      $this->solr->getPlugin('postbigrequest');
+      $plugin = $this->solr->getPlugin('postbigrequest');
     }
 
     // Use the manual method of creating a Solarium request so we can control
@@ -894,7 +959,13 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
       $request->setMethod(Request::METHOD_GET);
     }
 
-    return $this->executeRequest($request, $endpoint);
+    $result = $this->executeRequest($request, $endpoint);
+
+    if ($plugin) {
+      $this->solr->removePlugin($plugin);
+    }
+
+    return $result;
   }
 
   /**
@@ -953,9 +1024,31 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
     // Use the 'postbigrequest' plugin if no specific http method is
     // configured. The plugin needs to be loaded before the request is
     // created.
+    $plugin = NULL;
     if ($this->configuration['http_method'] === 'AUTO') {
-      $this->solr->getPlugin('postbigrequest');
+      $plugin = $this->solr->getPlugin('postbigrequest');
     }
+
+    $result = $this->execute($query, $endpoint);
+
+    if ($plugin) {
+      $this->solr->removePlugin($plugin);
+    }
+
+    return $result;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function analyze(AbstractQuery $query, ?Endpoint $endpoint = NULL) {
+    $this->connect();
+
+    if (!$endpoint) {
+      $endpoint = $this->solr->getEndpoint();
+    }
+
+    $this->useTimeout(self::QUERY_TIMEOUT, $endpoint);
 
     return $this->execute($query, $endpoint);
   }
@@ -995,6 +1088,17 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
       $this->handleHttpException($e, $endpoint);
     }
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fireAndForget(QueryInterface $query, ?Endpoint $endpoint = NULL): void {
+    $this->connect();
+    $plugin = $this->solr->getPlugin('nowaitforresponserequest');
+    $this->execute($query, $endpoint);
+    $this->solr->removePlugin($plugin);
+  }
+
 
   /**
    * Converts a HttpException in an easier to read SearchApiSolrException.
@@ -1054,8 +1158,11 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
    * Could be overwritten by other connectors according to their needs.
    *
    * @param \Solarium\Core\Client\Endpoint $endpoint
+   *   The endpoint.
    *
    * @return string
+   *   Returns the server uri, required for non core/collection specific
+   *   requests.
    */
   protected function getEndpointUri(Endpoint $endpoint): string {
     return $endpoint->getServerUri();
@@ -1222,7 +1329,10 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
    */
   public function createEndpoint(string $key, array $additional_configuration = []) {
     $this->connect();
-    $configuration = ['key' => $key, self::QUERY_TIMEOUT => $this->configuration['timeout']] + $additional_configuration + $this->configuration;
+    $configuration = [
+      'key' => $key,
+      self::QUERY_TIMEOUT => $this->configuration['timeout'],
+    ] + $additional_configuration + $this->configuration;
     unset($configuration['timeout']);
 
     return $this->solr->createEndpoint($configuration, TRUE);
@@ -1253,7 +1363,7 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
   /**
    * {@inheritdoc}
    */
-  public function __sleep() {
+  public function __sleep(): array {
     // It's safe to unset the solr client completely before serialization
     // because connect() will set it up again correctly after deserialization.
     unset($this->solr);
@@ -1264,7 +1374,7 @@ abstract class SolrConnectorPluginBase extends ConfigurablePluginBase implements
    * {@inheritdoc}
    */
   public function alterConfigFiles(array &$files, string $lucene_match_version, string $server_id = '') {
-    if (!empty($this->configuration['jmx'])) {
+    if (!empty($this->configuration['jmx']) && version_compare($this->getSolrVersion(), '9.0', '<')) {
       $files['solrconfig_extra.xml'] .= "<jmx />\n";
     }
 

@@ -7,6 +7,8 @@ dependencies:
     - field.storage.block_content.field_link
   module:
     - link
+_core:
+  default_config_hash: Za9pevSNYiuynzkRvfjpRyhiPJfQsOqGB9NGtG-A3ag
 id: block_content.hero.field_link
 field_name: field_link
 entity_type: block_content

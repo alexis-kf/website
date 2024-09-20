@@ -4,7 +4,10 @@ status: true
 dependencies:
   module:
     - block_content
+_core:
+  default_config_hash: GYvH4OO0LK3lliM8sX7ZwsiETEBAv346lPFgWe8QUKI
 id: block_content.hero
 label: Hero
+description: ''
 targetEntityType: block_content
 cache: true

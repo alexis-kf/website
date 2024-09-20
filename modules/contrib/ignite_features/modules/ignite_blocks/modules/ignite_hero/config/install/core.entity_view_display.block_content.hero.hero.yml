@@ -1,27 +1,27 @@
 uuid: ad9c7f83-5f72-457f-b563-c9be214e6bed
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - block_content.type.hero
     - core.entity_view_mode.block_content.hero
+    - field.field.block_content.hero.field_boolean_overlay
     - field.field.block_content.hero.field_eyebrow
     - field.field.block_content.hero.field_heading
-    - field.field.block_content.hero.field_hero_layout
     - field.field.block_content.hero.field_link
     - field.field.block_content.hero.field_media
     - field.field.block_content.hero.field_summary
+    - field.field.block_content.hero.field_text_position
   module:
     - layout_builder
     - link
-    - options
     - text
 third_party_settings:
   layout_builder:
     enabled: false
     allow_custom: false
 _core:
-  default_config_hash: 7Ulmv6d1FODNH2JCHaGRjRuI6s-q_87wA9vs8bWQ-rA
+  default_config_hash: EB7QpBrB38V-buW5NUHI0P6f2ZbhKrjJtLimyXmX2Bg
 id: block_content.hero.hero
 targetEntityType: block_content
 bundle: hero
@@ -41,13 +41,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 4
-    region: content
-  field_hero_layout:
-    type: list_key
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 5
     region: content
   field_link:
     type: link
@@ -78,5 +71,7 @@ content:
     weight: 3
     region: content
 hidden:
+  field_boolean_overlay: true
+  field_text_position: true
   langcode: true
   search_api_excerpt: true

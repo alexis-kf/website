@@ -164,6 +164,7 @@ class BrowserController extends ControllerBase {
         if (isset($definitions[$key])) {
           $blocks[$key] = $definitions[$key];
           $blocks[$key]['layout_builder_browser_data'] = $item;
+          $blocks[$key]['layout_builder_browser_category_data'] = $blockcat;
         }
       }
 
@@ -195,6 +196,9 @@ class BrowserController extends ControllerBase {
           'reusable' => TRUE,
         ]);
       foreach ($content_blocks as $block) {
+        if (!$block->hasTranslation($this->languageManager()->getCurrentLanguage()->getId())) {
+          continue;
+        }
         $block_plugin_id = 'block_content:' . $block->uuid();
         // Only blocks available in layout definition and not selected in the
         // browser categories yet.
@@ -256,14 +260,22 @@ class BrowserController extends ControllerBase {
     foreach ($blocks as $block_id => $block) {
       $attributes = $this->getAjaxAttributes();
       $attributes['class'][] = 'js-layout-builder-block-link';
-      $attributes['class'][] = 'layout-builder-browser-block-item';
 
       $block_render_array = [];
+      // Use block image when available.
       if (!empty($block["layout_builder_browser_data"]) && isset($block["layout_builder_browser_data"]->image_path) && trim($block["layout_builder_browser_data"]->image_path) != '') {
         $block_render_array['image'] = [
           '#theme' => 'image',
           '#uri' => $block["layout_builder_browser_data"]->image_path,
           '#alt' => $block['layout_builder_browser_data']->image_alt,
+        ];
+      }
+      // Use category image when available.
+      elseif (!empty($block["layout_builder_browser_category_data"]) && isset($block["layout_builder_browser_category_data"]->image_path) && trim($block["layout_builder_browser_category_data"]->image_path) != '') {
+        $block_render_array['image'] = [
+          '#theme' => 'image',
+          '#uri' => $block["layout_builder_browser_category_data"]->image_path,
+          '#alt' => $block['layout_builder_browser_category_data']->image_alt,
         ];
       }
       $block_render_array['label'] = ['#markup' => (empty($block["layout_builder_browser_data"])) ? $block['admin_label'] : $block["layout_builder_browser_data"]->label()];
@@ -282,7 +294,15 @@ class BrowserController extends ControllerBase {
         '#attributes' => $attributes,
       ];
 
-      $links[] = $link;
+      $links[] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'layout-builder-browser-block-item',
+          ],
+        ],
+        'link' => $link,
+      ];
     }
     return $links;
   }

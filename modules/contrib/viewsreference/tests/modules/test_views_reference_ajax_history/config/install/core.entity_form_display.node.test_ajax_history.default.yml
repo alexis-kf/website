@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.test_ajax_history.field_views_reference_history
+    - node.type.test_ajax_history
+  module:
+    - viewsreference
+id: node.test_ajax_history.default
+targetEntityType: node
+bundle: test_ajax_history
+mode: default
+content:
+  field_views_reference_history:
+    type: viewsreference_select
+    weight: 121
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

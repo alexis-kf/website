@@ -1,5 +1,8 @@
 name: 'Views Reference Field'
 description: 'Defines the viewsreference field type to embed views in an entity reference field.'
-core_version_requirement: ^9.3 || ^10
+core_version_requirement: ^10 || ^11
 package: Views
 type: module
+
+test_dependencies:
+  - views_ajax_history:views_ajax_history

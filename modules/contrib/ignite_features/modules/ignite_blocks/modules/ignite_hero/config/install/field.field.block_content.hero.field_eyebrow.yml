@@ -5,6 +5,8 @@ dependencies:
   config:
     - block_content.type.hero
     - field.storage.block_content.field_eyebrow
+_core:
+  default_config_hash: uzu6IXaoB25aqoW13ZlenuhhiOpxKjHF3Bp3KpH2jfk
 id: block_content.hero.field_eyebrow
 field_name: field_eyebrow
 entity_type: block_content

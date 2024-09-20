@@ -4,6 +4,7 @@ namespace Drupal\pwa\Form;
 
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\File\FileUrlGenerator;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -97,6 +98,8 @@ class ManifestConfigurationForm extends ConfigFormBase {
    *   The file url generator.
    * @param \Drupal\Core\Language\LanguageManager $languageManager
    *   The language manager service.
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface|null $typedConfigManager
+   *   The typed config manager.
    */
   public function __construct(
     CacheTagsInvalidatorInterface $cacheTagsInvalidator,
@@ -108,8 +111,9 @@ class ManifestConfigurationForm extends ConfigFormBase {
     StreamWrapperManagerInterface $streamWrapperManager,
     FileUrlGenerator $fileUrlGenerator,
     LanguageManager $languageManager,
+    ?TypedConfigManagerInterface $typedConfigManager = NULL,
   ) {
-    parent::__construct($configFactory);
+    parent::__construct($configFactory, $typedConfigManager);
     $this->cacheTagsInvalidator = $cacheTagsInvalidator;
     $this->fileStorage          = $fileStorage;
     $this->fileUsage            = $fileUsage;
@@ -138,6 +142,7 @@ class ManifestConfigurationForm extends ConfigFormBase {
       $container->get('stream_wrapper_manager'),
       $container->get('file_url_generator'),
       $container->get('language_manager'),
+      $container->get('config.typed') ?? NULL,
     );
   }
 
@@ -311,8 +316,8 @@ class ManifestConfigurationForm extends ConfigFormBase {
       '#type' => 'managed_file',
       '#description' => $this->t('This image is your application icon (png files only, format: 512x512, transparent background, padding 20-30%). The padding is needed, so the icons are not getting cropped on Android phone Home-Screens (To verify an Icon, you can visit <a href="@link">Maskable App</a>).<br><strong>Note</strong>, that this uses the icons in "pwa/assets" as a fallback, if no icon is uploaded.', ['@link' => 'https://maskable.app/']),
       '#upload_validators' => [
-        'file_validate_extensions' => ['png'],
-        'file_validate_image_resolution' => ['512x512', '512x512'],
+        'FileExtension' => ['extensions' => 'png'],
+        'FileImageDimensions' => ['maxDimensions' => '512x512', '512x512'],
       ],
       '#default_value' => $imageFid,
       '#upload_location' => 'public://pwa/',

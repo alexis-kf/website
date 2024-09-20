@@ -39,6 +39,8 @@ class SearchApiSolrHighlightedTextDefaultFormatter extends FormatterBase {
     // @see \Drupal\filter\Element\ProcessedText::preRenderText()
     foreach ($items as $delta => $item) {
       $cacheableMetadata = new CacheableMetadata();
+      // The fulltext search keys are usually set via a GET parameter.
+      $cacheableMetadata->addCacheContexts(['url.query_args']);
 
       $elements[$delta] = [
         '#type' => 'processed_text',

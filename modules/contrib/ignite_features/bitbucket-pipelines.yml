@@ -132,7 +132,7 @@ pipelines:
             - cd web
             # Check security review.
             - ../vendor/bin/drush en security_review
-            - SECURITYREVIEW=$(../vendor/bin/drush secrev --skip=blocked_admin_account,error_reporting,executable_php,failed_logins,file_perms,private_files,views_access,trusted_hosts,field,username_same_as_password 2>&1)
+            - SECURITYREVIEW=$(../vendor/bin/drush secrev --skip=blocked_admin_account,error_reporting,executable_php,failed_logins,file_perms,input_formats,private_files,views_access,trusted_hosts,field,username_same_as_password 2>&1)
             - printf '%s\n' "${SECURITYREVIEW}"
             - if grep -q 'failed' <<< ${SECURITYREVIEW} ; then
             - slackcli -h ${SLACK_CHANNEL} -e ":lock:" -m "https://bitbucket.org/mediacurrent/${BITBUCKET_REPO_SLUG}/addon/pipelines/home#!/results/$BITBUCKET_BUILD_NUMBER - ${BITBUCKET_BRANCH} - secrev \`\`\`${SECURITYREVIEW}\`\`\`"
@@ -145,47 +145,29 @@ pipelines:
           name: Visual Regression
           caches:
             - docker
-            - visual-regression-ci-reference
-            - visual-regression-node-modules
           script:
-            - aws --version
             - ls -l
             - cd ignite_project
             - ls -l ./vendor/bin
+            # Install Chromium/Puppeteer dependency
+            - apt-get update
+            - apt-get install -y libgbm1
             - cd web
             - ../vendor/bin/drush sqlc < ../vendor/bin/db.sql
             - ../vendor/bin/drush status
             - ../vendor/bin/drush -vvv --debug runserver 172.17.0.1:8080 &
             - sleep 3
-            - cd ..
-            - cd tests/visual-regression
-            - chmod -R o+w ./backstop_data
-            - npm install
+            - cd ../tests/visual-regression/percy
+            - nvm --version
+            - npm --version
+            - node --version
+            - nvm install v18.16.0
+            - npm install --save-dev @percy/cli
             - set +e
-            # Generate new reference if needed
-            - if [ ! "$(ls -A backstop_data/ci_reference)" ]; then
-            - aws s3 cp s3://mis-ci-tests/vrt/reference-${BITBUCKET_REPO_SLUG} backstop_data --recursive
-            - if [ ! "$(ls -A backstop_data/ci_reference)" ]; then
-            - make -i ci-reference
-            - fi
-            - fi
-            - make -i ci-test
-            - aws s3 cp backstop_data s3://mis-ci-tests/vrt/test-${BITBUCKET_REPO_SLUG}-${BITBUCKET_BUILD_NUMBER} --recursive
-            # link to results posted to Bitbucket
-            - export VRT_URL="http://vrt.mediacurrent.com/test-${BITBUCKET_REPO_SLUG}-${BITBUCKET_BUILD_NUMBER}/ci_html_report/"
-            - export BUILD_STATUS="{\"key\":\"doc\", \"state\":\"SUCCESSFUL\", \"name\":\"VRT Results\", \"url\":\"${VRT_URL}\"}"
-            - curl -H "Content-Type:application/json" -X POST --user "${BB_AUTH_STRING}" -d "${BUILD_STATUS}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/commit/${BITBUCKET_COMMIT}/statuses/build"
-            # Use current 1.0.x as reference
-            - if [ "${BITBUCKET_BRANCH}" == "1.0.x" ]; then
-            - make -i ci-approve;
-            - aws s3 cp backstop_data s3://mis-ci-tests/vrt/reference-${BITBUCKET_REPO_SLUG} --recursive
-            - fi
+            - npx percy snapshot snapshots-pipelines.yml
           services:
             - docker
             - mysql
-          artifacts:
-            - tests/visual-regression/backstop_data/**
-
 
 definitions:
   caches:

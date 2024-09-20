@@ -5,6 +5,7 @@ dependencies:
   config:
     - block_content.type.hero
     - field.storage.block_content.field_summary
+    - filter.format.basic_html
   module:
     - allowed_formats
     - text
@@ -15,15 +16,18 @@ third_party_settings:
     scripts: '0'
     full_html: '0'
     plain_text: '0'
+_core:
+  default_config_hash: R0p-q46fhLp95uICeko607eFdgAKFHzwmxJlkmalCJ0
 id: block_content.hero.field_summary
 field_name: field_summary
 entity_type: block_content
 bundle: hero
-label: Summary
+label: Subhead
 description: 'Provide the teaser summary for the hero.'
 required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long

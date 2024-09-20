@@ -65,6 +65,20 @@ class BlockCategoryForm extends EntityForm {
       '#default_value' => $layout_builder_browser->getOpened(),
     ];
 
+    $form['image_path'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Image path'),
+      '#maxlength' => 255,
+      '#default_value' => $layout_builder_browser->image_path,
+      '#description' => $this->t("Preview image path. E.g. /themes/mycustomtheme/images/lbb/text.jpg"),
+    ];
+    $form['image_alt'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Image alt'),
+      '#maxlength' => 255,
+      '#default_value' => $layout_builder_browser->image_alt,
+    ];
+
     $form['status'] = [
       '#title' => $this->t('Enabled'),
       '#type' => 'checkbox',

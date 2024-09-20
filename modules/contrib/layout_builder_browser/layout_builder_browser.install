@@ -7,6 +7,7 @@
 
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
 
 /**
  * Implements hook_update().
@@ -73,5 +74,22 @@ function layout_builder_browser_update_8002() {
   $lbb_entity_type = $entity_manager->getDefinition('layout_builder_browser_block');
   if ($lbb_entity_type && $lbb_entity_type instanceof EntityTypeInterface) {
     \Drupal::entityDefinitionUpdateManager()->installEntityType($lbb_entity_type);
+  }
+}
+
+/**
+ * Implements hook_update().
+ *
+ * #3365606: Allow categories to have an image and alt.
+ */
+function layout_builder_browser_update_8003() {
+  $field_storage_definition = BaseFieldDefinition::create('string');
+  $names = [
+    'image_path',
+    'image_alt',
+  ];
+  foreach ($names as $name) {
+    \Drupal::entityDefinitionUpdateManager()
+      ->installFieldStorageDefinition($name, 'layout_builder_browser_blockcat', 'layout_builder_browser', $field_storage_definition);
   }
 }

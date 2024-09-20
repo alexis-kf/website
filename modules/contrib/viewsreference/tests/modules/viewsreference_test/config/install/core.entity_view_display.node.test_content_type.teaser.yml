@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.test_content_type.field_views_reference_field
+    - node.type.test_content_type
+  module:
+    - user
+id: node.test_content_type.teaser
+targetEntityType: node
+bundle: test_content_type
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_views_reference_field: true

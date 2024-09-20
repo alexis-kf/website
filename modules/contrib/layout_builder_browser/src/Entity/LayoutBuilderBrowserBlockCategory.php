@@ -36,6 +36,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "status",
  *     "weight",
  *     "opened",
+ *     "image_path",
+ *     "image_alt",
  *   },
  *   links = {
  *     "edit-form" =
@@ -78,6 +80,20 @@ class LayoutBuilderBrowserBlockCategory extends ConfigEntityBase {
    *   The flag value.
    */
   protected bool $opened = TRUE;
+
+  /**
+   * Image path.
+   *
+   * @var string
+   */
+  public $image_path;
+
+  /**
+   * Image alt.
+   *
+   * @var string
+   */
+  public $image_alt;
 
   /**
    * {@inheritdoc}

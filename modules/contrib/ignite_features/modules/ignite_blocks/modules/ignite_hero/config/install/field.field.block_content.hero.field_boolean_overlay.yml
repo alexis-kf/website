@@ -1,0 +1,21 @@
+uuid: 2c926635-829e-4483-8b08-9bcdb5e23682
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.hero
+    - field.storage.block_content.field_boolean_overlay
+id: block_content.hero.field_boolean_overlay
+field_name: field_boolean_overlay
+entity_type: block_content
+bundle: hero
+label: 'Remove overlay & change text color to be dark'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

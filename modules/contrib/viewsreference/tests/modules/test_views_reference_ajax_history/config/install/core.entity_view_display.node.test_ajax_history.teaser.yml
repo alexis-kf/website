@@ -1,0 +1,21 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.test_ajax_history.field_views_reference_history
+    - node.type.test_ajax_history
+  module:
+    - user
+id: node.test_ajax_history.teaser
+targetEntityType: node
+bundle: test_ajax_history
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_views_reference_history: true

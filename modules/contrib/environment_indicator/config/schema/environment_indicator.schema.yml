@@ -11,11 +11,11 @@ environment_indicator.switcher.*:
       type: text
       label: 'Description'
     name:
-      type: string
+      type: label
       label: 'Name'
     weight:
-      type: string
-      label: 'Name'
+      type: integer
+      label: 'Weight'
     url:
       type: uri
       label: 'URL'
@@ -46,7 +46,7 @@ environment_indicator.indicator:
     mapping:
       name:
         type: string
-        label: 'Evironment name'
+        label: 'Environment name'
       fg_color:
         type: string
         label: 'Foreground color'

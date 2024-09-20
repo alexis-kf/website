@@ -35,14 +35,14 @@ class SearchApiExcludeEntityFieldWidget extends WidgetBase {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element += [
       '#type' => 'details',
-      '#group' => 'advanced'
+      '#group' => 'advanced',
     ];
 
     $element['value'] = [
       '#type' => 'checkbox',
       '#default_value' => !empty($items[0]->value),
       '#title' => $this->getSetting('field_label'),
-      '#required' => !empty($element['#required']) ? $element['#required'] : false,
+      '#required' => !empty($element['#required']) ? $element['#required'] : FALSE,
     ];
     return $element;
   }

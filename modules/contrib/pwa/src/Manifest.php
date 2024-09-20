@@ -68,7 +68,7 @@ class Manifest implements ManifestInterface {
     ModuleHandlerInterface $moduleHandler,
     RequestStack $requestStack,
     ThemeManagerInterface $themeManager,
-    EntityTypeManagerInterface $entityTypeManager
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->configFactory = $configFactory;
     $this->moduleHandler = $moduleHandler;

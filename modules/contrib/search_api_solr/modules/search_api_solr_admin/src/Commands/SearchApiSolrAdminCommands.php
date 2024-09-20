@@ -4,6 +4,9 @@ namespace Drupal\search_api_solr_admin\Commands;
 
 use Consolidation\AnnotatedCommand\Input\StdinAwareInterface;
 use Consolidation\AnnotatedCommand\Input\StdinAwareTrait;
+use Drupal\search_api\SearchApiException;
+use Drupal\search_api_solr\SearchApiSolrException;
+use Drupal\search_api_solr\SolrBackendInterface;
 use Drupal\search_api_solr_admin\Utility\SolrAdminCommandHelper;
 use Drush\Commands\DrushCommands;
 use Psr\Log\LoggerInterface;
@@ -60,7 +63,7 @@ class SearchApiSolrAdminCommands extends DrushCommands implements StdinAwareInte
    */
   public function reload(string $server_id): void {
     $this->commandHelper->reload($server_id);
-    $this->logger()->success('Solr core/collection of %server_id reloaded.', ['%server_id' => $server_id]);
+    $this->logger()->success(dt('Solr core/collection of %server_id reloaded.', ['%server_id' => $server_id]));
   }
 
   /**
@@ -81,7 +84,50 @@ class SearchApiSolrAdminCommands extends DrushCommands implements StdinAwareInte
    */
   public function deleteCollection(string $server_id): void {
     $this->commandHelper->deleteCollection($server_id);
-    $this->logger()->success('Solr collection of %server_id deleted.', ['%server_id' => $server_id]);
+    $this->logger()->success(dt('Solr collection of %server_id deleted.', ['%server_id' => $server_id]));
+  }
+
+  /**
+   * Deletes *all* documents on a Solr search server (including all indexes).
+   *
+   * @param string $server_id
+   *   The ID of the server.
+   *
+   * @command search-api-solr:delete-all
+   *
+   * @usage search-api-solr:delete-all server_id
+   *   Deletes *all* documents on server_id.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
+   * @throws \Drupal\search_api_solr\SearchApiSolrException
+   * @throws \Drupal\search_api\SearchApiException
+   */
+  public function deleteAll(string $server_id): void {
+    $servers = $this->commandHelper->loadServers([$server_id]);
+    if ($server = reset($servers)) {
+      $backend = $server->getBackend();
+      if ($backend instanceof SolrBackendInterface) {
+        $connector = $backend->getSolrConnector();
+        $update_query = $connector->getUpdateQuery();
+        $update_query->addDeleteQuery('*:*');
+        $connector->update($update_query);
+
+        foreach ($server->getIndexes() as $index) {
+          if ($index->status() && !$index->isReadOnly()) {
+            if ($connector->isCloud()) {
+              $connector->update($update_query, $backend->getCollectionEndpoint($index));
+            }
+            $index->reindex();
+          }
+        }
+      }
+      else {
+        throw new SearchApiSolrException("The given server ID doesn't use the Solr backend.");
+      }
+    }
+    else {
+      throw new SearchApiException("The given server ID doesn't exist.");
+    }
   }
 
   /**
@@ -89,8 +135,6 @@ class SearchApiSolrAdminCommands extends DrushCommands implements StdinAwareInte
    *
    * @param string $server_id
    *   The ID of the server.
-   * @param int $num_shards
-   *   This parameter is deprecated. Use the numShards option instead.
    * @param array $options
    *   Additional options for the command.
    *
@@ -175,7 +219,7 @@ class SearchApiSolrAdminCommands extends DrushCommands implements StdinAwareInte
    * @throws \ZipStream\Exception\FileNotReadableException
    * @throws \ZipStream\Exception\OverflowException
    */
-  public function uploadConfigset(string $server_id, int $num_shards = 0, array $options = [
+  public function uploadConfigset(string $server_id, array $options = [
     'numShards' => 3,
     'maxShardsPerNode' => 1,
     'replicationFactor' => 1,
@@ -187,12 +231,8 @@ class SearchApiSolrAdminCommands extends DrushCommands implements StdinAwareInte
     'waitForFinalState' => FALSE,
     'createNodeSet' => '',
   ]): void {
-    if ($num_shards) {
-      @trigger_error('Parameter num_shards is deprecated in 4.2.8 and is removed from 4.3.0. Use the --numShards option instead.', E_USER_DEPRECATED);
-      $options['numShards'] = $num_shards;
-    }
     $this->commandHelper->uploadConfigset($server_id, $options, $this->output()->isVerbose());
-    $this->logger()->success('Solr configset for %server_id uploaded.', ['%server_id' => $server_id]);
+    $this->logger()->success(dt('Solr configset for %server_id uploaded.', ['%server_id' => $server_id]));
   }
 
 }

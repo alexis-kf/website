@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.test_ajax_history.field_views_reference_history
+    - node.type.test_ajax_history
+  module:
+    - user
+    - viewsreference
+id: node.test_ajax_history.default
+targetEntityType: node
+bundle: test_ajax_history
+mode: default
+content:
+  field_views_reference_history:
+    type: viewsreference_formatter
+    label: above
+    settings:
+      plugin_types:
+        - block
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

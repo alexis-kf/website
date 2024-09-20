@@ -2,13 +2,15 @@
 
 namespace Drupal\search_api_solr;
 
-use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Drupal\Component\Plugin\ConfigurableInterface;
 use Drupal\search_api_solr\Solarium\Autocomplete\Query as AutocompleteQuery;
 use Solarium\Core\Client\Endpoint;
 use Solarium\Core\Client\Request;
 use Solarium\Core\Client\Response;
 use Solarium\Core\Query\QueryInterface;
+use Solarium\QueryType\Analysis\Query\AbstractQuery;
+use Solarium\QueryType\Analysis\Query\Field;
 use Solarium\QueryType\Extract\Result as ExtractResult;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Update\Query\Query as UpdateQuery;
@@ -27,9 +29,10 @@ interface SolrConnectorInterface extends ConfigurableInterface {
   /**
    * Sets the event dispatcher.
    *
-   * @param \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher $eventDispatcher
+   * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+   *   The container aware event dispatcher.
    */
-  public function setEventDispatcher(ContainerAwareEventDispatcher $eventDispatcher): SolrConnectorInterface;
+  public function setEventDispatcher(EventDispatcherInterface $eventDispatcher): SolrConnectorInterface;
 
   /**
    * Returns TRUE for Cloud.
@@ -103,9 +106,17 @@ interface SolrConnectorInterface extends ConfigurableInterface {
    *   An optional Solr version string.
    *
    * @return string
-   *   The lucene match version in V.V format.
+   *   The lucene match version in Major.Minor(.Patch) format.
    */
   public function getLuceneMatchVersion($version = '');
+
+  /**
+   * Gets the current Lucene version deployed on Solr server.
+   *
+   * @return string
+   *   The full Lucene version string.
+   */
+  public function getLuceneVersion();
 
   /**
    * Gets information about the Solr server.
@@ -230,6 +241,7 @@ interface SolrConnectorInterface extends ConfigurableInterface {
    * Pings the Solr endpoint to tell whether it can be accessed.
    *
    * @param \Solarium\Core\Client\Endpoint|null $endpoint
+   *   The endpoint.
    * @param array $options
    *   (optional) An array of options.
    *
@@ -255,6 +267,7 @@ interface SolrConnectorInterface extends ConfigurableInterface {
    * @param string $path
    *   The path to append to the base URI.
    * @param \Solarium\Core\Client\Endpoint|null $endpoint
+   *   The endpoint.
    *
    * @return string
    *   The decoded response.
@@ -271,6 +284,7 @@ interface SolrConnectorInterface extends ConfigurableInterface {
    * @param string $command_json
    *   The command to send encoded as JSON.
    * @param \Solarium\Core\Client\Endpoint|null $endpoint
+   *   The endpoint.
    *
    * @return string
    *   The decoded response.
@@ -372,6 +386,11 @@ interface SolrConnectorInterface extends ConfigurableInterface {
   public function getExtractQuery();
 
   /**
+   * Creates a new Solarium analysis query.
+   */
+  public function getAnalysisQueryField(): Field;
+
+  /**
    * Returns a Solarium query helper object.
    *
    * @param \Solarium\Core\Query\QueryInterface|null $query
@@ -441,6 +460,21 @@ interface SolrConnectorInterface extends ConfigurableInterface {
   public function autocomplete(AutocompleteQuery $query, ?Endpoint $endpoint = NULL);
 
   /**
+   * Executes an analysis query and returns the raw response.
+   *
+   * @param \Solarium\QueryType\Analysis\Query\AbstractQuery $query
+   *   The Solarium select query object.
+   * @param \Solarium\Core\Client\Endpoint|null $endpoint
+   *   (optional) The Solarium endpoint object.
+   *
+   * @return \Solarium\Core\Query\Result\ResultInterface
+   *   The Solarium Result object.
+   *
+   * @throws \Drupal\search_api_solr\SearchApiSolrException
+   */
+  public function analyze(AbstractQuery $query, ?Endpoint $endpoint = NULL);
+
+  /**
    * Executes any query.
    *
    * @param \Solarium\Core\Query\QueryInterface $query
@@ -469,6 +503,18 @@ interface SolrConnectorInterface extends ConfigurableInterface {
    * @throws \Drupal\search_api_solr\SearchApiSolrException
    */
   public function executeRequest(Request $request, ?Endpoint $endpoint = NULL);
+
+  /**
+   * Executes any query but don't wait for Solr's response.
+   *
+   * @param \Solarium\Core\Query\QueryInterface $query
+   *   The Solarium query object.
+   * @param \Solarium\Core\Client\Endpoint|null $endpoint
+   *   (optional) The Solarium endpoint object.
+   *
+   * @throws \Drupal\search_api_solr\SearchApiSolrException
+   */
+  public function fireAndForget(QueryInterface $query, ?Endpoint $endpoint = NULL): void;
 
   /**
    * Optimizes the Solr index.

@@ -89,7 +89,7 @@ class SearchApiExcludeEntityProcessor extends ProcessorPluginBase implements Plu
         '#type' => 'checkboxes',
         '#title' => $this->t('Fields entity type: %type', ['%type' => $datasource->label()]),
         '#description' => $this->t('Choose the Search API Exclude fields that should be used to exclude entities in this index.'),
-        '#default_value' => isset($fields_config[$entity_type]) ? $fields_config[$entity_type] : [],
+        '#default_value' => $fields_config[$entity_type] ?? [],
         '#options' => $this->getFieldOptions($entity_type, $datasource),
         '#multiple' => TRUE,
       ];
@@ -121,7 +121,7 @@ class SearchApiExcludeEntityProcessor extends ProcessorPluginBase implements Plu
    *   The entity type we are finding bundles for.
    * @param object $datasource
    *   The data source from the active index.
-   * 
+   *
    * @return array
    *   Options array with bundles.
    */
@@ -207,4 +207,5 @@ class SearchApiExcludeEntityProcessor extends ProcessorPluginBase implements Plu
       }
     }
   }
+
 }

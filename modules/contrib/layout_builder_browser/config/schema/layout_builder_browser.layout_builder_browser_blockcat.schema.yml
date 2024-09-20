@@ -14,6 +14,12 @@ layout_builder_browser.layout_builder_browser_blockcat.*:
     opened:
       type: boolean
       label: 'Indicates whether the category fieldset should be open by default'
+    image_path:
+      type: string
+      label: "Image preview path"
+    image_alt:
+      type: string
+      label: "Image alt text"
 
 layout_builder_browser.layout_builder_browser_block.*:
   type: config_entity

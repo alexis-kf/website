@@ -218,7 +218,7 @@ class BlockListingForm extends FormBase {
           'url' => Url::fromRoute('entity.layout_builder_browser_block.edit_form', ['layout_builder_browser_block' => $block['id']]),
           'weight' => 10,
           'attributes' => [
-            'class' => ['use-ajax', 'button', 'button--small'],
+            'class' => ['use-ajax', 'button'],
             'data-dialog-type' => 'modal',
             'data-dialog-options' => Json::encode([
               'width' => 700,

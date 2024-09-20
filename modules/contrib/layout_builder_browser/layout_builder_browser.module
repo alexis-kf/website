@@ -56,6 +56,10 @@ function layout_builder_browser_link_alter(&$variables) {
     return;
   }
 
+  if (!isset($variables['options']['attributes']['class'])) {
+    return;
+  }
+
   if (in_array('use-ajax', $variables['options']['attributes']['class'])) {
     $data_dialog_options = Json::encode([
       'width' => "80%",
