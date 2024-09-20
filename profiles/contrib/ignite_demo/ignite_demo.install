@@ -5,15 +5,15 @@
  * Install methods for ignite_demo profile.
  */
 
-use Drupal\user\Entity\User;
-use Drupal\menu_link_content\Entity\MenuLinkContent;
-use Drupal\node\Entity\Node;
+use Drupal\block_content\Entity\BlockContent;
 use Drupal\layout_builder\Section;
 use Drupal\layout_builder\SectionComponent;
-use Drupal\block_content\Entity\BlockContent;
-use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\media\Entity\Media;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_install_tasks().
@@ -424,17 +424,19 @@ function ignite_demo_install_content() {
       'value' => '<p>Have a question about Ignite? We’re here to help! Drop us a message and we’ll get back to you soon.</p>',
       'format' => 'full_html',
     ],
+    'reusable' => FALSE,
   ]);
 
   $block->save();
 
   // Append block to the layout.
   $component = new SectionComponent(
-    $block->id(), 'first', [
-      'id' => 'block_content:' . $block->uuid(),
+    $block->uuid(), 'first', [
+      'id' => 'inline_block:' . $block->bundle(),
       'label' => $block->label(),
-      'provider' => 'block_content',
+      'provider' => 'layout_builder',
       'label_display' => '0',
+      'block_revision_id' => $block->getRevisionId(),
     ]
   );
   $section->appendComponent($component);
@@ -445,17 +447,19 @@ function ignite_demo_install_content() {
     'info' => 'Form: Contact Us',
     'field_title' => '',
     'field_webform' => 'contact_us',
+    'reusable' => FALSE,
   ]);
 
   $block->save();
 
   // Append block to the layout.
   $component = new SectionComponent(
-    $block->id(), 'second', [
-      'id' => 'block_content:' . $block->uuid(),
+    $block->uuid(), 'second', [
+      'id' => 'inline_block:' . $block->bundle(),
       'label' => $block->label(),
-      'provider' => 'block_content',
+      'provider' => 'layout_builder',
       'label_display' => '0',
+      'block_revision_id' => $block->getRevisionId(),
     ]
   );
   $section->appendComponent($component);
@@ -546,15 +550,17 @@ function ignite_demo_install_content() {
   $blocks[] = _ignite_demo_create_accordion();
 
   // Create block entities and add them to the layout.
-  foreach ($blocks as $block) {
+  foreach ($blocks as $i => $block) {
     $block->save();
 
     $component = new SectionComponent(
-      $block->id(), 'content', [
-        'id' => 'block_content:' . $block->uuid(),
+      $block->uuid(), 'content', [
+        'id' => 'inline_block:' . $block->bundle(),
         'label' => $block->label(),
-        'provider' => 'block_content',
+        'provider' => 'layout_builder',
         'label_display' => '0',
+        'view_mode' => $i == 0 ? 'hero' : 'default',
+        'block_revision_id' => $block->getRevisionId(),
       ]
     );
     $section->appendComponent($component);
@@ -630,15 +636,17 @@ function ignite_demo_install_content() {
   }
 
   // Create block entities and add them to the layout.
-  foreach ($blocks as $block) {
+  foreach ($blocks as $i => $block) {
     $block->save();
 
     $component = new SectionComponent(
-      $block->id(), 'content', [
-        'id' => 'block_content:' . $block->uuid(),
+      $block->uuid(), 'content', [
+        'id' => 'inline_block:' . $block->bundle(),
         'label' => $block->label(),
-        'provider' => 'block_content',
+        'provider' => 'layout_builder',
         'label_display' => '0',
+        'view_mode' => $i == 0 ? 'hero_square' : 'default',
+        'block_revision_id' => $block->getRevisionId(),
       ]
     );
     $section->appendComponent($component);
@@ -725,15 +733,17 @@ function ignite_demo_install_content() {
   $blocks[] = _ignite_demo_create_banner($banner_info);
 
   // Create block entities and add them to the layout.
-  foreach ($blocks as $block) {
+  foreach ($blocks as $i => $block) {
     $block->save();
 
     $component = new SectionComponent(
-      $block->id(), 'content', [
-        'id' => 'block_content:' . $block->uuid(),
+      $block->uuid(), 'content', [
+        'id' => 'inline_block:' . $block->bundle(),
         'label' => $block->label(),
-        'provider' => 'block_content',
+        'provider' => 'layout_builder',
         'label_display' => '0',
+        'view_mode' => $i == 0 ? 'hero' : 'default',
+        'block_revision_id' => $block->getRevisionId(),
       ]
     );
     $section->appendComponent($component);
@@ -783,11 +793,12 @@ function ignite_demo_install_content() {
     $block->save();
 
     $component = new SectionComponent(
-      $block->id(), 'content', [
-        'id' => 'block_content:' . $block->uuid(),
+      $block->uuid(), 'content', [
+        'id' => 'inline_block:' . $block->bundle(),
         'label' => $block->label(),
-        'provider' => 'block_content',
+        'provider' => 'layout_builder',
         'label_display' => '0',
+        'block_revision_id' => $block->getRevisionId(),
       ]
     );
     $section->appendComponent($component);
@@ -837,11 +848,12 @@ function ignite_demo_install_content() {
     $block->save();
 
     $component = new SectionComponent(
-      $block->id(), 'content', [
-        'id' => 'block_content:' . $block->uuid(),
+      $block->uuid(), 'content', [
+        'id' => 'inline_block:' . $block->bundle(),
         'label' => $block->label(),
-        'provider' => 'block_content',
+        'provider' => 'layout_builder',
         'label_display' => '0',
+        'block_revision_id' => $block->getRevisionId(),
       ]
     );
     $section->appendComponent($component);
@@ -1021,6 +1033,7 @@ function _ignite_demo_create_newsletter() {
     'type' => 'newsletter',
     'info' => 'Newsletter',
     'uuid' => 'affdecfe-f74e-45cb-b4b1-2f527341bc8b',
+    'reusable' => FALSE,
   ]);
 
   return $block;
@@ -1041,6 +1054,7 @@ function _ignite_demo_create_case_studies() {
       'target_id' => 'recent_cards',
       'display_id' => 'block_1',
     ],
+    'reusable' => FALSE,
   ]);
 
   return $block;
@@ -1061,6 +1075,7 @@ function _ignite_demo_create_articles_view() {
       'target_id' => 'recent_cards',
       'display_id' => 'block_2',
     ],
+    'reusable' => FALSE,
   ]);
 
   return $block;
@@ -1083,9 +1098,10 @@ function _ignite_demo_create_hero(array $hero_info) {
     'field_media' => $hero_info['media'],
     'field_heading' => [
       'value' => $hero_info['heading'],
-      'format' => 'basic_html',
+      'format' => 'restricted_html',
     ],
     'field_hero_layout' => $hero_info['hero_layout'],
+    'reusable' => FALSE,
   ]);
 
   if (!empty($hero_info['eyebrow'])) {
@@ -1129,6 +1145,7 @@ function _ignite_demo_create_5050(array $info = []) {
     ],
     'field_summary' => $info['summary'],
     'field_teaser_layout' => $info['layout'],
+    'reusable' => FALSE,
   ]);
 
   if (!empty($info['link'])) {
@@ -1155,6 +1172,7 @@ function _ignite_demo_create_banner(array $banner_info) {
       'uri' => $banner_info['link']['uri'],
       'title' => $banner_info['link']['title'],
     ],
+    'reusable' => FALSE,
   ]);
 
   return $block;
@@ -1193,6 +1211,7 @@ function _ignite_demo_create_quote() {
     'field_quote' => 'Mediacurrent provided a range of high caliber services including design, UX, development, and digital strategy that are helping us pivot and transform the insurance purchasing experience.',
     'field_author' => 'Peggy Maher',
     'field_job_title' => 'SVP, Direct to Consumer at Guardian Life Insurance',
+    'reusable' => FALSE,
   ]);
 
   $block->field_thumb->setValue([
@@ -1217,6 +1236,7 @@ function _ignite_demo_create_carousel() {
       'display_id' => 'block_2',
       'data' => 'a:5:{s:5:"pager";N;s:6:"offset";N;s:8:"argument";s:1:"3";s:5:"title";N;s:5:"limit";N;}',
     ],
+    'reusable' => FALSE,
   ]);
 
   return $block;
@@ -1230,6 +1250,7 @@ function _ignite_demo_create_accordion() {
   $block = BlockContent::create([
     'type' => 'accordion',
     'field_title' => 'Frequently Asked Questions',
+    'reusable' => FALSE,
   ]);
 
   $block->save();
@@ -1324,6 +1345,7 @@ function _ignite_demo_create_stats() {
       'target_id' => $media_items['features-stats.png']->id(),
     ],
     'field_stats_layout' => 'dark',
+    'reusable' => FALSE,
   ]);
 
   $stats = [

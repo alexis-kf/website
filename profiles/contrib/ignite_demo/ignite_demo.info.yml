@@ -23,9 +23,7 @@ core_version_requirement: '^8 || ^9 || ^10'
 dependencies:
 # Required modules
 # Installs Guardr recommended modules and configuration.
-  - gin_lb
-  - gin_login
-  - gin_toolbar
+  - ignite_gin
   - ignite_features
   - ignite_core
   - ignite_layout
