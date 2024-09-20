@@ -65,7 +65,7 @@ export default {
 export const HeroDivided = HeroDividedTemplate.bind({});
 HeroDivided.args = {
   media: '<img src="https://picsum.photos/1600/900" class="img-fluid rounded" alt="Placeholder image" />',
-  eyebrow: 'Ignite Eyebrow',
+  eyebrow: 'Kodffe Eyebrow',
   title: 'Shortcut your design and development',
   subtitle: 'Quickly design and customize responsive mobile-first sites with Bootstrap.',
   body_text: '<p>Lorem ipsum dolor sit amet consectetur. Congue vel sagittis eu ullamcorper vel. Et et dui est ante tempor egestas pellentesque odio. Ornare erat lacus commodo porttitor ut enim. Ultricies mauris blandit in fermentum fringilla mollis risus ut. Nam eget eu suspendisse ut fermentum nascetur pretium lectus. Odio amet amet nam viverra hendrerit diam et. Nibh nunc in senectus odio tempor vitae id. Sit ut sit porta nisl enim.</p>',

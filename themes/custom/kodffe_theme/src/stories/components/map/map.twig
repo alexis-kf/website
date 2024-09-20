@@ -1,4 +1,4 @@
-{{ attach_library('ignite_theme/map') }}
+{{ attach_library('kodffe_theme/map') }}
 
 <div class="map {{ modifier }}">
   <div class="card border-0">
@@ -20,7 +20,7 @@
         {% endif %}
       </div>
       {% if map.link %}
-        {% include '@ignite_theme/button/button.twig' with {
+        {% include '@kodffe_theme/button/button.twig' with {
             "button": {
               "url": map.link.url,
               "text": map.link.text,

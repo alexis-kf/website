@@ -1,5 +1,5 @@
 
-{{ attach_library('ignite_theme/hero-divided') }}
+{{ attach_library('kodffe_theme/hero-divided') }}
 
 {% set body_modifier = ('flex-column-reverse' in modifier) ? 'd-lg-none' : '' %}
 {% set btn_modifier = ('is-row' in modifier) ? 'btn-primary has-icon' : 'btn-primary has-icon mx-auto' %}
@@ -21,7 +21,7 @@
       {% endif %}
       {% if title %}
         {{ include(
-          '@ignite_theme/heading/heading.twig',
+          '@kodffe_theme/heading/heading.twig',
           {
             heading: {
               title: title,
@@ -31,10 +31,10 @@
           },
           with_context = false
         )}}
-      {% endif %} 
+      {% endif %}
       {% if subtitle %}
         {{ include(
-          '@ignite_theme/heading/heading.twig',
+          '@kodffe_theme/heading/heading.twig',
           {
             heading: {
               title: subtitle,
@@ -47,7 +47,7 @@
       {% endif %}
       {% if body_text %}
         {{ include(
-          '@ignite_theme/rich-text/rich-text.twig',
+          '@kodffe_theme/rich-text/rich-text.twig',
           {
             body_text: body_text,
             modifier: body_modifier
@@ -57,7 +57,7 @@
       {% endif %}
       {% if button.url %}
         {{ include(
-          '@ignite_theme/button/button.twig',
+          '@kodffe_theme/button/button.twig',
           {
             button: {
               text: button.text,

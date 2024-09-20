@@ -36,16 +36,16 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-// Ignite overrides some colors.
+// Kodffe overrides some colors.
 $blue:    #0d6efd !default;
 $indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
+$purple:  #522b95 !default;
 $pink:    #d63384 !default;
 $red:     #F23A37 !default;
 $orange:  #F4A231 !default;
 $yellow:  #ffc107 !default;
 $green:   #48D841 !default;
-$teal:    #20c997 !default;
+$teal:    #34e6ad !default;
 $cyan:    #01B2EA !default;
 // scss-docs-end color-variables
 
@@ -299,15 +299,15 @@ $cyans: (
 // fusv-enable
 
 // scss-docs-start theme-color-variables
-// Ignite overrides these values.
-$primary:       #111112 !default;
-$secondary:     #0069F6 !default;
+// Kodffe overrides these values.
+$primary:       $purple !default;
+$secondary:     $teal !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         #F9FAFB !default;
-$dark:          #111112 !default;
+$dark:          shade-color($purple, 70%) !default;
 
 // User filters to color SVGs rendered in IMG tags.
 $filter-primary: invert(3%) sepia(0%) saturate(2572%) hue-rotate(295deg) brightness(96%) contrast(92%);
@@ -316,12 +316,12 @@ $filter-light: invert(100%) sepia(0%) saturate(7500%) hue-rotate(300deg) brightn
 $filter-dark: invert(3%) sepia(0%) saturate(2572%) hue-rotate(295deg) brightness(96%) contrast(92%);
 
 // Create Ignite map.
-$ignite-colors: (
-  overlay-color: rgba(33, 11, 11, 0.5),
+$kodffe-colors: (
+  overlay-color: rgba(82, 43, 149, 0.5),
   icon-light: $primary,
   icon-dark: $secondary,
   filter-light: rgb(249,250,251),
-  filter-dark: rgb(17,17,18),
+  filter-dark: shade-color($purple, 75%),
 );
 // scss-docs-end theme-color-variables
 
@@ -339,7 +339,7 @@ $theme-colors: (
 // scss-docs-end theme-colors-map
 
 // Merge or remove colors from $theme-colors map.
-$theme-colors: map-merge($theme-colors, $ignite-colors);
+$theme-colors: map-merge($theme-colors, $kodffe-colors);
 // $theme-colors: map-remove($theme-colors, "info", "light", "dark");
 
 // scss-docs-start theme-text-variables
@@ -390,8 +390,8 @@ $escaped-characters: (
 
 $enable-caret:                true !default;
 $enable-rounded:              true !default;
-$enable-shadows:              false !default;
-$enable-gradients:            false !default;
+$enable-shadows:              true !default;
+$enable-gradients:            true !default;
 $enable-transitions:          true !default;
 $enable-reduced-motion:       true !default;
 $enable-smooth-scroll:        true !default;

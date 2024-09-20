@@ -1,14 +1,14 @@
 {% if video %}
   <div class="card border-0">
     {%
-      include '@ignite_theme/video/video.twig' with {
+      include '@kodffe_theme/video/video.twig' with {
         video: video,
       } only
     %}
     <div class="card-body">
       {% if heading %}
         {%
-          include '@ignite_theme/heading/heading.twig' with {
+          include '@kodffe_theme/heading/heading.twig' with {
             "heading": heading
           } only
         %}

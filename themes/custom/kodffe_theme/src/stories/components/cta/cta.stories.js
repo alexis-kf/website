@@ -27,7 +27,7 @@ Primary.args = {
 export const Secondary = CTATemplate.bind({});
 Secondary.args = {
   "button": {
-    "url": "https://www.mediacurrent.com",
+    "url": "https://www.kodffe.com",
     "modifier": "btn-outline-primary",
     "text": "Secondary Button",
     "icon": 'arrow_right_alt',

@@ -20,11 +20,12 @@
 #}
 
 {%
-  include '@ignite_theme/main-menu/main-menu.twig' with
+  include '@kodffe_theme/main-menu/main-menu.twig' with
     {
       modifier: '',
       link_modifier: 'text-dark',
       items: items,
       attributes: attributes,
+      language: site_language == 'es' ? 'EN' : 'ES',
     }
 %}

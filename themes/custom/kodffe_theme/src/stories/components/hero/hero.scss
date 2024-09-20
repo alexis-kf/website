@@ -27,6 +27,10 @@
       z-index: 1;
     }
 
+    .darker-overlay &:not(.remove-overlay)::before {
+      background-color: shade-color($purple, 60%);
+    }
+
     picture {
       width: 100%;
       height: 100%;
@@ -47,7 +51,7 @@
       }
     }
   }
-  
+
   .hero-content {
     position: relative;
     z-index: 2;
@@ -76,7 +80,7 @@
     .btn {
       width: fit-content;
     }
-  
+
     // <-- Storybook specific styles:
     .sb-main-padded & > .row {
       // Account for Storybook padding.
@@ -97,4 +101,8 @@
     }
     // end Storybook specific styles -->
   }
+}
+
+.darker-overlay {
+
 }

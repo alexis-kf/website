@@ -8,12 +8,15 @@
  * @ingroup themeable
  */
 #}
+{% set media_image = content.field_media|render %}
 {%
   set classes = [
     'block-content',
     'block-content--type-' ~ bundle|clean_class,
     'block-content--' ~ id,
     'block-content--view-mode-' ~ view_mode|clean_class,
+    'mb-6 mb-lg-12',
+    media_image ? '' : 'darker-overlay',
   ]
 %}
 {# Use boolean to disable overlay if TRUE #}
@@ -48,8 +51,8 @@
   {{ title_prefix }}
   {{ title_suffix }}
   {% block content %}
-    {% include '@ignite_theme/hero/hero.twig' with {
-      media: content.field_media|render,
+    {% include '@kodffe_theme/hero/hero.twig' with {
+      media: media_image,
       eyebrow: content.field_eyebrow|field_value,
       title: content.field_heading|field_value,
       subtitle: content.field_summary|render|trim is not empty ? content.field_summary,

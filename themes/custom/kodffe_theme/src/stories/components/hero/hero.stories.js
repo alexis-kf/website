@@ -75,7 +75,7 @@ export default {
 export const Hero = HeroTemplate.bind({});
 Hero.args = {
   media: '<img src="https://picsum.photos/1600/900" alt="Placeholder image" />',
-  eyebrow: 'Ignite Eyebrow',
+  eyebrow: 'Kodffe Eyebrow',
   title: '<strong>Shortcut</strong> your <strong>design</strong> and <strong>development</strong> with our website starter kit',
   subtitle: 'Quickly design and customize responsive mobile-first sites with Bootstrap.',
   button: {

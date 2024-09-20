@@ -1,4 +1,4 @@
-{{ attach_library('ignite_theme/hero') }}
+{{ attach_library('kodffe_theme/hero') }}
 
 <div class="hero{{ layout ? ' ' ~ layout }}">
   <div class="hero-media{{ overlay ? ' ' ~ overlay }}{{ sb_overlay|length ? sb_overlay ? ' remove-overlay' : '' }}">
@@ -18,7 +18,7 @@
         {% endif %}
         {% if title %}
           {{ include(
-            '@ignite_theme/heading/heading.twig',
+            '@kodffe_theme/heading/heading.twig',
             {
               heading: {
                 title: title,
@@ -28,10 +28,10 @@
             },
             with_context = false
           )}}
-        {% endif %} 
+        {% endif %}
         {% if subtitle %}
           {{ include(
-            '@ignite_theme/heading/heading.twig',
+            '@kodffe_theme/heading/heading.twig',
             {
               heading: {
                 title: subtitle,
@@ -44,7 +44,7 @@
         {% endif %}
         {% if button.url %}
           {{ include(
-            '@ignite_theme/button/button.twig',
+            '@kodffe_theme/button/button.twig',
             {
               button: button
             },

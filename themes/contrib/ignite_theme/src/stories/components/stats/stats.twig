@@ -1,52 +1,86 @@
 {{ attach_library('ignite_theme/stats') }}
 
-<div class="pt-8 pt-lg-16 pb-6 pb-lg-8 {{ modifier }}">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xxl-6">
-        {% if eyebrow %}
-          <div class="text-uppercase mb-2 pt-1">
-            {% include '@ignite_theme/badge/badge.twig' with {
-                tag: eyebrow,
-                modifier: 'text-bg-secondary'
-              } only %}
-          </div>
-        {% endif %}
-
+{% if 'bg-dark' in modifier %}
+  <div class="bg-dark text-light">
+{% endif %}
+    <div class="stats-list container-fluid{{ modifier ? ' ' ~ modifier }} py-4 py-xl-6">
+      {# Display as horizontal list. #}
+      {% if 'stat_list' in modifier %}
         {%
           include '@ignite_theme/heading/heading.twig' with {
             "heading": {
               title: title,
               heading_level: '2',
-              modifier: 'mb-2 ' ~ heading_modifier
+              modifier: 'use-current-color mb-4'
             }
           } only
         %}
-        <div class="mb-5">
-          {% if summary %}
-            {{ summary }}
-          {% endif %}
+        <div class="stats-list_row row row-cols-1 row-cols-md-2 row-cols-lg-4 gy-3">
+          {% block stat_list %}
+            {% if stats %}
+              {% for item in stats %}
+                {%
+                  include '@ignite_theme/stats/stats.item.twig' with {
+                    item: item
+                  } only
+                %}
+              {% endfor %}
+            {% endif %}
+          {% endblock stat_list %}
         </div>
-
-        <div class="mb-6 stats-image">
-          {{ image }}
+        {% if button.url %}
+          {%
+            include '@ignite_theme/button/button.twig' with {
+              "button": button
+            } only
+          %}
+        {% endif %}
+      {# Or display as grid with image and intro. #}
+      {% elseif 'stat_grid' or 'bg-dark' in modifier %}
+        {% if eyebrow %}
+          <div class="stats-list_prefix mb-2">
+            {% include '@ignite_theme/badge/badge.twig' with {
+                tag: eyebrow,
+                modifier: 'text-uppercase d-inline-block text-bg-secondary'
+              } only %}
+          </div>
+        {% endif %}
+        <div class="stats-list_grid row flex-column flex-lg-row row-cols-lg-2 gap-3 gap-md-4 gap-lg-0">
+          <div class="col d-flex flex-column gap-2">
+            {%
+              include '@ignite_theme/heading/heading.twig' with {
+                "heading": {
+                  title: title,
+                  heading_level: 2,
+                  modifier: 'use-current-color mb-0'
+                }
+              } only
+            %}
+            <div class="stats-list_lead">
+              {% if body %}
+                {{ body }}
+              {% endif %}
+            </div>
+            <div class="stats-list_media mt-2 mb-2 mb-lg-0">
+              {{ media }}
+            </div>
+          </div>
+          <div class="col d-flex flex-column d-md-grid gap-3 align-content-start">
+            {% block stat_grid %}
+              {% if stats %}
+                {% for item in stats %}
+                  {%
+                    include '@ignite_theme/stats/stats.item.twig' with {
+                      item: item
+                    } only
+                  %}
+                {% endfor %}
+              {% endif %}
+            {% endblock stat_grid %}
+          </div>
         </div>
-      </div>
-
-      <div class="col-xxl-6 d-flex align-content-start flex-wrap">
-        {% block stats %}
-          {% if stats %}
-            {% for item in stats %}
-              {%
-                include '@ignite_theme/stats/stats.item.twig' with {
-                  item: item,
-                  heading_modifier: heading_modifier
-                } only
-              %}
-            {% endfor %}
-          {% endif %}
-        {% endblock %}
-      </div>
+      {% endif %}
     </div>
+{% if 'bg-dark' in modifier %}
   </div>
-</div>
+{% endif %}

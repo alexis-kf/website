@@ -9,6 +9,8 @@ global:
   dependencies:
     - "kodffe_theme/icons"
     - "kodffe_theme/fonts"
+    # Option to load secondary font.
+    # - "kodffe_theme/fonts-secondary"
 
 alerts:
   css:
@@ -54,15 +56,13 @@ fonts:
         minified: true
       }
 
-gin:
+fonts-secondary:
   css:
     component:
-      dist/css/gin.css: {}
-  js:
-      dist/js/gin.es6.js: {}
-  dependencies:
-    - core/drupal
-    - core/jquery
+      //fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap: {
+        type: external,
+        minified: true
+      }
 
 header:
   css:
@@ -197,8 +197,11 @@ hero:
   css:
     component:
       dist/css/hero.css: {}
-  dependencies:
-    - kodffe_theme/card
+
+hero-divided:
+  css:
+    component:
+      dist/css/hero-divided.css: {}
 
 map:
   css:
@@ -227,10 +230,10 @@ stats:
     component:
       dist/css/stats.css: {}
 
-teaser:
+side-by-side:
   css:
     component:
-      dist/css/teaser.css: {}
+      dist/css/side-by-side.css: {}
 
 text-block:
   css:

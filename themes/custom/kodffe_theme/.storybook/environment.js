@@ -15,7 +15,7 @@ const environment = new TwingEnvironment(chain, { autoescape: false, auto_reload
 if (typeof loader.addPath === 'function') {
   // The loader expects aliases to be prefixed with a `@` sign.
   // To import a component, you would include it from `@src/components/../..`
-  loader.addPath(srcPath, 'ignite_theme');
+  loader.addPath(srcPath, 'kodffe_theme');
 }
 
 environment.addFunction(attachLibraryFn);

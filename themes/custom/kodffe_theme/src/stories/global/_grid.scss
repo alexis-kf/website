@@ -8,7 +8,7 @@
 
     @include make-row();
 
-    // Ignite: Override gutters per breakpoint.
+    // Kodffe: Override gutters per breakpoint.
     @include media-breakpoint-up(sm) {
       @include make-row($grid-gutter-width-sm);
     }

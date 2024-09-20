@@ -1,4 +1,4 @@
-{{ attach_library('ignite_theme/card') }}
+{{ attach_library('kodffe_theme/card') }}
 
 <div class="card border-0 {{ card.modifier }}
   {{- attributes ? ' ' ~ attributes.class -}}">
@@ -19,7 +19,7 @@
       <ul class="list-inline mb-2">
         {% for tag in card.tags %}
           <li class="list-inline-item">
-            {% include '@ignite_theme/badge/badge.twig' with {
+            {% include '@kodffe_theme/badge/badge.twig' with {
               "tag": tag,
               "modifier": 'text-bg-primary'
             } only %}
@@ -28,7 +28,7 @@
       </ul>
     {% endif %}
     {%
-      include '@ignite_theme/heading/heading.twig' with {
+      include '@kodffe_theme/heading/heading.twig' with {
         "heading": card.heading
       } only
     %}
@@ -41,7 +41,7 @@
       <ul class="list-inline mb-0">
         {% if card.link.url %}
           <li class="list-inline-item">
-            {% include '@ignite_theme/button/button.twig' with {
+            {% include '@kodffe_theme/button/button.twig' with {
               "button": {
                 "url": card.link.url,
                 "text": card.link.text,
@@ -53,7 +53,7 @@
         {% endif %}
         {% if card.link2.url %}
           <li class="list-inline-item">
-            {% include '@ignite_theme/button/button.twig' with {
+            {% include '@kodffe_theme/button/button.twig' with {
               "button": {
                 "url": card.link2.url,
                 "text": card.link2.text,

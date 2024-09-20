@@ -99,6 +99,13 @@ function kodffe_theme_preprocess_page(array &$variables) {
 }
 
 /**
+ * Implements hook_theme_suggestions_page_alter().
+ */
+function kodffe_theme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+
+}
+
+/**
  * Implements hook_theme_suggestions_node_alter().
  */
 function kodffe_theme_theme_suggestions_node_alter(array &$suggestions, array $variables) {
@@ -111,9 +118,9 @@ function kodffe_theme_theme_suggestions_node_alter(array &$suggestions, array $v
 function kodffe_theme_preprocess_block(array &$variables) {
 
   // Add logo footer to footer.
-  if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'kodffe_theme_footer') {
+  if (isset($variables['elements']['#id']) && $variables['elements']['#id'] == 'footer') {
     $theme_path = \Drupal::service('extension.list.theme')->getPath('kodffe_theme');
-    $variables['site_logo'] = '/' . $theme_path . '/static/images/logo-footer-kf.svg';
+    $variables['site_logo'] = '/' . $theme_path . '/static/images/logo-footer-mc.svg';
 
     // Show social icons if enabled.
     $variables['show_social_icons'] = theme_get_setting('show_social');
@@ -145,7 +152,7 @@ function kodffe_theme_preprocess_image(&$variables) {
   if (!empty($variables['attributes']['class']) && is_string($variables['attributes']['class'])) {
     $variables['attributes']['class'] = [$variables['attributes']['class']];
   }
-  $variables['attributes']['class'][] = 'img-fluid rounded';
+  $variables['attributes']['class'][] = 'img-fluid rounded w-auto';
 }
 
 /**
@@ -235,15 +242,5 @@ function kodffe_theme_preprocess_menu(&$variables) {
   $config = \Drupal::config('system.site');
   $variables['site_name'] = $config->get('name');
   $variables['site_logo'] = theme_get_setting('logo.url');
-}
-
-/**
- * Use language code for the language switcher
- */
-function kodffe_theme_preprocess_links__language_block(&$variables) {
-  foreach ($variables['links'] as $i => $link) {
-    // @var \Drupal\language\Entity\ConfigurableLanguage $link_language
-    $link_language = $link['link']['#options']['language'];
-    $variables['links'][$i]['link']['#title'] = strtoupper($link_language->get('id'));
-  }
+  $variables['site_language'] = \Drupal::languageManager()->getCurrentLanguage()->getId();
 }

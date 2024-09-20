@@ -18,9 +18,18 @@
   }
 
   &.bg-black {
+    background-color: $dark !important;
 
     a {
       color: $white;
+    }
+  }
+
+  &.bg-teal {
+    background-color: $teal;
+
+    a {
+      color: $black;
     }
   }
 

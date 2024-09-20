@@ -1,7 +1,7 @@
 // Defines custom Storybook theme.
 import { addons } from '@storybook/addons';
-import IgniteTheme from './ignite-theme';
+import Kodffe_Theme from './kodffe-theme';
 
 addons.setConfig({
-  theme: IgniteTheme,
+  theme: Kodffe_Theme,
 });

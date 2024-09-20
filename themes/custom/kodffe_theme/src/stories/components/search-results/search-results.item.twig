@@ -1,7 +1,8 @@
-<div class="row mb-2">
-  <div>
+<div class="row mt-1 mb-3">
+  <strong><a href="{{ item.link }}" class="text-secondary">{{ item.title }}</a></strong>
+  <small>
     {{ item.link }}
-  </div>
-  <h2><a href="{{ item.link }}" class="text-secondary">{{ item.title }}</a></h2>
+  </small>
   <div>{{ item.summary|raw }}</div>
+  <hr>
 </div>

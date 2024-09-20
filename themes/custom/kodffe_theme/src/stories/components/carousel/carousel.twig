@@ -1,11 +1,11 @@
-{{ attach_library('ignite_theme/carousel') }}
+{{ attach_library('kodffe_theme/carousel') }}
 
 <div id="carousel{{ id }}" class="carousel-single carousel slide{{ attributes ? ' ' ~ attributes.class}}" data-bs-ride="carousel">
   <div class="carousel-inner">
     {% block carousel_items %}
       {% for item in list %}
         {%
-          include '@ignite_theme/carousel/carousel-item.twig' with {
+          include '@kodffe_theme/carousel/carousel-item.twig' with {
             "id": id,
             "item": item
           } only

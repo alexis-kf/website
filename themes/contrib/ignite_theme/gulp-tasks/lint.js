@@ -33,6 +33,7 @@ module.exports = {
       './src/stories/{global,components}/**/*.es6.js'
     ])
       .pipe(eslint())
-      .pipe(eslint.format());
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError());
   }
 };

@@ -1,9 +1,77 @@
 /*!
- * Bootstrap Utilities v5.2.3 (https://getbootstrap.com/)
- * Copyright 2011-2022 The Bootstrap Authors
- * Copyright 2011-2022 Twitter, Inc.
+ * Bootstrap Utilities v5.3.2 (https://getbootstrap.com/)
+ * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+.btn {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  line-height: 1;
+  padding: 0.75em 1.5em;
+  width: -moz-fit-content;
+  width: fit-content;
+  --bs-btn-font-size: 0.875rem;
+}
+.btn.btn-sm {
+  padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+  --bs-btn-font-size: 0.75rem;
+}
+@media (min-width: 992px) {
+  .btn {
+    --bs-btn-font-size: 1rem;
+  }
+  .btn.btn-sm {
+    --bs-btn-font-size: 0.875rem;
+  }
+}
+.btn:has(.material-symbols-outlined) {
+  padding: 0.75em 1.25em 0.75em 1.5em;
+}
+.btn .material-symbols-outlined {
+  margin-left: 0.25em;
+  overflow: hidden;
+}
+.btn.has-icon {
+  padding: 0.75em 1.25em 0.75em 1.5em;
+}
+.btn.btn-primary {
+  --bs-btn-hover-bg: var(--bs-secondary);
+  --bs-btn-hover-border-color: var(--bs-secondary);
+}
+.bg-dark .btn.btn-primary {
+  --bs-btn-color: var(--bs-dark);
+  --bs-btn-bg: var(--bs-light);
+  --bs-btn-hover-bg: var(--bs-secondary);
+}
+.btn.btn-secondary {
+  --bs-btn-bg: var(--bs-secondary);
+  --bs-btn-hover-bg: var(--bs-primary);
+}
+.bg-dark .btn.btn-secondary {
+  --bs-btn-hover-color: var(--bs-dark);
+  --bs-btn-hover-bg: var(--bs-light);
+}
+.bg-dark .btn.btn-outline-primary {
+  --bs-btn-color: var(--bs-light);
+  --bs-btn-border-color: var(--bs-light);
+  --bs-btn-hover-border-color: var(--bs-secondary);
+  --bs-btn-hover-bg: var(--bs-secondary);
+}
+.bg-dark .btn.btn-outline-secondary {
+  --bs-btn-color: var(--bs-gray-300);
+  --bs-btn-border-color: var(--bs-gray-300);
+  --bs-btn-hover-color: var(--bs-secondary);
+  --bs-btn-hover-border-color: var(--bs-light);
+  --bs-btn-hover-bg: var(--bs-light);
+}
+
+.sb-only.bg-dark {
+  padding: 1rem;
+  margin-top: -1rem;
+  margin-left: -1rem;
+}
+
 .carousel {
   position: relative;
 }
@@ -157,7 +225,6 @@
   margin-right: 15%;
   margin-bottom: 1rem;
   margin-left: 15%;
-  list-style: none;
 }
 .carousel-indicators [data-bs-target] {
   box-sizing: content-box;
@@ -205,6 +272,18 @@
   background-color: #000;
 }
 .carousel-dark .carousel-caption {
+  color: #000;
+}
+
+[data-bs-theme=dark] .carousel .carousel-control-prev-icon,
+[data-bs-theme=dark] .carousel .carousel-control-next-icon, [data-bs-theme=dark].carousel .carousel-control-prev-icon,
+[data-bs-theme=dark].carousel .carousel-control-next-icon {
+  filter: invert(1) grayscale(100);
+}
+[data-bs-theme=dark] .carousel .carousel-indicators [data-bs-target], [data-bs-theme=dark].carousel .carousel-indicators [data-bs-target] {
+  background-color: #000;
+}
+[data-bs-theme=dark] .carousel .carousel-caption, [data-bs-theme=dark].carousel .carousel-caption {
   color: #000;
 }
 
