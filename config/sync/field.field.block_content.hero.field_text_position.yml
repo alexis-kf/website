@@ -14,7 +14,7 @@ bundle: hero
 label: 'Text position'
 description: ''
 required: true
-translatable: false
+translatable: true
 default_value:
   -
     value: align_center

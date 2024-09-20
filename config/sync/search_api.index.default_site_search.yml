@@ -3,10 +3,13 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.body
+    - field.storage.node.field_subhead
     - search_api.server.database_search
   module:
-    - search_api
+    - scheduler
     - node
+    - search_api
 _core:
   default_config_hash: k_zq4dnM_zmv2-Vxk_v1vcyt1OVEY2wQBZI8orqrdlA
 id: default_site_search
@@ -14,13 +17,44 @@ name: 'Default Site Search'
 description: 'Default Site Search.'
 read_only: false
 field_settings:
+  body:
+    label: Body
+    datasource_id: 'entity:node'
+    property_path: body
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.body
+  field_subhead:
+    label: Subhead
+    datasource_id: 'entity:node'
+    property_path: field_subhead
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_subhead
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
+  publish_on:
+    label: 'Publish on'
+    datasource_id: 'entity:node'
+    property_path: publish_on
+    type: date
+    dependencies:
+      module:
+        - scheduler
   rendered_item:
     label: 'Rendered HTML output'
     property_path: rendered_item
     type: text
     configuration:
       roles:
-        anonymous: anonymous
+        - anonymous
       view_mode:
         'entity:node':
           article: default
@@ -34,28 +68,6 @@ field_settings:
           profile: default
           resource: default
           webform: default
-  node_grants:
-    label: 'Node access information'
-    property_path: search_api_node_grants
-    type: string
-    indexed_locked: true
-    type_locked: true
-    hidden: true
-  title:
-    label: Title
-    datasource_id: 'entity:node'
-    property_path: title
-    type: string
-  nid:
-    label: ID
-    datasource_id: 'entity:node'
-    property_path: nid
-    type: integer
-  publish_on:
-    label: 'Publish on'
-    datasource_id: 'entity:node'
-    property_path: publish_on
-    type: date
   status:
     label: 'Publishing status'
     datasource_id: 'entity:node'
@@ -63,11 +75,17 @@ field_settings:
     type: boolean
     indexed_locked: true
     type_locked: true
-  changed:
-    label: Changed
+    dependencies:
+      module:
+        - node
+  title:
+    label: Title
     datasource_id: 'entity:node'
-    property_path: changed
-    type: date
+    property_path: title
+    type: string
+    dependencies:
+      module:
+        - node
   uid:
     label: 'Authored by'
     datasource_id: 'entity:node'
@@ -75,11 +93,16 @@ field_settings:
     type: integer
     indexed_locked: true
     type_locked: true
+    dependencies:
+      module:
+        - node
 datasource_settings:
   'entity:node':
     bundles:
-      default: true
-      selected: {  }
+      default: false
+      selected:
+        - article
+        - page
     languages:
       default: true
       selected: {  }
@@ -89,40 +112,49 @@ processor_settings:
   content_access:
     weights:
       preprocess_query: -30
+  custom_value: {  }
   entity_status: {  }
+  entity_type: {  }
   highlight:
-    highlight: always
-    highlight_partial: false
-    excerpt: true
-    excerpt_length: 256
-    exclude_fields: {  }
-    prefix: '<strong>'
-    suffix: '</strong>'
     weights:
       postprocess_query: 0
+    prefix: '<strong>'
+    suffix: '</strong>'
+    excerpt: true
+    excerpt_always: false
+    excerpt_length: 256
+    exclude_fields: {  }
+    highlight: always
+    highlight_partial: false
   ignorecase:
-    all_fields: false
-    fields:
-      - rendered_item
-      - title
     weights:
       preprocess_index: -20
       preprocess_query: -20
-  rendered_item: {  }
-  tokenizer:
     all_fields: true
     fields:
+      - body
+      - field_subhead
       - rendered_item
-    spaces: ''
-    overlap_cjk: 1
-    minimum_word_size: '3'
+      - title
+  language_with_fallback: {  }
+  rendered_item: {  }
+  tokenizer:
     weights:
       preprocess_index: -6
       preprocess_query: -6
+    all_fields: true
+    fields:
+      - body
+      - rendered_item
+    spaces: ''
+    ignored: ._-
+    overlap_cjk: 1
+    minimum_word_size: '3'
 tracker_settings:
-  default: {  }
+  default:
+    indexing_order: fifo
 options:
-  index_directly: true
   cron_limit: 50
+  index_directly: true
   track_changes_in_references: true
 server: database_search

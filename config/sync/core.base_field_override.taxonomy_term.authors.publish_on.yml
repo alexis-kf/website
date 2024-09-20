@@ -1,0 +1,18 @@
+uuid: ee2f5328-825c-423b-9716-d9df4dcffe51
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.authors
+id: taxonomy_term.authors.publish_on
+field_name: publish_on
+entity_type: taxonomy_term
+bundle: authors
+label: 'Publish on'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: timestamp

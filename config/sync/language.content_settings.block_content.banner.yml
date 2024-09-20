@@ -4,10 +4,17 @@ status: true
 dependencies:
   config:
     - block_content.type.banner
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
 _core:
   default_config_hash: n_9s6l5syL16Z1hUzO7U3Cci2JEh4d2XW3ODjGGymJc
 id: block_content.banner
 target_entity_type_id: block_content
 target_bundle: banner
 default_langcode: site_default
-language_alterable: false
+language_alterable: true

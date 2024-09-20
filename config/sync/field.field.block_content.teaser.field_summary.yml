@@ -24,7 +24,7 @@ bundle: teaser
 label: Summary
 description: 'Provide a brief description of the content being featured.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

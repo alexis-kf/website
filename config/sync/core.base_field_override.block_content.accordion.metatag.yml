@@ -1,0 +1,20 @@
+uuid: 7b721962-d8f0-4422-916e-afdb91134f72
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.accordion
+  module:
+    - metatag
+id: block_content.accordion.metatag
+field_name: metatag
+entity_type: block_content
+bundle: accordion
+label: 'Metatags (Hidden field for JSON support)'
+description: 'The computed meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag_computed

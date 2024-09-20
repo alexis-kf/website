@@ -1,0 +1,18 @@
+uuid: f2bf1908-ced5-47e9-996a-cdb9e83f151a
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.card_list
+id: block_content.card_list.info
+field_name: info
+entity_type: block_content
+bundle: card_list
+label: 'Block description'
+description: 'A brief description of your block.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

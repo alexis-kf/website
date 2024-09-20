@@ -4,12 +4,13 @@ status: true
 dependencies:
   config:
     - block_content.type.hero
+    - field.field.block_content.hero.field_boolean_overlay
     - field.field.block_content.hero.field_eyebrow
     - field.field.block_content.hero.field_heading
-    - field.field.block_content.hero.field_hero_layout
     - field.field.block_content.hero.field_link
     - field.field.block_content.hero.field_media
     - field.field.block_content.hero.field_summary
+    - field.field.block_content.hero.field_text_position
   module:
     - link
     - options
@@ -21,6 +22,16 @@ targetEntityType: block_content
 bundle: hero
 mode: default
 content:
+  field_boolean_overlay:
+    type: boolean
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: text-light
+      format_custom_true: text-dark
+    third_party_settings: {  }
+    weight: 6
+    region: content
   field_eyebrow:
     type: string
     label: hidden
@@ -35,13 +46,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 4
-    region: content
-  field_hero_layout:
-    type: list_key
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 5
     region: content
   field_link:
     type: link
@@ -71,6 +75,14 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  field_text_position:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
 hidden:
+  field_hero_layout: true
   langcode: true
   search_api_excerpt: true

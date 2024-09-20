@@ -1,0 +1,22 @@
+uuid: db3b3e26-40fa-42b3-96d0-42ecfbd9439c
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.teaser
+id: block_content.teaser.status
+field_name: status
+entity_type: block_content
+bundle: teaser
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

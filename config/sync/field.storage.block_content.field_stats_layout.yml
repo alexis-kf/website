@@ -5,8 +5,6 @@ dependencies:
   module:
     - block_content
     - options
-_core:
-  default_config_hash: wVfg-SX4GfpfWwCF6htsU-KE-VjzZjBJpelyL-oa4O8
 id: block_content.field_stats_layout
 field_name: field_stats_layout
 entity_type: block_content
@@ -14,8 +12,14 @@ type: list_string
 settings:
   allowed_values:
     -
+      value: stat_list
+      label: 'Stat List'
+    -
+      value: stat_grid
+      label: 'Stat Grid with Image'
+    -
       value: dark
-      label: Dark
+      label: 'Stat Grid with Image (Dark)'
   allowed_values_function: ''
 module: options
 locked: false

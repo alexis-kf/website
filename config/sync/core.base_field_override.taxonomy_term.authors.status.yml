@@ -1,0 +1,22 @@
+uuid: 79ed9612-d6d9-471f-9e4e-2856f3c11206
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.authors
+id: taxonomy_term.authors.status
+field_name: status
+entity_type: taxonomy_term
+bundle: authors
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,18 @@
+uuid: d65b8a67-7bef-4637-a02b-e67ba99aa854
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.authors
+id: taxonomy_term.authors.name
+field_name: name
+entity_type: taxonomy_term
+bundle: authors
+label: Name
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -16,10 +16,10 @@ bundle: teaser
 label: Link
 description: 'Provide an internal or external link.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  link_type: 17
   title: 1
+  link_type: 17
 field_type: link

@@ -5,6 +5,7 @@ dependencies:
   config:
     - block_content.type.hero
     - field.storage.block_content.field_summary
+    - filter.format.basic_html
   module:
     - allowed_formats
     - text
@@ -21,7 +22,7 @@ id: block_content.hero.field_summary
 field_name: field_summary
 entity_type: block_content
 bundle: hero
-label: Summary
+label: Subhead
 description: 'Provide the teaser summary for the hero.'
 required: false
 translatable: true

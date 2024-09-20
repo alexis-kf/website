@@ -14,7 +14,7 @@ bundle: banner
 label: Title
 description: 'Provide the primary heading for the banner.'
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

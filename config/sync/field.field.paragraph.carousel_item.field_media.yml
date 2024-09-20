@@ -15,7 +15,7 @@ bundle: carousel_item
 label: Media
 description: 'Carousel media item.'
 required: true
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:

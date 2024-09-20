@@ -7,4 +7,4 @@ _core:
 id: hero
 label: Hero
 revision: false
-description: 'Promotional teasers that include a large image, typically placed at the top of a page.'
+description: 'Full-width banner that includes a large image, heading, and options for a button, typically placed at the top of a page.'

@@ -4,10 +4,17 @@ status: true
 dependencies:
   config:
     - block_content.type.card_list
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
 _core:
   default_config_hash: CtvbwS24LQet2F6tXznFR-nRwN84ewMzlIJii9PmtQE
 id: block_content.card_list
 target_entity_type_id: block_content
 target_bundle: card_list
 default_langcode: site_default
-language_alterable: false
+language_alterable: true

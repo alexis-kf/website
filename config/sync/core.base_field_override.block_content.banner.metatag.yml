@@ -1,0 +1,20 @@
+uuid: 912870c9-b0a1-46e5-816d-438113cac226
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.banner
+  module:
+    - metatag
+id: block_content.banner.metatag
+field_name: metatag
+entity_type: block_content
+bundle: banner
+label: 'Metatags (Hidden field for JSON support)'
+description: 'The computed meta tags for the entity.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag_computed

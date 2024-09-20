@@ -1,0 +1,22 @@
+uuid: 7c6ed5c9-756d-46db-8c47-9310dfd7ea9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.carousel_item
+id: paragraph.carousel_item.status
+field_name: status
+entity_type: paragraph
+bundle: carousel_item
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

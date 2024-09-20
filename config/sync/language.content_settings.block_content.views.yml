@@ -4,10 +4,17 @@ status: true
 dependencies:
   config:
     - block_content.type.views
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
 _core:
   default_config_hash: 287P1tVn7fi66zv193c7qHI7W8U5nx6cJ7E_2elgo58
 id: block_content.views
 target_entity_type_id: block_content
 target_bundle: views
 default_langcode: site_default
-language_alterable: false
+language_alterable: true

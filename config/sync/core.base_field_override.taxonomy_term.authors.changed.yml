@@ -1,0 +1,18 @@
+uuid: 79887d2d-d6cf-493c-a3c7-73902c31d106
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.authors
+id: taxonomy_term.authors.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: authors
+label: Changed
+description: 'The time that the term was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

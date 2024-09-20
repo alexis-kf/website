@@ -1,0 +1,18 @@
+uuid: f8a68038-7046-40a4-9751-d8b9e9b65c04
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.card_list
+id: block_content.card_list.changed
+field_name: changed
+entity_type: block_content
+bundle: card_list
+label: Changed
+description: 'The time that the content block was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed
