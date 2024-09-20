@@ -10,7 +10,7 @@
 
     @include make-container($container-margin-default);
 
-    // Kodffe: Override outer margins per breakpoint.
+    // Ignite: Override outer margins per breakpoint.
     @include media-breakpoint-up(lg) {
       @include make-container($container-margin-lg);
     }
@@ -23,11 +23,11 @@
       @include make-container($container-margin-xxl);
     }
 
-    // Kodffe: Override container to use full gutter for outer spacing.
+    // Ignite: Override container to use full gutter for outer spacing.
     padding-right: var(--bs-gutter-x);
     padding-left: var(--bs-gutter-x);
 
-    // Kodffe: If container is nested, remove outer spacing.
+    // Ignite: If container is nested, remove outer spacing.
     .container,
     .container-fluid {
       padding-right: 0;

@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'org\\bovigo\\vfs\\' => array($vendorDir . '/mikey179/vfsstream/src/main/php'),
-    'WebDriver' => array($vendorDir . '/instaclick/php-webdriver/lib'),
+    'WebDriver' => array($vendorDir . '/lullabot/php-webdriver/lib'),
     'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
     'Drupal\\Tests\\Driver' => array($vendorDir . '/drupal/drupal-driver/tests'),
     'Drupal\\MinkExtension' => array($vendorDir . '/drupal/drupal-extension/src'),
@@ -20,5 +20,4 @@ return array(
     'Behat\\MinkExtension' => array($vendorDir . '/friends-of-behat/mink-extension/src'),
     'Behat\\Gherkin' => array($vendorDir . '/behat/gherkin/src'),
     'Archive_Tar' => array($vendorDir . '/pear/archive_tar'),
-    '' => array($vendorDir . '/pear/pear-core-minimal/src'),
 );

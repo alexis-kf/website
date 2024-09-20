@@ -1,8 +1,8 @@
-{{ attach_library('kodffe_theme/card-list') }}
+{{ attach_library('ignite_theme/card-list') }}
 
 {% if section_title %}
   {%
-    include '@kodffe_theme/heading/heading.twig' with {
+    include '@ignite_theme/heading/heading.twig' with {
       "heading": {
         "title": section_title,
         "heading_level": 2,
@@ -17,7 +17,7 @@
     {% for item in items %}
       <div class="col-sm-4 mb-4">
         {%
-          include '@kodffe_theme/card/card.twig' with {
+          include '@ignite_theme/card/card.twig' with {
             "card": item.card
           } only
         %}

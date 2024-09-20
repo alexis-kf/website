@@ -1,35 +1,91 @@
-// Import site utilities.
 @import '../../global/bootstrap-init';
 
-// Style the icon.
-.btn span {
-  float: right;
-  margin-left: 7px;
-  margin-top: 2px;
-  width: 24px;
-  height: 24px;
-  overflow: hidden;
+.btn {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  line-height: 1;
+  padding: 0.75em 1.5em;
+  width: fit-content;
+  --bs-btn-font-size: 0.875rem;
+
+  &.btn-sm {
+    padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+    --bs-btn-font-size: 0.75rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    --bs-btn-font-size: 1rem;
+
+    &.btn-sm {
+      --bs-btn-font-size: 0.875rem;
+    }
+  }
+
+  // Adjust padding if icon present.
+  &:has(.material-symbols-outlined) {
+    padding: 0.75em 1.25em 0.75em 1.5em;
+  }
+
+  // Icon container.
+  .material-symbols-outlined {
+    margin-left: 0.25em;
+    overflow: hidden;
+  }
+
+  // Add class if possible, just in case older browser doesn't support :has().
+  &.has-icon {
+    padding: 0.75em 1.25em 0.75em 1.5em;
+  }
+
+  &.btn-primary {
+    --bs-btn-hover-bg: var(--bs-secondary);
+    --bs-btn-hover-border-color: var(--bs-secondary);
+
+    .bg-dark & {
+      --bs-btn-color: var(--bs-dark);
+      --bs-btn-bg: var(--bs-light);
+      --bs-btn-hover-bg: var(--bs-secondary);
+    }
+  }
+
+  &.btn-secondary {
+    --bs-btn-bg: var(--bs-secondary);
+    --bs-btn-hover-bg: var(--bs-primary);
+
+    .bg-dark & {
+      --bs-btn-hover-color: var(--bs-dark);
+      --bs-btn-hover-bg: var(--bs-light);
+    }
+  }
+
+  &.btn-outline-primary {
+
+    .bg-dark & {
+      --bs-btn-color: var(--bs-light);
+      --bs-btn-border-color: var(--bs-light);
+      --bs-btn-hover-border-color: var(--bs-secondary);
+      --bs-btn-hover-bg: var(--bs-secondary);
+    }
+  }
+
+  &.btn-outline-secondary {
+
+    .bg-dark & {
+      --bs-btn-color: var(--bs-gray-300);
+      --bs-btn-border-color: var(--bs-gray-300);
+      --bs-btn-hover-color: var(--bs-secondary);
+      --bs-btn-hover-border-color: var(--bs-light);
+      --bs-btn-hover-bg: var(--bs-light);
+    }
+  }
 }
 
-// Override the hove button background color.
-.btn:hover {
-  background-color: $secondary;
-  border-color: $secondary;
-}
+.sb-only {
 
-// Override border color for primary button.
-body .btn-primary {
-  border-color: $primary;
-}
-
-body .btn-primary:hover {
-  color: $white;
-}
-
-body .btn-outline-primary {
-  background-color: $white;
-}
-
-.btn-light:hover {
-  color: $white !important;
+  &.bg-dark {
+    padding: 1rem;
+    margin-top: -1rem;
+    margin-left: -1rem;
+  }
 }

@@ -1,111 +1,150 @@
-import "./stats.scss";
-import StatsTemplate from "./stats.twig";
+import './stats.scss';
+import StatsTemplate from './stats.twig';
 
 export default {
-  title: "Editorial/Stats",
+  title: 'Editorial/Stats',
   argTypes: {
+    eyebrow: {
+      name: 'Eyebrow Text',
+      description: 'Eyebrow displays above heading.',
+      control: 'text'
+    },
     title: {
-      description: "Stats title",
-      control: "text",
+      name: 'Heading',
+      description: 'Headline displayed for Stat Grid..',
+      control: 'object'
     },
-    image: {
-      description: "Stats image markup",
-      control: "text",
+    media: {
+      description: 'Stats image markup',
+      table: { disable: true }
     },
-    summary: {
-      description: "Stats summary",
-      control: "text",
+    body: {
+      description: 'Lead text displayed for Stat Grid.',
+      control: 'text',
     },
-    modifer: {
-      description: "Stats modifier",
-      control: "text",
+    modifier: {
+      description: 'Stats modifier',
+      control: 'select',
+      options: {
+        'Default': 'dark bg-dark text-light',
+        'Stat List': 'stat_list',
+        'Stat Grid': 'stat_grid',
+      },
     },
     stats: {
-      description: "Stats list",
-      control: "array",
+      description: 'Stats list',
+      control: 'array',
     },
   },
 };
 
-export const Stats = StatsTemplate.bind({});
-Stats.args = {
-  "title": 'All the pieces you need to kickstart your site',
-  'eyebrow': 'Eyebrow',
-  "image": "<img src='https://via.placeholder.com/800x600.png' class='img-fluid rounded' alt='Placeholder' />",
-  "summary": 'Use our customizable design system as a foundation and expand from there to meet your organization’s needs.',
-  "modifier": "text-dark",
-  "stats": [
+export const StatsDark = StatsTemplate.bind({});
+StatsDark.args = {
+  title: 'All the pieces you need to kickstart your site',
+  eyebrow: 'Eyebrow',
+  media: '<img src="https://picsum.photos/1600/900" class="img-fluid rounded" alt="Placeholder" />',
+  body: '<p>Lorem ipsum dolor sit amet consectetur adipiscing, elit platea sem eu vehicula consequat, venenatis auctor pellentesque metus commodo. Tempus fermentum natoque hac curae aliquet vehicula justo felis vel, sed nascetur senectus etiam posuere convallis integer euismod eleifend curabitur, penatibus torquent mattis vitae ligula conubia platea phasellus.</p>',
+  modifier: 'dark bg-dark text-light',
+  stats: [
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<span class="material-symbols-outlined">rocket_launch</span>',
+      heading: 'Lorem ipsum dolor sit amet consectetur',
+      body: 'Diam suscipit ligula velit integer inceptos sociis, lobortis cursus luctus mollis per etiam iaculis.',
+      modifier: ''
     },
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<span class="material-symbols-outlined">forest</span>',
+      heading: 'Dictumst primis leo gravida eros nulla mattis',
+      body: 'Himenaeos erat natoque gravida tempus nisl curabitur ut praesent, orci porttitor luctus hendrerit habitasse facilisis.',
+      modifier: ''
     },
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<span class="material-symbols-outlined">linked_services</span>',
+      heading: 'Id nulla facilisis cras torquent',
+      body: 'Volutpat nascetur libero neque pulvinar primis accumsan taciti id.',
+      modifier: ''
     },
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
-    },
-    {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
-    },
-    {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
-    },
+      media: '<span class="material-symbols-outlined">timer_10_alt_1</span>',
+      heading: 'Mollis erat litora velit pharetra ante',
+      body: 'Fermentum tellus elementum porta euismod lectus condimentum hendrerit blandit interdum.',
+      modifier: ''
+    }
   ]
 };
 
-export const StatsDark = StatsTemplate.bind({});
-StatsDark.args = {
-  "title": 'All the pieces you need to kickstart your site',
-  'eyebrow': 'Eyebrow',
-  "image": "<img src='https://via.placeholder.com/800x600.png' class='img-fluid rounded' alt='Placeholder' />",
-  "summary": 'Use our customizable design system as a foundation and expand from there to meet your organization’s needs.',
-  "modifier": "bg-black text-light",
-  "heading_modifier": "text-light",
-  "stats": [
+export const StatsList = StatsTemplate.bind({});
+StatsList.args = {
+  title: 'Heading text',
+  eyebrow: '',
+  media: '',
+  body: '',
+  modifier: 'stat_list',
+  button: {
+    url: '#',
+    modifier: 'btn-primary has-icon',
+    text: 'primary Button',
+    icon: 'arrow_right_alt',
+  },
+  stats: [
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<span class="material-symbols-outlined">rocket_launch</span>',
+      heading: 'Lorem ipsum dolor sit amet consectetur',
+      body: 'Diam suscipit ligula velit integer inceptos sociis, lobortis cursus luctus mollis per etiam iaculis.',
+      modifier: 'col-md-6 col-xl-3'
     },
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<span class="material-symbols-outlined">forest</span>',
+      heading: 'Dictumst primis leo gravida eros nulla mattis',
+      body: 'Himenaeos erat natoque gravida tempus nisl curabitur ut praesent, orci porttitor luctus hendrerit habitasse facilisis.',
+      modifier: 'col-md-6 col-xl-3'
     },
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<span class="material-symbols-outlined">linked_services</span>',
+      heading: 'Id nulla facilisis cras torquent',
+      body: 'Volutpat nascetur libero neque pulvinar primis accumsan taciti id.',
+      modifier: 'col-md-6 col-xl-3'
     },
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<span class="material-symbols-outlined">timer_10_alt_1</span>',
+      heading: 'Mollis erat litora velit pharetra ante',
+      body: 'Fermentum tellus elementum porta euismod lectus condimentum hendrerit blandit interdum.',
+      modifier: 'col-md-6 col-xl-3'
+    }
+  ]
+};
+
+export const StatsGrid = StatsTemplate.bind({});
+StatsGrid.args = {
+  title: 'All the pieces you need to kickstart your site',
+  eyebrow: 'Eyebrow',
+  media: '<img src="https://picsum.photos/1600/900" class="img-fluid rounded" alt="Placeholder" />',
+  body: '<p>Lorem ipsum dolor sit amet consectetur adipiscing, elit platea sem eu vehicula consequat, venenatis auctor pellentesque metus commodo. Tempus fermentum natoque hac curae aliquet vehicula justo felis vel, sed nascetur senectus etiam posuere convallis integer euismod eleifend curabitur, penatibus torquent mattis vitae ligula conubia platea phasellus.</p>',
+  modifier: 'stat_grid',
+  stats: [
+    {
+      media: '<span class="material-symbols-outlined">rocket_launch</span>',
+      heading: 'Lorem ipsum dolor sit amet consectetur',
+      body: 'Diam suscipit ligula velit integer inceptos sociis, lobortis cursus luctus mollis per etiam iaculis.',
+      modifier: ''
     },
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<img src="/images/custom-icon.svg" alt="" typeof="foaf:Image" class="img-fluid">',
+      heading: 'Dictumst primis leo gravida eros nulla mattis',
+      body: 'Himenaeos erat natoque gravida tempus nisl curabitur ut praesent, orci porttitor luctus hendrerit habitasse facilisis.',
+      modifier: ''
     },
     {
-      "icon": '<span class="material-symbols-outlined">arrow_right_alt</span>',
-      "title": "H3 Title",
-      "summary": "Use our customizable design system as a foundation and expand from there to meet your organization’s needs.",
+      media: '<span class="material-symbols-outlined">linked_services</span>',
+      heading: 'Id nulla facilisis cras torquent',
+      body: 'Volutpat nascetur libero neque pulvinar primis accumsan taciti id.',
+      modifier: ''
     },
+    {
+      media: '<span class="material-symbols-outlined">timer_10_alt_1</span>',
+      heading: 'Mollis erat litora velit pharetra ante',
+      body: 'Fermentum tellus elementum porta euismod lectus condimentum hendrerit blandit interdum.',
+      modifier: ''
+    }
   ]
 };

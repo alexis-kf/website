@@ -1,44 +1,64 @@
-// Import site utilities.
 @import '../../global/bootstrap-init';
 
-.stats-item {
+div[class^='stats-list_'] {
 
-  .material-symbols-outlined {
-    font-size: 3rem;
+  picture {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      // Classes added to all images by .theme function
+      &.w-auto {
+        width: 100% !important;
+      }
+    }
   }
 
-  img {
-    width: 32px;
-    margin-bottom: 1rem;
+  .d-md-grid {
+    // Set grid columns
+    @include media-breakpoint-up(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }
 
-// Adjust stats image size per breakpoint.
-.stats-image {
-  text-align: center;
-
-  img {
-    width: 100%;
+.stats-list_lead {
+  // Remove margin on last or only paragraph
+  p:last-of-type:only-child {
+    margin-bottom: 0;
   }
+}
 
-  @include media-breakpoint-up(md) {
+.stat-item_media {
+  // Redefine custom props for icon colors.
+  --ig-icon-light: var(--bs-secondary);
+  --ig-icon-dark: var(--bs-secondary);
+  --ig-filter-light: $filter-primary;
+  --ig-filter-dark: $filter-secondary;
 
-    img {
-      width: 70%;
+  &.icon-color {
+    color: var(--ig-icon-light);
+  
+    .material-symbols-outlined {
+      @include font-size(3rem);
+      color: inherit;
+      display: block;
     }
-  }
-
-  @include media-breakpoint-up(xl) {
-
+  
     img {
-      width: 50%;
+      filter: var(--ig-filter-light);
     }
-  }
-
-  @include media-breakpoint-up(xxl) {
-
-    img {
-      width: 100%;
+  
+    .bg-dark & {
+      color: var(--ig-icon-dark);
+  
+      img {
+        filter: var(--ig-filter-light);
+      }
     }
   }
 }

@@ -22,7 +22,7 @@
   {% block content %}
     {% if content.field_title %}
       {%
-        include '@kodffe_theme/heading/heading.twig' with {
+        include '@ignite_theme/heading/heading.twig' with {
           "heading": {
             "title": content.field_title|field_value,
             "heading_level": "2",
@@ -31,7 +31,7 @@
         } only
       %}
     {% endif %}
-    {% embed '@kodffe_theme/accordion/accordion.twig' with { content: content, modifier: "container-fluid" } only %}
+    {% embed '@ignite_theme/accordion/accordion.twig' with { content: content, modifier: "container-fluid" } only %}
       {% block accordion_items %}
         {{ content.field_accordion_item }}
       {% endblock accordion_items %}

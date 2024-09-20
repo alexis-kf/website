@@ -36,7 +36,7 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-// overrides some colors.
+// Ignite overrides some colors.
 $blue:    #0d6efd !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
@@ -299,15 +299,30 @@ $cyans: (
 // fusv-enable
 
 // scss-docs-start theme-color-variables
-// overrides these values.
+// Ignite overrides these values.
 $primary:       #111112 !default;
-$secondary:     $teal !default;
+$secondary:     #0069F6 !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         #F9FAFB !default;
 $dark:          #111112 !default;
+
+// User filters to color SVGs rendered in IMG tags.
+$filter-primary: invert(3%) sepia(0%) saturate(2572%) hue-rotate(295deg) brightness(96%) contrast(92%);
+$filter-secondary: invert(28%) sepia(44%) saturate(6415%) hue-rotate(206deg) brightness(98%) contrast(103%);
+$filter-light: invert(100%) sepia(0%) saturate(7500%) hue-rotate(300deg) brightness(107%) contrast(115%);
+$filter-dark: invert(3%) sepia(0%) saturate(2572%) hue-rotate(295deg) brightness(96%) contrast(92%);
+
+// Create Ignite map.
+$ignite-colors: (
+  overlay-color: rgba(33, 11, 11, 0.5),
+  icon-light: $primary,
+  icon-dark: $secondary,
+  filter-light: rgb(249,250,251),
+  filter-dark: rgb(17,17,18),
+);
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
@@ -322,6 +337,43 @@ $theme-colors: (
   "dark":       $dark
 ) !default;
 // scss-docs-end theme-colors-map
+
+// Merge or remove colors from $theme-colors map.
+$theme-colors: map-merge($theme-colors, $ignite-colors);
+// $theme-colors: map-remove($theme-colors, "info", "light", "dark");
+
+// scss-docs-start theme-text-variables
+$primary-text-emphasis:   shade-color($primary, 60%) !default;
+$secondary-text-emphasis: shade-color($secondary, 60%) !default;
+$success-text-emphasis:   shade-color($success, 60%) !default;
+$info-text-emphasis:      shade-color($info, 60%) !default;
+$warning-text-emphasis:   shade-color($warning, 60%) !default;
+$danger-text-emphasis:    shade-color($danger, 60%) !default;
+$light-text-emphasis:     $gray-700 !default;
+$dark-text-emphasis:      $gray-700 !default;
+// scss-docs-end theme-text-variables
+
+// scss-docs-start theme-bg-subtle-variables
+$primary-bg-subtle:       tint-color($primary, 80%) !default;
+$secondary-bg-subtle:     tint-color($secondary, 80%) !default;
+$success-bg-subtle:       tint-color($success, 80%) !default;
+$info-bg-subtle:          tint-color($info, 80%) !default;
+$warning-bg-subtle:       tint-color($warning, 80%) !default;
+$danger-bg-subtle:        tint-color($danger, 80%) !default;
+$light-bg-subtle:         mix($gray-100, $white) !default;
+$dark-bg-subtle:          $gray-400 !default;
+// scss-docs-end theme-bg-subtle-variables
+
+// scss-docs-start theme-border-subtle-variables
+$primary-border-subtle:   tint-color($primary, 60%) !default;
+$secondary-border-subtle: tint-color($secondary, 60%) !default;
+$success-border-subtle:   tint-color($success, 60%) !default;
+$info-border-subtle:      tint-color($info, 60%) !default;
+$warning-border-subtle:   tint-color($warning, 60%) !default;
+$danger-border-subtle:    tint-color($danger, 60%) !default;
+$light-border-subtle:     $gray-200 !default;
+$dark-border-subtle:      $gray-500 !default;
+// scss-docs-end theme-border-subtle-variables
 
 // Characters which are escaped by the escape-svg function
 $escaped-characters: (
@@ -352,6 +404,9 @@ $enable-validation-icons:     true !default;
 $enable-negative-margins:     false !default;
 $enable-deprecation-messages: true !default;
 $enable-important-utilities:  true !default;
+
+$enable-dark-mode:            true !default;
+$color-mode-type:             data !default; // `data` or `media-query`
 
 // Prefix for :root CSS variables
 
@@ -418,11 +473,19 @@ $position-values: (
 //
 // Settings for the `<body>` element.
 
+$body-text-align:           null !default;
+
+// Ignite color override.
+$body-color:                #4D5156 !default;
 $body-bg:                   $white !default;
 
-// color override.
-$body-color:                #4D5156 !default;
-$body-text-align:           null !default;
+$body-secondary-color:      rgba($body-color, .75) !default;
+$body-secondary-bg:         $gray-200 !default;
+
+$body-tertiary-color:       rgba($body-color, .5) !default;
+$body-tertiary-bg:          $gray-100 !default;
+
+$body-emphasis-color:       $black !default;
 
 // Links
 //
@@ -436,6 +499,15 @@ $link-hover-decoration:                   null !default;
 
 $stretched-link-pseudo-element:           after !default;
 $stretched-link-z-index:                  1 !default;
+
+// Icon links
+// scss-docs-start icon-link-variables
+$icon-link-gap:               .375rem !default;
+$icon-link-underline-offset:  .25em !default;
+$icon-link-icon-size:         1em !default;
+$icon-link-icon-transition:   .2s ease-in-out transform !default;
+$icon-link-icon-transform:    translate3d(.25em, 0, 0) !default;
+// scss-docs-end icon-link-variables
 
 // Paragraphs
 //
@@ -490,19 +562,19 @@ $grid-columns:                12 !default;
 $grid-gutter-width:           16px !default;
 $grid-row-columns:            6 !default;
 
-// custom gutter widths variables.
+// Ignite: custom gutter widths variables.
 $grid-gutter-width-sm:        24px !default;
 $grid-gutter-width-md:        24px !default;
 $grid-gutter-width-xl:        32px !default;
 $grid-gutter-width-xxl:       48px !default;
 
-// custom container margin variables.
+// Ignite: custom container margin variables.
 $container-margin-default:    24px !default;
 $container-margin-lg:         32px !default;
 $container-margin-xl:         48px !default;
 $container-margin-xxl:        96px !default;
 
-// set max width for container fluid.
+// Ignite: set max width for container fluid.
 $container-fluid-max-width:   1668px;
 
 // Container padding
@@ -530,12 +602,12 @@ $border-color-translucent:    rgba($black, .175) !default;
 // scss-docs-end border-variables
 
 // scss-docs-start border-radius-variables
-// override border radius default.
+// Ignite override border radius default.
 $border-radius:               .5rem !default;
 $border-radius-sm:            .25rem !default;
 $border-radius-lg:            .5rem !default;
 $border-radius-xl:            1rem !default;
-$border-radius-2xl:           2rem !default;
+$border-radius-xxl:           2rem !default;
 $border-radius-pill:          50rem !default;
 // scss-docs-end border-radius-variables
 
@@ -548,6 +620,14 @@ $box-shadow-inset:            inset 0 1px 2px rgba($black, .075) !default;
 
 $component-active-color:      $white !default;
 $component-active-bg:         $primary !default;
+
+// scss-docs-start focus-ring-variables
+$focus-ring-width:      .25rem !default;
+$focus-ring-opacity:    .25 !default;
+$focus-ring-color:      rgba($primary, $focus-ring-opacity) !default;
+$focus-ring-blur:       0 !default;
+$focus-ring-box-shadow: 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color !default;
+// scss-docs-end focus-ring-variables
 
 // scss-docs-start caret-variables
 $caret-width:                 .3em !default;
@@ -589,15 +669,17 @@ $font-family-code:            var(--#{$prefix}font-monospace) !default;
 // $font-size-base affects the font size of the body text
 $font-size-root:              null !default;
 
-// Override font size.
-$font-size-base:              20px !default; // Assumes the browser default, typically `16px`
+// Ignite: Override font size.
+$font-size-base:              1.25rem !default; // Assumes the browser default, typically `16px`
 $font-size-sm:                $font-size-base * .8 !default;
+$font-size-md:                $font-size-base * 1 !default;
 $font-size-lg:                $font-size-base * 1.25 !default;
 
-// Override font weight.
+// Ignite: Override font weight.
 $font-weight-lighter:         lighter !default;
 $font-weight-light:           300 !default;
 $font-weight-normal:          400 !default;
+$font-weight-medium:          500 !default;
 $font-weight-semibold:        500 !default;
 $font-weight-bold:            550 !default;
 $font-weight-bolder:          bolder !default;
@@ -608,7 +690,7 @@ $line-height-base:            1.5 !default;
 $line-height-sm:              1.25 !default;
 $line-height-lg:              2 !default;
 
-// override headings font sizes.
+// Ignite: override headings font sizes.
 $h1-font-size:                $font-size-base * 3.25 !default;
 $h2-font-size:                $font-size-base * 2.6 !default;
 $h3-font-size:                $font-size-base * 1.9 !default;
@@ -617,7 +699,7 @@ $h5-font-size:                $font-size-base * 1.2 !default;
 $h6-font-size:                $font-size-base * .85 !default;
 // scss-docs-end font-variables
 
-// Add font size 7 variable.
+// Ignite: Add font size 7 variable.
 // scss-docs-start font-sizes
 $font-sizes: (
   1: $h1-font-size,
@@ -634,13 +716,13 @@ $font-sizes: (
 $headings-margin-bottom:      $spacer * .5 !default;
 $headings-font-family:        null !default;
 $headings-font-style:         null !default;
-// Override font weight and line height.
+// Ignite: Override font weight and line height.
 $headings-font-weight:        500 !default;
-$headings-line-height:        1.2 !default;
+$headings-line-height:        1 !default;
 $headings-color:              $black;
 // scss-docs-end headings-variables
 
-// Override display heading sizes.
+// Ignite: Override display heading sizes.
 // scss-docs-start display-headings
 $display-font-sizes: (
   1: 5rem,
@@ -658,7 +740,7 @@ $display-line-height: $headings-line-height !default;
 // scss-docs-end display-headings
 
 // scss-docs-start type-variables
-// override lead font size.
+// Ignite override lead font size.
 $lead-font-size:              $font-size-base * 1.2 !default;
 $lead-font-weight:            300 !default;
 
@@ -666,7 +748,7 @@ $small-font-size:             .875em !default;
 
 $sub-sup-font-size:           .75em !default;
 
-$text-muted:                  $gray-600 !default;
+$text-body-secondary:                  $gray-600 !default;
 
 $initialism-font-size:        $small-font-size !default;
 
@@ -687,6 +769,10 @@ $hr-border-color:             null !default; // Allows for inherited colors
 $hr-border-width:             $border-width !default;
 $hr-opacity:                  .25 !default;
 
+// scss-docs-start vr-variables
+$vr-border-width:             var(--#{$prefix}border-width) !default;
+// scss-docs-end vr-variables
+
 $legend-margin-bottom:        .5rem !default;
 $legend-font-size:            1.5rem !default;
 $legend-font-weight:          null !default;
@@ -696,6 +782,7 @@ $dt-font-weight:              $font-weight-bold !default;
 $list-inline-padding:         .5rem !default;
 
 $mark-padding:                .1875em !default;
+$mark-color:                  $body-color !default;
 $mark-bg:                     $yellow-100 !default;
 // scss-docs-end type-variables
 
@@ -739,7 +826,7 @@ $table-striped-columns-order: even !default;
 
 $table-group-separator-color: currentcolor !default;
 
-$table-caption-color:         $text-muted !default;
+$table-caption-color:         $text-body-secondary !default;
 
 $table-bg-scale:              -80% !default;
 // scss-docs-end table-variables
@@ -764,13 +851,13 @@ $table-variants: (
 
 // scss-docs-start input-btn-variables
 
-// overrides the btn padding variables.
+// Ignite overrides the btn padding variables.
 $input-btn-padding-y:         1rem !default;
 $input-btn-padding-x:         2rem !default;
 
 $input-btn-font-family:       null !default;
 
-// custom font size.
+// Ignite custom font size.
 $input-btn-font-size:         18px !default;
 $input-btn-line-height:       $line-height-base !default;
 
@@ -780,12 +867,16 @@ $input-btn-focus-color:         rgba($component-active-bg, $input-btn-focus-colo
 $input-btn-focus-blur:          0 !default;
 $input-btn-focus-box-shadow:    0 0 $input-btn-focus-blur $input-btn-focus-width $input-btn-focus-color !default;
 
-$input-btn-padding-y-sm:      .25rem !default;
-$input-btn-padding-x-sm:      .5rem !default;
+$input-btn-padding-y-sm:      10px !default;
+$input-btn-padding-x-sm:      18px !default;
 $input-btn-font-size-sm:      $font-size-sm !default;
 
-$input-btn-padding-y-lg:      .5rem !default;
-$input-btn-padding-x-lg:      1rem !default;
+$input-btn-padding-y-md:      14px !default;
+$input-btn-padding-x-md:      22px !default;
+$input-btn-font-size-md:      $font-size-md !default;
+
+$input-btn-padding-y-lg:      16px !default;
+$input-btn-padding-x-lg:      30px !default;
 $input-btn-font-size-lg:      $font-size-lg !default;
 
 $input-btn-border-width:      1px;
@@ -797,6 +888,7 @@ $input-btn-border-width:      1px;
 // For each of Bootstrap's buttons, define text, background, and border color.
 
 // scss-docs-start btn-variables
+$btn-color:                   var(--#{$prefix}body-color) !default;
 $btn-padding-y:               $input-btn-padding-y !default;
 $btn-padding-x:               $input-btn-padding-x !default;
 $btn-font-family:             $input-btn-font-family !default;
@@ -814,7 +906,7 @@ $btn-font-size-lg:            $input-btn-font-size-lg !default;
 
 $btn-border-width:            $input-btn-border-width !default;
 
-// Override button weight.
+// Ignite: Override button weight.
 $btn-font-weight:             500 !default;
 $btn-box-shadow:              inset 0 1px 0 rgba($white, .15), 0 1px 1px rgba($black, .075) !default;
 $btn-focus-width:             $input-btn-focus-width !default;
@@ -825,6 +917,7 @@ $btn-active-box-shadow:       inset 0 3px 5px rgba($black, .125) !default;
 $btn-link-color:              var(--#{$prefix}link-color) !default;
 $btn-link-hover-color:        var(--#{$prefix}link-hover-color) !default;
 $btn-link-disabled-color:     $gray-600 !default;
+$btn-link-focus-shadow-rgb:   to-rgb(mix(color-contrast($link-color), $link-color, 15%)) !default;
 
 // Allows for customizing button radius independently from global border radius
 $btn-border-radius:           $border-radius !default;
@@ -851,7 +944,7 @@ $form-text-margin-top:                  .25rem !default;
 $form-text-font-size:                   17px !default;
 $form-text-font-style:                  null !default;
 $form-text-font-weight:                 null !default;
-$form-text-color:                       $text-muted !default;
+$form-text-color:                       $text-body-secondary !default;
 // scss-docs-end form-text-variables
 
 // scss-docs-start form-label-variables
@@ -863,7 +956,7 @@ $form-label-color:                      null !default;
 // scss-docs-end form-label-variables
 
 // scss-docs-start form-input-variables
-// overrides the input padding variables.
+// Ignite overrides the input padding variables.
 $input-padding-y:                       $input-btn-padding-y !default;
 $input-padding-x:                       1rem !default;
 $input-font-family:                     $input-btn-font-family !default;
@@ -1050,15 +1143,17 @@ $form-file-button-hover-bg:       shade-color($form-file-button-bg, 5%) !default
 // scss-docs-end form-file-variables
 
 // scss-docs-start form-floating-variables
-$form-floating-height:            add(3.5rem, $input-height-border) !default;
-$form-floating-line-height:       1.25 !default;
-$form-floating-padding-x:         $input-padding-x !default;
-$form-floating-padding-y:         1rem !default;
-$form-floating-input-padding-t:   1.625rem !default;
-$form-floating-input-padding-b:   .625rem !default;
-$form-floating-label-opacity:     .65 !default;
-$form-floating-label-transform:   scale(.85) translateY(-.5rem) translateX(.15rem) !default;
-$form-floating-transition:        opacity .1s ease-in-out, transform .1s ease-in-out !default;
+$form-floating-height:                  add(3.5rem, $input-height-border) !default;
+$form-floating-line-height:             1.25 !default;
+$form-floating-padding-x:               $input-padding-x !default;
+$form-floating-padding-y:               1rem !default;
+$form-floating-input-padding-t:         1.625rem !default;
+$form-floating-input-padding-b:         .625rem !default;
+$form-floating-label-height:            1.5em !default;
+$form-floating-label-opacity:           .65 !default;
+$form-floating-label-transform:         scale(.85) translateY(-.5rem) translateX(.15rem) !default;
+$form-floating-label-disabled-color:    $gray-600 !default;
+$form-floating-transition:              opacity .1s ease-in-out, transform .1s ease-in-out !default;
 // scss-docs-end form-floating-variables
 
 // Form validation
@@ -1075,6 +1170,13 @@ $form-feedback-icon-valid:          url("data:image/svg+xml,<svg xmlns='http://w
 $form-feedback-icon-invalid-color:  $form-feedback-invalid-color !default;
 $form-feedback-icon-invalid:        url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{$form-feedback-icon-invalid-color}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{$form-feedback-icon-invalid-color}' stroke='none'/></svg>") !default;
 // scss-docs-end form-feedback-variables
+
+// scss-docs-start form-validation-colors
+$form-valid-color:                  $form-feedback-valid-color !default;
+$form-valid-border-color:           $form-feedback-valid-color !default;
+$form-invalid-color:                $form-feedback-invalid-color !default;
+$form-invalid-border-color:         $form-feedback-invalid-color !default;
+// scss-docs-end form-validation-colors
 
 // scss-docs-start form-validation-states
 $form-validation-states: (
@@ -1107,30 +1209,45 @@ $zindex-tooltip:                    1080 !default;
 $zindex-toast:                      1090 !default;
 // scss-docs-end zindex-stack
 
+// scss-docs-start zindex-levels-map
+$zindex-levels: (
+  n1: -1,
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3
+) !default;
+// scss-docs-end zindex-levels-map
+
 
 // Navs
 
 // scss-docs-start nav-variables
-$nav-link-padding-y:                0 !default;
+$nav-link-padding-y:                0.5rem !default;
 $nav-link-padding-x:                1rem !default;
-$nav-link-font-size:                18px !default;
-$nav-link-font-weight:              500 !default;
+$nav-link-font-size:                null !default;
+$nav-link-font-weight:              null !default;
 $nav-link-color:                    var(--#{$prefix}link-color) !default;
 $nav-link-hover-color:              var(--#{$prefix}link-hover-color) !default;
 $nav-link-transition:               color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out !default;
-$nav-link-disabled-color:           $gray-600 !default;
+$nav-link-disabled-color:           var(--#{$prefix}secondary-color) !default;
+$nav-link-focus-box-shadow:         $focus-ring-box-shadow !default;
 
-$nav-tabs-border-color:             $gray-300 !default;
-$nav-tabs-border-width:             $border-width !default;
-$nav-tabs-border-radius:            $border-radius !default;
-$nav-tabs-link-hover-border-color:  $gray-200 $gray-200 $nav-tabs-border-color !default;
-$nav-tabs-link-active-color:        $gray-700 !default;
-$nav-tabs-link-active-bg:           $body-bg !default;
-$nav-tabs-link-active-border-color: $gray-300 $gray-300 $nav-tabs-link-active-bg !default;
+$nav-tabs-border-color:             var(--#{$prefix}border-color) !default;
+$nav-tabs-border-width:             var(--#{$prefix}border-width) !default;
+$nav-tabs-border-radius:            var(--#{$prefix}border-radius) !default;
+$nav-tabs-link-hover-border-color:  var(--#{$prefix}secondary-bg) var(--#{$prefix}secondary-bg) $nav-tabs-border-color !default;
+$nav-tabs-link-active-color:        var(--#{$prefix}emphasis-color) !default;
+$nav-tabs-link-active-bg:           var(--#{$prefix}body-bg) !default;
+$nav-tabs-link-active-border-color: var(--#{$prefix}border-color) var(--#{$prefix}border-color) $nav-tabs-link-active-bg !default;
 
-$nav-pills-border-radius:           $border-radius !default;
+$nav-pills-border-radius:           var(--#{$prefix}border-radius) !default;
 $nav-pills-link-active-color:       $component-active-color !default;
 $nav-pills-link-active-bg:          $component-active-bg !default;
+
+$nav-underline-gap:                 1rem !default;
+$nav-underline-border-width:        0.125rem !default;
+$nav-underline-link-active-color:   var(--#{$prefix}emphasis-color) !default;
 // scss-docs-end nav-variables
 
 
@@ -1156,7 +1273,7 @@ $navbar-toggler-border-radius:      $btn-border-radius !default;
 $navbar-toggler-focus-width:        $btn-focus-width !default;
 $navbar-toggler-transition:         box-shadow .15s ease-in-out !default;
 
-// Color overrides.
+// Ignite: Color overrides.
 $navbar-light-color:                rgba($dark, .55) !default;
 $navbar-light-hover-color:          rgba($dark, .7) !default;
 $navbar-light-active-color:         rgba($dark, .9) !default;

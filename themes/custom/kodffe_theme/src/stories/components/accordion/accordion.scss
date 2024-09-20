@@ -8,7 +8,7 @@ $accordion-padding-y:                     1rem !default;
 $accordion-padding-x:                     1.25rem !default;
 $accordion-color:                         $body-color !default; // Sass variable because of $accordion-button-icon
 $accordion-bg:                            $body-bg !default;
-// override.
+// Ignite override.
 $accordion-border-width:                  0 !default;
 $accordion-border-color:                  var(--#{$prefix}border-color) !default;
 $accordion-border-radius:                 $border-radius !default;
@@ -22,7 +22,7 @@ $accordion-button-padding-x:              $accordion-padding-x !default;
 $accordion-button-color:                  $accordion-color !default;
 $accordion-button-bg:                     var(--#{$prefix}accordion-bg) !default;
 $accordion-transition:                    $btn-transition, border-radius 0.15s ease !default;
-// override.
+// Ignite override.
 $accordion-button-active-bg:              var(--#{$prefix}accordion-bg) !default;
 $accordion-button-active-color:           shade-color($primary, 10%) !default;
 

@@ -27,7 +27,7 @@ Primary.args = {
 export const Secondary = CTATemplate.bind({});
 Secondary.args = {
   "button": {
-    "url": "https://www.google.com",
+    "url": "https://www.mediacurrent.com",
     "modifier": "btn-outline-primary",
     "text": "Secondary Button",
     "icon": 'arrow_right_alt',
