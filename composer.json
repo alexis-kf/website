@@ -61,6 +61,7 @@
         "mediacurrent/ignite_core": "^1.0@beta",
         "mediacurrent/ignite_demo": "^1.0@beta",
         "mediacurrent/ignite_features": "1.0-beta7",
+        "mediacurrent/ignite_gin": "^1.10",
         "mediacurrent/ignite_theme": "^1.0@beta",
         "mediacurrent/mis_profile": "^2.4",
         "mediacurrent/rain_gin": "^1.2",
