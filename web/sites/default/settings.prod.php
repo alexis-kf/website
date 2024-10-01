@@ -11,9 +11,9 @@ $host = "localhost";
 $port = '';
 $driver = "mysql";
 
-$databases['default']['default']['database'] = "kodf123_db";
-$databases['default']['default']['username'] = "kodf123_master";
-$databases['default']['default']['password'] = "ATbNwAgR,TF0";
+$databases['default']['default']['database'] = "upunucjvve";
+$databases['default']['default']['username'] = "upunucjvve";
+$databases['default']['default']['password'] = "Sdjur35Ctz";
 $databases['default']['default']['host'] = 'localhost';
 $databases['default']['default']['driver'] = $driver;
 $databases['default']['default']['port'] = '';
@@ -25,6 +25,7 @@ $settings['hash_salt'] = 'TIDhLuAxiwIBPyjUNzdQavYvVvkxSLJXCmRHzeQIKWqCqDGMCAYZua
 $settings['trusted_host_patterns'] = [
   '^kodffe\.com$',
   '^.+\.kodffe\.com$',
+  '^.+\.cloudwaysapps\.com$',
 ];
 
 // Set $settings['config_sync_directory'] if not set in settings.php.
