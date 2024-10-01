@@ -120,7 +120,7 @@ function kodffe_theme_preprocess_block(array &$variables) {
   // Add logo footer to footer.
   if (isset($variables['elements']['#id']) && $variables['elements']['#id'] == 'footer') {
     $theme_path = \Drupal::service('extension.list.theme')->getPath('kodffe_theme');
-    $variables['site_logo'] = '/' . $theme_path . '/static/images/logo-footer-mc.svg';
+    $variables['site_logo'] = '/' . $theme_path . '/static/images/logo-footer-kf.svg';
 
     // Show social icons if enabled.
     $variables['show_social_icons'] = theme_get_setting('show_social');
