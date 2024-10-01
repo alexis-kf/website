@@ -1,5 +1,0 @@
-claro_media_library_theme:
-  version: VERSION
-  css:
-    theme:
-      css/claro_media_library_theme.css: {}

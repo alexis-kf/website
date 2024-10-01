@@ -1,8 +1,0 @@
-uuid: a1c82505-1045-4b25-8dc2-4bce05ea2c56
-langcode: en
-status: true
-dependencies: {  }
-id: newsletter
-label: Newsletter
-revision: 0
-description: 'Custom newsletter form.'

@@ -1,9 +1,0 @@
-name: 'Views Reference Field Test Module'
-description: 'Provides sample data to help test the module'
-core_version_requirement: ^9.3 || ^10 || ^11
-package: Views
-type: module
-dependencies:
-  - drupal:node
-  - drupal:views
-  - viewsreference:viewsreference

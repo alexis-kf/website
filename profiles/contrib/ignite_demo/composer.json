@@ -1,7 +1,0 @@
-{
-  "name": "mediacurrent/ignite_demo",
-  "description": "Ignite Demo sub-profile with full content demonstrating Ignites capabilities.",
-  "type": "drupal-profile",
-  "license": "GPL-2.0-or-later",
-  "require": { }
-}

@@ -1,6 +1,0 @@
-x_originating_ip.settings:
-  type: mapping
-  label: Settings
-  mapping:
-    x_originating_ip_header:
-      type: string
