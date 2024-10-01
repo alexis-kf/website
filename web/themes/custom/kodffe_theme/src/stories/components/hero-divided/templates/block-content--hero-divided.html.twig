@@ -1,0 +1,55 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display the Hero block.
+ *
+ * @see template_preprocess_block_content_template()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'block-content',
+    'block-content--type-' ~ bundle|clean_class,
+    'block-content--' ~ id,
+    'block-content--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+{%
+  set layout = content.field_layout['#items'].getString()
+%}
+{# Position field defines text alignment #}
+{% if layout == 'row_media_first' %}
+  {% set modifier = 'flex-column flex-lg-row align-items-lg-center is-row' %}
+  {% set btnModifier = 'align-self-start' %}
+{% elseif layout == 'row_media_last' %}
+  {% set modifier = 'flex-column flex-lg-row-reverse align-items-center is-row' %}
+  {% set btnModifier = 'align-self-end' %}
+{% elseif layout == 'stack_media_first'  %}
+  {% set modifier = 'flex-column is-stacked' %}
+{% elseif layout == 'stack_media_last'  %}
+  {% set modifier = 'flex-column-reverse is-stacked' %}
+{% endif %}
+{# Pass content to Storybook component #}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {{ title_suffix }}
+  {% block content %}
+    {% include '@kodffe_theme/hero-divided/hero-divided.twig' with {
+      media: content.field_media|render,
+      eyebrow: content.field_eyebrow|field_value,
+      title: content.field_heading|field_value,
+      subtitle: content.field_subhead|field_value,
+      body_text: content.field_summary|render|trim is not empty ? content.field_summary,
+      button: {
+        text: content.field_link[0]['#title'],
+        url: content.field_link[0]['#url'],
+        modifier: btnModifier,
+        icon: 'arrow_right_alt',
+      },
+      modifier: modifier,
+      layout: ''
+    } only %}
+  {% endblock %}
+</div>

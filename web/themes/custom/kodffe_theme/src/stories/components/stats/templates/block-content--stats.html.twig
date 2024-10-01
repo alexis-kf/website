@@ -1,0 +1,48 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block content.
+ *
+ * @see template_preprocess_block_content_template()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'block-content',
+    'block-content--type-' ~ bundle|clean_class,
+    'block-content--' ~ id,
+    'block-content--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+
+{# stats_layout field sets list or grid layout #}
+{%
+  set modifier = content.field_stats_layout['#items'].getString()
+%}
+
+{% if 'dark' in modifier %}
+  {% set modifier = modifier ~ ' bg-dark' %}
+{% endif %}
+
+<div{{ attributes.addClass(classes) }}>
+  {% block stat_content %}
+    {% embed '@kodffe_theme/stats/stats.twig' with {
+        content: content,
+        title: content.field_title|field_value,
+        eyebrow: content.field_eyebrow|field_value,
+        body: content.field_summary,
+        media: content.field_media|render,
+        modifier: modifier,
+        heading_modifier: '',
+    } only %}
+      {% block stat_list %}
+        {{ content.field_stats }}
+      {% endblock %}
+      {% block stat_grid %}
+        {{ content.field_stats }}
+      {% endblock %}
+    {% endembed %}
+  {% endblock %}
+</div>

@@ -1,0 +1,56 @@
+// Import site utilities.
+@import '../../global/bootstrap-init';
+
+.site-footer {
+
+  .logo {
+    display: block;
+    max-width: 300px;
+    margin-bottom: 2rem;
+
+    @include media-breakpoint-up(lg) {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: $black;
+  }
+
+  &.bg-black {
+    background-color: $dark !important;
+
+    a {
+      color: $white;
+    }
+  }
+
+  &.bg-teal {
+    background-color: $teal;
+
+    a {
+      color: $black;
+    }
+  }
+
+  // Menu links list.
+  .list-unstyled {
+    margin-bottom: 2rem;
+
+    li {
+      margin-right: 2rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      margin-bottom: 0;
+
+      li {
+        display: inline-block;
+      }
+    }
+  }
+}

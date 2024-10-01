@@ -1,0 +1,74 @@
+
+{{ attach_library('kodffe_theme/hero-divided') }}
+
+{% set body_modifier = ('flex-column-reverse' in modifier) ? 'd-lg-none' : '' %}
+{% set btn_modifier = ('is-row' in modifier) ? 'btn-primary has-icon' : 'btn-primary has-icon mx-auto' %}
+
+<div class="hero-divided container-fluid">
+  <div class="row{{ modifier ? ' ' ~ modifier }}">
+    <div class="hero-media{{ ('is-row' in modifier) ? ' col-12 col-lg-6' : ' col-12 px-lg-0' }}{{ ('is-row' in modifier) ? ('reverse' in modifier) ? ' pe-lg-0' : ' ps-lg-0' }}">
+      {% if 'sb-only' in modifier %}
+        <picture>{{ media }}</picture>
+      {% else %}
+        {{ media }}
+      {% endif %}
+    </div>
+    <div class="hero-content{{ ('is-row' in modifier) ? ' col-12 col-lg-6 col-xl-5 mx-xl-auto d-flex flex-column gap-2 gap-lg-3 py-3' : ' col-12 col-md-10 col-lg-9 col-xl-6 mx-auto d-flex flex-column gap-2 gap-lg-3 py-3 py-lg-4 text-center' }}">
+      {% if eyebrow %}
+        <div class="text-uppercase fs-7">
+          {{ eyebrow }}
+        </div>
+      {% endif %}
+      {% if title %}
+        {{ include(
+          '@kodffe_theme/heading/heading.twig',
+          {
+            heading: {
+              title: title,
+              heading_level: 1,
+              modifier: 'display-3 mb-0'
+            }
+          },
+          with_context = false
+        )}}
+      {% endif %}
+      {% if subtitle %}
+        {{ include(
+          '@kodffe_theme/heading/heading.twig',
+          {
+            heading: {
+              title: subtitle,
+              heading_level: 2,
+              modifier: 'display-3 fs-5 mb-0'
+            }
+          },
+          with_context = false
+        )}}
+      {% endif %}
+      {% if body_text %}
+        {{ include(
+          '@kodffe_theme/rich-text/rich-text.twig',
+          {
+            body_text: body_text,
+            modifier: body_modifier
+          },
+          with_context = false
+        )}}
+      {% endif %}
+      {% if button.url %}
+        {{ include(
+          '@kodffe_theme/button/button.twig',
+          {
+            button: {
+              text: button.text,
+              url: button.url,
+              modifier: btn_modifier,
+              icon: button.icon
+            }
+          },
+          with_context = false
+        )}}
+      {% endif %}
+    </div>
+  </div>
+</div>

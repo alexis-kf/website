@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% block paragraph %}
+  {% block content %}
+    {% include '@kodffe_theme/stats/stats.item.twig' with {
+        item: {
+          title: content.field_title|field_value,
+          body: content.field_summary|field_value,
+          media: content.field_icon|render ? content.field_icon|render : content.field_custom_icon|render,
+          modifier: 'col'
+        }
+      } only
+    %}
+  {% endblock %}
+{% endblock paragraph %}
