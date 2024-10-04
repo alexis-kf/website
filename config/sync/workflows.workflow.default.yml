@@ -2,6 +2,10 @@ uuid: b63d4028-bf7a-4832-b829-993fc7025104
 langcode: en
 status: true
 dependencies:
+  config:
+    - node.type.article
+    - node.type.layout
+    - node.type.page
   module:
     - content_moderation
 _core:
@@ -12,25 +16,25 @@ type: content_moderation
 type_settings:
   states:
     archived:
-      published: false
-      default_revision: false
       label: Archived
       weight: -2
+      published: false
+      default_revision: false
     draft:
       label: Draft
-      published: false
-      default_revision: false
       weight: -1
-    needs_review:
       published: false
       default_revision: false
+    needs_review:
       label: 'Needs Review'
       weight: 0
+      published: false
+      default_revision: false
     published:
       label: Published
+      weight: 1
       published: true
       default_revision: true
-      weight: 1
   transitions:
     archived_to_draft:
       label: 'Un-archive to Draft'
@@ -52,11 +56,11 @@ type_settings:
       weight: -3
     create_new_draft:
       label: 'Create New Draft'
-      to: draft
-      weight: -4
       from:
         - draft
         - published
+      to: draft
+      weight: -4
     draft_need_review:
       label: 'Need Review'
       from:
@@ -65,11 +69,11 @@ type_settings:
       weight: 0
     publish:
       label: Publish
-      to: published
-      weight: 1
       from:
         - draft
         - published
+      to: published
+      weight: 1
     published_archive:
       label: Archive
       from:
@@ -94,5 +98,9 @@ type_settings:
         - needs_review
       to: published
       weight: 3
+  entity_types:
+    node:
+      - article
+      - layout
+      - page
   default_moderation_state: draft
-  entity_types: {  }

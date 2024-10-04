@@ -17,68 +17,26 @@ bundle: card_list
 label: Card
 description: ''
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       card: card
+    negate: 0
     target_bundles_drag_drop:
-      block:
-        weight: 20
-        enabled: false
-      breaker:
-        weight: 21
+      accordion_item:
+        weight: 5
         enabled: false
       card:
-        enabled: true
         weight: 22
-      card_list:
-        weight: 23
+        enabled: true
+      carousel_item:
+        weight: 7
         enabled: false
-      columns:
-        weight: 24
-        enabled: false
-      embed:
-        weight: 25
-        enabled: false
-      faq:
-        weight: 26
-        enabled: false
-      faq_qa:
-        weight: 27
-        enabled: false
-      form:
-        weight: 28
-        enabled: false
-      from_library:
-        weight: 29
-        enabled: false
-      gallery:
-        weight: 30
-        enabled: false
-      hero_media:
-        weight: 32
-        enabled: false
-      map:
-        weight: 33
-        enabled: false
-      media:
-        weight: 34
-        enabled: false
-      page_title:
-        weight: 35
-        enabled: false
-      quote:
-        weight: 36
-        enabled: false
-      text:
-        weight: 37
-        enabled: false
-      view:
-        weight: 38
+      stats_item:
+        weight: 8
         enabled: false
 field_type: entity_reference_revisions

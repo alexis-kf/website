@@ -15,7 +15,7 @@ bundle: gallery
 label: 'Media items'
 description: 'Add collection of media library items.'
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

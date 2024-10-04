@@ -17,15 +17,15 @@ bundle: carousel
 label: 'Carousel item'
 description: 'Build a collection of items for the carousel component.'
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       carousel_item: carousel_item
+    negate: 0
     target_bundles_drag_drop:
       accordion_item:
         weight: 10
@@ -33,22 +33,10 @@ settings:
       card:
         weight: 11
         enabled: false
-      map:
-        weight: 13
-        enabled: false
-      media:
-        weight: 14
-        enabled: false
-      quote:
-        weight: 15
-        enabled: false
       carousel_item:
-        enabled: true
         weight: 16
-      text:
-        weight: 17
-        enabled: false
-      view:
-        weight: 18
+        enabled: true
+      stats_item:
+        weight: 8
         enabled: false
 field_type: entity_reference_revisions

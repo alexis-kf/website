@@ -1,36 +1,23 @@
-uuid: 01631b6c-8049-4149-9d41-60cbf6477fb8
+uuid: 91e8da22-3a04-45be-aa58-d232d013fb5c
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_form_mode.media.media_library
     - field.field.media.image.field_image
-    - image.style.large
     - media.type.image
   module:
-    - focal_point
     - path
-_core:
-  default_config_hash: HOONWJBpk40U6cjWznjibtyVWblMQqV7TVQ3vs4OylM
-id: media.image.default
+id: media.image.media_library
 targetEntityType: media
 bundle: image
-mode: default
+mode: media_library
 content:
   created:
     type: datetime_timestamp
     weight: 10
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_image:
-    type: image_focal_point
-    weight: 11
-    region: content
-    settings:
-      progress_indicator: throbber
-      preview_image_style: large
-      preview_link: true
-      offsets: '50,50'
     third_party_settings: {  }
   langcode:
     type: language_select
@@ -76,5 +63,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
+  field_image: true
   publish_on: true
+  scheduler_settings: true
   unpublish_on: true

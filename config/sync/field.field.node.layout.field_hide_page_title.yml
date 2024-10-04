@@ -14,7 +14,7 @@ bundle: layout
 label: 'Hide Page Title?'
 description: 'Optionally hide page title.'
 required: false
-translatable: false
+translatable: true
 default_value:
   -
     value: 0

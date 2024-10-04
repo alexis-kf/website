@@ -17,59 +17,26 @@ bundle: accordion
 label: 'Accordion item'
 description: 'List of title/description pairings used to populate the accordion.'
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       accordion_item: accordion_item
+    negate: 0
     target_bundles_drag_drop:
       accordion_item:
-        enabled: true
         weight: 17
+        enabled: true
       card:
         weight: 18
         enabled: false
-      columns:
-        weight: 19
+      carousel_item:
+        weight: 7
         enabled: false
-      embed:
-        weight: 20
-        enabled: false
-      faq:
-        weight: 21
-        enabled: false
-      faq_qa:
-        weight: 22
-        enabled: false
-      form:
-        weight: 23
-        enabled: false
-      from_library:
-        weight: 24
-        enabled: false
-      gallery:
-        weight: 25
-        enabled: false
-      hero_media:
-        weight: 27
-        enabled: false
-      map:
-        weight: 28
-        enabled: false
-      media:
-        weight: 29
-        enabled: false
-      quote:
-        weight: 30
-        enabled: false
-      text:
-        weight: 31
-        enabled: false
-      view:
-        weight: 32
+      stats_item:
+        weight: 8
         enabled: false
 field_type: entity_reference_revisions

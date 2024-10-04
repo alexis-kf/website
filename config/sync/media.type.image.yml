@@ -1,7 +1,26 @@
 uuid: fe95f5e4-0ec1-44b6-9f46-46d88978aacd
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - crop
+    - scheduler
+third_party_settings:
+  crop:
+    image_field: _none
+  scheduler:
+    expand_fieldset: when_required
+    fields_display_mode: vertical_tab
+    publish_enable: false
+    publish_past_date: error
+    publish_past_date_created: false
+    publish_required: false
+    publish_revision: false
+    publish_touch: false
+    show_message_after_update: true
+    unpublish_enable: false
+    unpublish_required: false
+    unpublish_revision: false
 _core:
   default_config_hash: l_pe9Hl-9WTixhIQkCymYf3SeLuRdp6IIpTc0Mino5o
 id: image
@@ -13,4 +32,5 @@ new_revision: false
 source_configuration:
   source_field: field_image
   gather_exif: false
-field_map: {  }
+field_map:
+  name: name

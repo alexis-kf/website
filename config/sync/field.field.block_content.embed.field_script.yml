@@ -24,7 +24,7 @@ bundle: embed
 label: Script
 description: 'Paste the third-party script embed here.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

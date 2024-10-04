@@ -4,11 +4,16 @@ status: true
 dependencies:
   config:
     - filter.format.webform_default
+    - taxonomy.vocabulary.authors
+    - taxonomy.vocabulary.tags
   module:
     - filter
     - media
     - pwa
+    - statistics
     - system
+    - taxonomy_access_fix
+    - toolbar
 _core:
   default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
 id: authenticated
@@ -18,5 +23,13 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access pwa'
+  - 'access toolbar'
   - 'use text format webform_default'
+  - 'view any term'
+  - 'view any term name'
   - 'view media'
+  - 'view post access counter'
+  - 'view term names in authors'
+  - 'view term names in tags'
+  - 'view terms in authors'
+  - 'view terms in tags'

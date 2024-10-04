@@ -8,6 +8,6 @@ id: quote
 block_id: 'inline_block:quote'
 category: content
 label: Quote
-weight: -3
 image_path: /modules/contrib/ignite_features/modules/ignite_blocks/modules/ignite_block_quote/images/quote.png
 image_alt: ''
+weight: -3

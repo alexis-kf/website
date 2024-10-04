@@ -3,11 +3,42 @@ langcode: en
 status: true
 dependencies:
   config:
+    - block_content.type.accordion
+    - block_content.type.banner
+    - block_content.type.card_list
+    - block_content.type.carousel
+    - block_content.type.cta
+    - block_content.type.embed
+    - block_content.type.form
+    - block_content.type.gallery
+    - block_content.type.hero
+    - block_content.type.library
+    - block_content.type.map
+    - block_content.type.media
+    - block_content.type.newsletter
+    - block_content.type.quote
+    - block_content.type.stats
+    - block_content.type.teaser
+    - block_content.type.text
+    - block_content.type.views
+    - core.entity_view_display.node.layout.default
     - filter.format.basic_html
     - filter.format.full_html
+    - filter.format.restricted_html
     - filter.format.scripts
+    - media.type.image
+    - media.type.video
+    - node.type.article
+    - node.type.layout
+    - node.type.page
+    - taxonomy.vocabulary.authors
+    - taxonomy.vocabulary.tags
+    - workflows.workflow.default
   module:
     - block
+    - block_content
+    - content_moderation
+    - content_translation
     - contextual
     - file
     - filter
@@ -17,9 +48,13 @@ dependencies:
     - node
     - path
     - scheduler
+    - shortcut
+    - statistics
     - system
     - taxonomy
+    - taxonomy_access_fix
     - toolbar
+    - webform
 _core:
   default_config_hash: p_bT07Qr_e7RWoYbxViB90FT9Oyd95h9NUFlCsWv9Js
 id: editor
@@ -28,24 +63,134 @@ weight: 2
 is_admin: null
 permissions:
   - 'access administration pages'
+  - 'access any webform configuration'
   - 'access content overview'
   - 'access contextual links'
   - 'access files overview'
   - 'access media overview'
+  - 'access own webform configuration'
+  - 'access shortcuts'
   - 'access taxonomy overview'
   - 'access toolbar'
+  - 'access user profiles'
+  - 'access webform overview'
+  - 'access webform submission user'
   - 'administer blocks'
-  - 'administer media'
   - 'administer menu'
   - 'administer nodes'
-  - 'administer taxonomy'
-  - 'bypass node access'
+  - 'administer webform element access'
+  - 'change own username'
   - 'configure any layout'
+  - 'configure editable layout node layout overrides'
+  - 'create accordion block content'
   - 'create and edit custom blocks'
+  - 'create any term'
+  - 'create article content'
+  - 'create banner block content'
+  - 'create card_list block content'
+  - 'create carousel block content'
+  - 'create content translations'
+  - 'create cta block content'
+  - 'create embed block content'
+  - 'create form block content'
+  - 'create gallery block content'
+  - 'create hero block content'
+  - 'create image media'
+  - 'create layout content'
+  - 'create library block content'
+  - 'create map block content'
+  - 'create media block content'
+  - 'create newsletter block content'
+  - 'create page content'
+  - 'create quote block content'
+  - 'create stats block content'
+  - 'create teaser block content'
+  - 'create terms in authors'
+  - 'create terms in tags'
+  - 'create text block content'
   - 'create url aliases'
+  - 'create video media'
+  - 'create views block content'
+  - 'create webform'
+  - 'delete any accordion block content'
+  - 'delete any banner block content'
+  - 'delete any library block content'
+  - 'delete any teaser block content'
+  - 'edit any accordion block content'
+  - 'edit any article content'
+  - 'edit any banner block content'
+  - 'edit any card_list block content'
+  - 'edit any carousel block content'
+  - 'edit any cta block content'
+  - 'edit any embed block content'
+  - 'edit any form block content'
+  - 'edit any gallery block content'
+  - 'edit any hero block content'
+  - 'edit any image media'
+  - 'edit any layout content'
+  - 'edit any library block content'
+  - 'edit any map block content'
+  - 'edit any media block content'
+  - 'edit any newsletter block content'
+  - 'edit any page content'
+  - 'edit any quote block content'
+  - 'edit any stats block content'
+  - 'edit any teaser block content'
+  - 'edit any text block content'
+  - 'edit any video media'
+  - 'edit any views block content'
+  - 'edit any webform'
+  - 'edit own article content'
+  - 'edit own image media'
+  - 'edit own layout content'
+  - 'edit own page content'
+  - 'edit own video media'
+  - 'edit own webform'
+  - 'edit terms in authors'
+  - 'edit terms in tags'
+  - 'reorder terms in any vocabulary'
+  - 'reorder terms in authors'
+  - 'reorder terms in tags'
+  - 'revert article revisions'
+  - 'revert layout revisions'
+  - 'revert page revisions'
+  - 'schedule publishing of media'
+  - 'schedule publishing of nodes'
+  - 'select terms in authors'
+  - 'select terms in tags'
+  - 'translate any entity'
+  - 'translate article node'
+  - 'translate authors taxonomy_term'
+  - 'translate block_content'
   - 'translate interface'
+  - 'translate layout node'
+  - 'translate page node'
+  - 'translate tags taxonomy_term'
+  - 'update any term'
+  - 'update content translations'
+  - 'use default transition archived_to_draft'
+  - 'use default transition archived_to_review'
+  - 'use default transition create_new_draft'
+  - 'use default transition draft_need_review'
+  - 'use default transition published_archive'
+  - 'use default transition review_archived'
+  - 'use default transition review_draft'
   - 'use text format basic_html'
   - 'use text format full_html'
+  - 'use text format restricted_html'
   - 'use text format scripts'
+  - 'view all revisions'
+  - 'view any webform submission'
+  - 'view article revisions'
+  - 'view layout revisions'
+  - 'view own unpublished content'
+  - 'view own webform submission'
+  - 'view page revisions'
+  - 'view post access counter'
   - 'view scheduled content'
+  - 'view scheduled media'
+  - 'view term revisions in authors'
+  - 'view term revisions in tags'
   - 'view the administration theme'
+  - 'view user email addresses'
+  - 'view vocabulary labels'
