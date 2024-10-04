@@ -52,6 +52,7 @@
         "drupal/redirect": "^1.9",
         "drupal/search_api": "^1.31",
         "drupal/statistics": "^1.0",
+        "drupal/svg_image": "^3.1",
         "drupal/taxonomy_access_fix": "^4.0",
         "drupal/token": "^1.13",
         "drupal/twig_tweak": "^3.4",
@@ -100,7 +101,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true,
             "phpro/grumphp-shim": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "tbachert/spi": true
         }
     },
     "autoload": {

@@ -42,50 +42,12 @@ module:
   help: 0
   history: 0
   honeypot: 0
-  ignite_accordion: 0
-  ignite_accordion_item: 0
-  ignite_article: 0
-  ignite_authors: 0
-  ignite_banner: 0
-  ignite_block_library: 0
-  ignite_block_quote: 0
-  ignite_blocks: 0
-  ignite_card: 0
-  ignite_card_list: 0
-  ignite_carousel: 0
-  ignite_carousel_item: 0
-  ignite_content: 0
-  ignite_core: 0
-  ignite_cta: 0
-  ignite_embed: 0
-  ignite_features: 0
-  ignite_form: 0
-  ignite_gallery: 0
-  ignite_hero: 0
-  ignite_layout: 0
-  ignite_map: 0
-  ignite_media: 0
-  ignite_media_bundle: 0
-  ignite_newsletter: 0
-  ignite_page: 0
-  ignite_paragraphs: 0
-  ignite_search: 0
-  ignite_stats: 0
-  ignite_stats_item: 0
-  ignite_styles: 0
-  ignite_tags: 0
-  ignite_teaser: 0
-  ignite_text: 0
-  ignite_views: 0
   image: 0
-  inline_block_title_automatic: 0
   jquery_ui: 0
   jquery_ui_autocomplete: 0
   jquery_ui_menu: 0
   language: 0
   layout_builder: 0
-  layout_builder_browser: 0
-  layout_builder_expose_all_field_blocks: 0
   layout_builder_modal: 0
   layout_builder_restrictions: 0
   layout_discovery: 0
@@ -129,7 +91,6 @@ module:
   text: 0
   token: 0
   toolbar: 0
-  tour: 0
   twig_field_value: 0
   twig_tweak: 0
   update: 0
@@ -144,11 +105,10 @@ module:
   content_translation: 10
   views: 10
   paragraphs: 11
-  ignite_demo: 1000
 theme:
   stable9: 0
   claro: 0
   gin: 0
   ignite_theme: 0
   kodffe_theme: 0
-profile: ignite_demo
+profile: null
