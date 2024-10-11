@@ -6,7 +6,14 @@ dependencies:
     - block_content.type.quote
     - field.storage.block_content.field_thumb
   module:
+    - content_translation
     - image
+third_party_settings:
+  content_translation:
+    translation_sync:
+      alt: alt
+      title: title
+      file: '0'
 _core:
   default_config_hash: ZxMxkEvjgY4Ckq7GKa-MG2u__bnWTaskXIWD9Sk__qM
 id: block_content.quote.field_thumb

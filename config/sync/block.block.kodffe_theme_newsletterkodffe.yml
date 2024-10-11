@@ -12,7 +12,7 @@ dependencies:
 id: kodffe_theme_newsletterkodffe
 theme: kodffe_theme
 region: content
-weight: 2
+weight: 1
 provider: null
 plugin: 'block_content:cefaa65a-8389-486f-ab7e-0f3a46fb9fbc'
 settings:

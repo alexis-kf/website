@@ -11,7 +11,7 @@ dependencies:
 id: kodffe_theme_socialmedia
 theme: kodffe_theme
 region: content
-weight: 0
+weight: 2
 provider: null
 plugin: 'system_menu_block:social-media'
 settings:

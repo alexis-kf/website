@@ -9,7 +9,7 @@ _core:
 id: kodffe_theme_page_title
 theme: kodffe_theme
 region: content
-weight: -6
+weight: -4
 provider: null
 plugin: page_title_block
 settings:

@@ -16,10 +16,10 @@ bundle: layout
 label: 'Meta tags'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value:
   -
-    value: 'a:0:{}'
+    value: '{"robots":"max-image-preview:standard"}'
 default_value_callback: ''
 settings: {  }
 field_type: metatag

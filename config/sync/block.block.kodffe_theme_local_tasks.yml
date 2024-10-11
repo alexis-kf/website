@@ -9,7 +9,7 @@ _core:
 id: kodffe_theme_local_tasks
 theme: kodffe_theme
 region: content
-weight: -5
+weight: -3
 provider: null
 plugin: local_tasks_block
 settings:
