@@ -11,9 +11,9 @@ dependencies:
 third_party_settings:
   content_translation:
     translation_sync:
-      alt: alt
-      title: title
-      file: '0'
+      file: file
+      alt: '0'
+      title: '0'
 _core:
   default_config_hash: K5NOxYxkl6o_8T_sY2953Cl2FRj8eMIgLRTKKQDThmo
 id: media.image.field_image

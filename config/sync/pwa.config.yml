@@ -1,9 +1,9 @@
 _core:
-  default_config_hash: oMro5cfiGHdynGc5hzRBCm08SOzSWpGXf7X5h13R16Q
+  default_config_hash: bBsKNU9uuzzS7zaKZhHpof7W8sOAuKBZJDF5Eh76BTs
 langcode: en
-name: 'Kodffe Software'
+name: Kodffe
 short_name: Kodffe
-description: 'Stay in touch!'
+description: 'Reliable Software Solutions'
 start_url: /
 scope: /
 lang: en
@@ -15,12 +15,13 @@ categories:
   - development
   - education
   - business
+  - design
 theme_color: '#522b95'
 background_color: '#34e6ad'
 display: fullscreen
 cross_origin: false
-image_fid: 0
-image_small_fid: 86
-image_very_small_fid: 87
+image_fid: 91
+image_small_fid: 163
+image_very_small_fid: 164
 manifest_path_mode: all_except_listed
 manifest_paths: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*"

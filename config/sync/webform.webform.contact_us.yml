@@ -1,7 +1,12 @@
 uuid: 224046af-a92c-402f-80d4-5e6f9c2f892c
 langcode: en
 status: open
-dependencies: {  }
+dependencies:
+  module:
+    - honeypot
+third_party_settings:
+  honeypot:
+    honeypot: true
 _core:
   default_config_hash: gL00Ew44BjhxWNVF4ELUl4jOMseZNbjkKzmnKajzFLI
 weight: 0

@@ -7,6 +7,21 @@ _core:
 id: node
 label: Content
 tags:
-  title: '[node:title] | [site:name]'
-  description: '[node:summary]'
+  abstract: '[node:field_lead]'
+  article_author: '[node:field_authors:0]'
+  article_modified_time: '[node:changed]'
+  article_published_time: '[node:created]'
+  article_tag: '[node:field_tags]'
   canonical_url: '[node:url]'
+  description: '[node:field_summary]'
+  geo_region: EC
+  image_src: '[node:field_thumbnail:entity:field_image]'
+  keywords: '[node:field_tags]'
+  og_description: '[node:field_summary]'
+  og_email: hello@kodffe.com
+  og_site_name: Kodffe
+  og_title: '[node:title]'
+  og_type: '[node:content-type]'
+  og_url: '[node:url]'
+  robots: 'index, max-image-preview:standard'
+  title: '[node:title] | [site:name]'

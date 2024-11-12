@@ -1,4 +1,4 @@
-uuid: 4545a83a-e6ff-4bf5-85a1-864a569a40a3
+uuid: cac832f5-8241-4c93-b987-4685663d0cb3
 langcode: en
 status: true
 dependencies:
@@ -22,15 +22,19 @@ dependencies:
     - block_content.type.text
     - block_content.type.views
     - filter.format.basic_html
+    - filter.format.email_html
     - filter.format.full_html
     - filter.format.restricted_html
     - filter.format.scripts
+    - filter.format.webform_default
     - media.type.image
     - media.type.video
     - node.type.article
+    - node.type.layout
     - node.type.page
     - taxonomy.vocabulary.authors
     - taxonomy.vocabulary.tags
+    - workflows.workflow.default
   module:
     - block
     - block_content
@@ -40,48 +44,40 @@ dependencies:
     - file
     - filter
     - layout_builder
-    - locale
     - media
     - menu_link_content
     - node
     - paragraphs
     - path
-    - scheduler
-    - shortcut
+    - pathauto
+    - redirect
     - statistics
     - system
     - taxonomy
     - taxonomy_access_fix
     - toolbar
-    - webform
-_core:
-  default_config_hash: p_bT07Qr_e7RWoYbxViB90FT9Oyd95h9NUFlCsWv9Js
-id: editor
-label: Editor
-weight: 2
+id: reviewer
+label: Reviewer
+weight: 3
 is_admin: null
 permissions:
-  - 'access administration pages'
-  - 'access any webform configuration'
   - 'access block library'
+  - 'access content'
   - 'access content overview'
   - 'access contextual links'
   - 'access files overview'
   - 'access media overview'
-  - 'access own webform configuration'
-  - 'access shortcuts'
   - 'access taxonomy overview'
   - 'access toolbar'
-  - 'access user profiles'
-  - 'access webform overview'
-  - 'access webform submission user'
-  - 'administer block content'
   - 'administer blocks'
+  - 'administer media'
   - 'administer menu'
   - 'administer nodes'
-  - 'administer webform element access'
+  - 'administer redirects'
+  - 'administer taxonomy'
+  - 'bulk delete aliases'
+  - 'bulk update aliases'
   - 'change own username'
-  - 'configure any layout'
   - 'create accordion block content'
   - 'create and edit custom blocks'
   - 'create any term'
@@ -111,9 +107,10 @@ permissions:
   - 'create url aliases'
   - 'create video media'
   - 'create views block content'
-  - 'create webform'
+  - 'delete all taxonomy revisions'
   - 'delete any accordion block content'
   - 'delete any accordion block content revisions'
+  - 'delete any article content'
   - 'delete any banner block content'
   - 'delete any banner block content revisions'
   - 'delete any card_list block content'
@@ -124,34 +121,52 @@ permissions:
   - 'delete any cta block content revisions'
   - 'delete any embed block content'
   - 'delete any embed block content revisions'
+  - 'delete any file'
   - 'delete any form block content'
   - 'delete any form block content revisions'
   - 'delete any gallery block content'
   - 'delete any gallery block content revisions'
   - 'delete any hero block content'
   - 'delete any hero block content revisions'
+  - 'delete any image media'
+  - 'delete any image media revisions'
   - 'delete any library block content'
   - 'delete any library block content revisions'
   - 'delete any map block content'
   - 'delete any map block content revisions'
+  - 'delete any media'
   - 'delete any media block content'
   - 'delete any media block content revisions'
   - 'delete any newsletter block content'
   - 'delete any newsletter block content revisions'
+  - 'delete any page content'
   - 'delete any quote block content'
   - 'delete any quote block content revisions'
   - 'delete any stats block content'
   - 'delete any stats block content revisions'
   - 'delete any teaser block content'
   - 'delete any teaser block content revisions'
+  - 'delete any term'
   - 'delete any text block content'
   - 'delete any text block content revisions'
+  - 'delete any video media'
+  - 'delete any video media revisions'
   - 'delete any views block content'
   - 'delete any views block content revisions'
+  - 'delete article revisions'
   - 'delete content translations'
+  - 'delete layout revisions'
   - 'delete media'
   - 'delete own article content'
+  - 'delete own files'
+  - 'delete own image media'
   - 'delete own page content'
+  - 'delete own video media'
+  - 'delete page revisions'
+  - 'delete term revisions in authors'
+  - 'delete term revisions in tags'
+  - 'delete terms in authors'
+  - 'delete terms in tags'
   - 'edit any accordion block content'
   - 'edit any article content'
   - 'edit any banner block content'
@@ -174,18 +189,22 @@ permissions:
   - 'edit any text block content'
   - 'edit any video media'
   - 'edit any views block content'
-  - 'edit any webform'
+  - 'edit behavior plugin settings'
   - 'edit own article content'
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
-  - 'edit own webform'
   - 'edit terms in authors'
   - 'edit terms in tags'
+  - 'notify of path changes'
   - 'reorder terms in any vocabulary'
   - 'reorder terms in authors'
   - 'reorder terms in tags'
+  - 'reset any vocabulary'
+  - 'reset authors'
+  - 'reset tags'
   - 'revert all revisions'
+  - 'revert all taxonomy revisions'
   - 'revert any accordion block content revisions'
   - 'revert any banner block content revisions'
   - 'revert any card_list block content revisions'
@@ -207,18 +226,23 @@ permissions:
   - 'revert any video media revisions'
   - 'revert any views block content revisions'
   - 'revert article revisions'
+  - 'revert layout revisions'
   - 'revert page revisions'
-  - 'schedule publishing of media'
-  - 'schedule publishing of nodes'
+  - 'revert term revisions in authors'
+  - 'revert term revisions in tags'
+  - 'select any term'
+  - 'select any unpublished term'
   - 'select terms in authors'
   - 'select terms in tags'
+  - 'select unpublished terms in authors'
+  - 'select unpublished terms in tags'
   - 'translate any entity'
   - 'translate article node'
   - 'translate authors taxonomy_term'
   - 'translate block_content'
   - 'translate editable entities'
   - 'translate image media'
-  - 'translate interface'
+  - 'translate layout node'
   - 'translate menu_link_content'
   - 'translate page node'
   - 'translate paragraph'
@@ -228,12 +252,25 @@ permissions:
   - 'update any term'
   - 'update content translations'
   - 'update media'
+  - 'use default transition archived_to_draft'
+  - 'use default transition archived_to_published'
+  - 'use default transition archived_to_review'
+  - 'use default transition create_new_draft'
+  - 'use default transition draft_need_review'
+  - 'use default transition publish'
+  - 'use default transition published_archive'
+  - 'use default transition review_archived'
+  - 'use default transition review_draft'
+  - 'use default transition review_published'
   - 'use text format basic_html'
+  - 'use text format email_html'
   - 'use text format full_html'
   - 'use text format restricted_html'
   - 'use text format scripts'
+  - 'use text format webform_default'
   - 'view all media revisions'
   - 'view all revisions'
+  - 'view all taxonomy revisions'
   - 'view any accordion block content history'
   - 'view any banner block content history'
   - 'view any card_list block content history'
@@ -251,23 +288,34 @@ permissions:
   - 'view any quote block content history'
   - 'view any stats block content history'
   - 'view any teaser block content history'
+  - 'view any term'
+  - 'view any term name'
   - 'view any text block content history'
   - 'view any unpublished content'
+  - 'view any unpublished term'
+  - 'view any unpublished term name'
   - 'view any video media revisions'
   - 'view any views block content history'
-  - 'view any webform submission'
+  - 'view any vocabulary name'
   - 'view article revisions'
   - 'view latest version'
+  - 'view layout revisions'
+  - 'view media'
   - 'view own unpublished content'
   - 'view own unpublished media'
-  - 'view own webform submission'
   - 'view page revisions'
   - 'view post access counter'
-  - 'view scheduled content'
-  - 'view scheduled media'
+  - 'view term names in authors'
+  - 'view term names in tags'
   - 'view term revisions in authors'
   - 'view term revisions in tags'
-  - 'view the administration theme'
+  - 'view terms in authors'
+  - 'view terms in tags'
   - 'view unpublished paragraphs'
-  - 'view user email addresses'
+  - 'view unpublished term names in authors'
+  - 'view unpublished term names in tags'
+  - 'view unpublished terms in authors'
+  - 'view unpublished terms in tags'
   - 'view vocabulary labels'
+  - 'view vocabulary name of authors'
+  - 'view vocabulary name of tags'
