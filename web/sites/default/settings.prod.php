@@ -17,7 +17,6 @@ $databases['default']['default']['password'] = "Sdjur35Ctz";
 $databases['default']['default']['host'] = 'localhost';
 $databases['default']['default']['driver'] = $driver;
 $databases['default']['default']['port'] = '';
-$databases['default']['default']['init_commands'] = ['isolation_level' => 'SET SESSION transaction_isolation=\'READ-COMMITTED\''];
 
 $settings['hash_salt'] = 'TIDhLuAxiwIBPyjUNzdQavYvVvkxSLJXCmRHzeQIKWqCqDGMCAYZuaNowXpXqXTi';
 
