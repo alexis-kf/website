@@ -21,7 +21,7 @@ background_color: '#34e6ad'
 display: fullscreen
 cross_origin: false
 image_fid: 91
-image_small_fid: 163
-image_very_small_fid: 164
+image_small_fid: 159
+image_very_small_fid: 160
 manifest_path_mode: all_except_listed
 manifest_paths: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*"

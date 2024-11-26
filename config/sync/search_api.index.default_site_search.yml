@@ -7,9 +7,8 @@ dependencies:
     - field.storage.node.field_subhead
     - search_api.server.database_search
   module:
-    - scheduler
     - node
-    - search_api
+    - scheduler
 _core:
   default_config_hash: k_zq4dnM_zmv2-Vxk_v1vcyt1OVEY2wQBZI8orqrdlA
 id: default_site_search
