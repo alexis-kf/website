@@ -76,4 +76,4 @@ Learn about the [Drupal trademark and logo policy here][trademark].
 
 ## Author
 
-Kodffe 2025 - EC + AI
+Kodffe 2025 - EC + AI + Drupal
