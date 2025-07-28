@@ -1,0 +1,137 @@
+# Code Review Configuration
+# This file contains configuration options for the code review workflows
+
+# PHP Configuration
+php:
+  version: '8.2'
+  extensions:
+    - mbstring
+    - xml
+    - ctype
+    - iconv
+    - intl
+    - pdo_mysql
+    - dom
+    - filter
+    - gd
+    - json
+    - pdo
+    - pdo_sqlite
+    - phar
+    - tokenizer
+    - xmlreader
+    - xmlwriter
+    - zip
+    - curl
+    - fileinfo
+
+# Node.js Configuration
+node:
+  version: '18'
+
+# Database Configuration
+database:
+  mysql:
+    version: '8.0'
+    database: 'drupal'
+    user: 'drupal'
+    password: 'drupal'
+
+# Code Review Checks Configuration
+checks:
+  # Enable/disable specific checks
+  php_lint: true
+  drupal_check: true
+  code_standards: true
+  security_check: true
+  deprecated_functions: true
+  composer_validate: true
+  twig_check: true
+  eslint_check: true
+  sensitive_data_check: true
+  
+  # Custom paths to check (relative to project root)
+  custom_paths:
+    - web/modules/custom
+    - web/profiles/custom
+    - web/themes/custom
+  
+  # Paths to ignore
+  ignore_paths:
+    - vendor
+    - web/core
+    - web/modules/contrib
+    - web/themes/contrib
+    - web/profiles/contrib
+    - node_modules
+    - */node_modules
+    - */src/styleguide
+    - */storybook-static
+
+# Code Standards Configuration
+code_standards:
+  standard: './vendor/drupal/coder/coder_sniffer/Drupal'
+  extensions:
+    - php
+    - module
+    - inc
+    - install
+    - test
+    - profile
+    - theme
+    - info
+    - txt
+    - md
+    - yml
+
+# Security Check Configuration
+security:
+  # Patterns to check for sensitive data
+  sensitive_patterns:
+    - "password.*=.*['\"][^'\"]*['\"]"
+    - "api_key.*=.*['\"][^'\"]*['\"]"
+    - "secret.*=.*['\"][^'\"]*['\"]"
+    - "token.*=.*['\"][^'\"]*['\"]"
+  
+  # Files to check for sensitive data
+  sensitive_files:
+    - web/modules/custom
+    - web/themes/custom
+    - web/profiles/custom
+
+# Notification Configuration
+notifications:
+  # Comment on PR with results
+  pr_comment: true
+  
+  # Create summary in Actions tab
+  summary_report: true
+  
+  # Fail workflow on specific check failures
+  fail_on:
+    - php_lint
+    - drupal_check
+    - security_check
+    - composer_validate
+  
+  # Warning only (don't fail workflow)
+  warning_only:
+    - deprecated_functions
+    - sensitive_data_check
+
+# Cache Configuration
+cache:
+  composer: true
+  node_modules: true
+  cache_key_prefix: 'code-review'
+
+# Branch Configuration
+branches:
+  - main
+  - develop
+  - master
+
+# Event Triggers
+triggers:
+  pull_request: true
+  push: true 

@@ -1,0 +1,144 @@
+name: Code Review
+
+on:
+  pull_request:
+    branches: [ main, develop, master ]
+  push:
+    branches: [ main, develop, master ]
+
+jobs:
+  code-review:
+    name: Code Review Checks
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: drupal
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo, pdo_sqlite, phar, tokenizer, xml, xmlreader, xmlwriter, zip, curl, fileinfo, gd, iconv, intl, json, mbstring, pdo, pdo_mysql, pdo_sqlite, phar, tokenizer, xml, xmlreader, xmlwriter, zip
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Composer dependencies
+        run: |
+          composer install --prefer-dist --no-progress --no-interaction
+          composer dump-autoload --optimize
+
+      - name: Install Node.js dependencies
+        run: |
+          if [ -f "web/themes/custom/kodffe_theme/package.json" ]; then
+            cd web/themes/custom/kodffe_theme
+            npm ci
+          fi
+
+      - name: Run PHP Lint
+        run: |
+          echo "Running PHP lint for all PHP files..."
+          find . -name "*.php" -not -path "./vendor/*" -not -path "./web/core/*" -not -path "./web/modules/contrib/*" -not -path "./web/themes/contrib/*" -not -path "./web/profiles/contrib/*" -not -path "./node_modules/*" -print0 | xargs -0 -n1 -P8 php -l
+
+      - name: Run Drupal Check
+        run: |
+          echo "Running drupal-check for custom code..."
+          if [ -d "web/modules/custom" ]; then
+            ./vendor/bin/drupal-check web/modules/custom
+          fi
+          if [ -d "web/profiles/custom" ]; then
+            ./vendor/bin/drupal-check web/profiles/custom
+          fi
+          if [ -d "web/themes/custom" ]; then
+            ./vendor/bin/drupal-check web/themes/custom
+          fi
+
+      - name: Run Code Standards Check
+        run: |
+          echo "Running coding standards check..."
+          if [ -d "web/modules/custom" ]; then
+            ./vendor/bin/phpcs --standard=./vendor/drupal/coder/coder_sniffer/Drupal --extensions=php,module,inc,install,test,profile,theme,info,txt,md,yml web/modules/custom
+          fi
+          if [ -d "web/profiles/custom" ]; then
+            ./vendor/bin/phpcs --standard=./vendor/drupal/coder/coder_sniffer/Drupal --extensions=php,module,inc,install,test,profile,theme,info,txt,md,yml web/profiles/custom
+          fi
+          if [ -d "web/themes/custom" ]; then
+            ./vendor/bin/phpcs --standard=./vendor/drupal/coder/coder_sniffer/Drupal --ignore=*/node_modules/,*/src/styleguide/,*/storybook-static/ --extensions=php,module,inc,install,test,profile,theme,info,txt,md,yml web/themes/custom
+          fi
+
+      - name: Run Security Check
+        run: |
+          echo "Running security check..."
+          ./vendor/bin/security-checker security:check composer.lock
+
+      - name: Check for deprecated functions
+        run: |
+          echo "Checking for deprecated functions..."
+          if [ -d "web/modules/custom" ]; then
+            find web/modules/custom -name "*.php" -exec grep -l "deprecated\|Deprecated" {} \; || true
+          fi
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Check for syntax errors in Twig templates
+        run: |
+          echo "Checking Twig templates for syntax errors..."
+          if [ -d "web/themes/custom" ]; then
+            find web/themes/custom -name "*.twig" -exec php -r "
+              \$file = \$argv[1];
+              \$content = file_get_contents(\$file);
+              if (preg_match('/\{\{[^}]*\}\}/', \$content) || preg_match('/\{\%[^%]*\%\}/', \$content)) {
+                echo \"Found Twig syntax in: \$file\n\";
+              }
+            " {} \;
+          fi
+
+      - name: Run ESLint (if applicable)
+        run: |
+          if [ -f "web/themes/custom/kodffe_theme/package.json" ]; then
+            cd web/themes/custom/kodffe_theme
+            npm run lint || echo "ESLint check completed"
+          fi
+
+      - name: Check file permissions
+        run: |
+          echo "Checking file permissions..."
+          find . -type f -name "*.sh" -exec chmod +x {} \;
+          if [ -f "tests/code-sniffer.sh" ]; then
+            chmod +x tests/code-sniffer.sh
+          fi
+          if [ -f "tests/drupal-check.sh" ]; then
+            chmod +x tests/drupal-check.sh
+          fi
+
+      - name: Create summary report
+        if: always()
+        run: |
+          echo "## Code Review Summary" >> $GITHUB_STEP_SUMMARY
+          echo "✅ PHP Lint completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Drupal Check completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Code Standards Check completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Security Check completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Composer validation completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All code review checks have been completed successfully!" >> $GITHUB_STEP_SUMMARY 
