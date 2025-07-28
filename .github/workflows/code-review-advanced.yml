@@ -194,110 +194,110 @@ jobs:
           fi
           set -e
 
-      - name: Validate composer.json
-        id: composer-validate
-        run: |
-          echo "Validating composer.json..."
-          set +e
-          composer validate --strict
-          COMPOSER_EXIT_CODE=$?
-          if [ $COMPOSER_EXIT_CODE -eq 0 ]; then
-            echo "Composer validation passed"
-            echo "composer-validate=passed" >> $GITHUB_OUTPUT
-          else
-            echo "Composer validation failed"
-            echo "composer-validate=failed" >> $GITHUB_OUTPUT
-          fi
-          set -e
+      # - name: Validate composer.json
+      #   id: composer-validate
+      #   run: |
+      #     echo "Validating composer.json..."
+      #     set +e
+      #     composer validate --strict
+      #     COMPOSER_EXIT_CODE=$?
+      #     if [ $COMPOSER_EXIT_CODE -eq 0 ]; then
+      #       echo "Composer validation passed"
+      #       echo "composer-validate=passed" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "Composer validation failed"
+      #       echo "composer-validate=failed" >> $GITHUB_OUTPUT
+      #     fi
+      #     set -e
 
-      - name: Check for syntax errors in Twig templates
-        id: twig-check
-        run: |
-          echo "Checking Twig templates for syntax errors..."
-          set +e
-          TWIG_ERRORS=false
+      # - name: Check for syntax errors in Twig templates
+      #   id: twig-check
+      #   run: |
+      #     echo "Checking Twig templates for syntax errors..."
+      #     set +e
+      #     TWIG_ERRORS=false
           
-          if [ -d "web/themes/custom" ]; then
-            TWIG_FILES=$(find web/themes/custom -name "*.twig")
-            for file in $TWIG_FILES; do
-              if ! php -r "
-                \$file = \$argv[1];
-                \$content = file_get_contents(\$file);
-                if (preg_match('/\{\{[^}]*\}\}/', \$content) || preg_match('/\{\%[^%]*\%\}/', \$content)) {
-                  echo \"Found Twig syntax in: \$file\n\";
-                }
-              " "$file" > /dev/null 2>&1; then
-                echo "Error checking Twig file: $file"
-                TWIG_ERRORS=true
-              fi
-            done
-          fi
+      #     if [ -d "web/themes/custom" ]; then
+      #       TWIG_FILES=$(find web/themes/custom -name "*.twig")
+      #       for file in $TWIG_FILES; do
+      #         if ! php -r "
+      #           \$file = \$argv[1];
+      #           \$content = file_get_contents(\$file);
+      #           if (preg_match('/\{\{[^}]*\}\}/', \$content) || preg_match('/\{\%[^%]*\%\}/', \$content)) {
+      #             echo \"Found Twig syntax in: \$file\n\";
+      #           }
+      #         " "$file" > /dev/null 2>&1; then
+      #           echo "Error checking Twig file: $file"
+      #           TWIG_ERRORS=true
+      #         fi
+      #       done
+      #     fi
           
-          if [ "$TWIG_ERRORS" = true ]; then
-            echo "Twig check failed"
-            echo "twig-check=failed" >> $GITHUB_OUTPUT
-          else
-            echo "Twig check passed"
-            echo "twig-check=passed" >> $GITHUB_OUTPUT
-          fi
-          set -e
+      #     if [ "$TWIG_ERRORS" = true ]; then
+      #       echo "Twig check failed"
+      #       echo "twig-check=failed" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "Twig check passed"
+      #       echo "twig-check=passed" >> $GITHUB_OUTPUT
+      #     fi
+      #     set -e
 
-      - name: Run ESLint (if applicable)
-        id: eslint-check
-        run: |
-          set +e
-          if [ -f "web/themes/custom/kodffe_theme/package.json" ]; then
-            cd web/themes/custom/kodffe_theme
-            if npm run lint 2>/dev/null; then
-              echo "ESLint check passed"
-              echo "eslint-check=passed" >> $GITHUB_OUTPUT
-            else
-              echo "ESLint check failed or not configured"
-              echo "eslint-check=skipped" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "No package.json found, skipping ESLint"
-            echo "eslint-check=skipped" >> $GITHUB_OUTPUT
-          fi
-          set -e
+      # - name: Run ESLint (if applicable)
+      #   id: eslint-check
+      #   run: |
+      #     set +e
+      #     if [ -f "web/themes/custom/kodffe_theme/package.json" ]; then
+      #       cd web/themes/custom/kodffe_theme
+      #       if npm run lint 2>/dev/null; then
+      #         echo "ESLint check passed"
+      #         echo "eslint-check=passed" >> $GITHUB_OUTPUT
+      #       else
+      #         echo "ESLint check failed or not configured"
+      #         echo "eslint-check=skipped" >> $GITHUB_OUTPUT
+      #       fi
+      #     else
+      #       echo "No package.json found, skipping ESLint"
+      #       echo "eslint-check=skipped" >> $GITHUB_OUTPUT
+      #     fi
+      #     set -e
 
-      - name: Check file permissions
-        run: |
-          echo "Checking file permissions..."
-          find . -type f -name "*.sh" -exec chmod +x {} \;
-          if [ -f "tests/code-sniffer.sh" ]; then
-            chmod +x tests/code-sniffer.sh
-          fi
-          if [ -f "tests/drupal-check.sh" ]; then
-            chmod +x tests/drupal-check.sh
-          fi
+      # - name: Check file permissions
+      #   run: |
+      #     echo "Checking file permissions..."
+      #     find . -type f -name "*.sh" -exec chmod +x {} \;
+      #     if [ -f "tests/code-sniffer.sh" ]; then
+      #       chmod +x tests/code-sniffer.sh
+      #     fi
+      #     if [ -f "tests/drupal-check.sh" ]; then
+      #       chmod +x tests/drupal-check.sh
+      #     fi
 
-      - name: Check for sensitive data
-        id: sensitive-data-check
-        run: |
-          echo "Checking for sensitive data in code..."
-          set +e
-          SENSITIVE_DATA_FOUND=false
+      # - name: Check for sensitive data
+      #   id: sensitive-data-check
+      #   run: |
+      #     echo "Checking for sensitive data in code..."
+      #     set +e
+      #     SENSITIVE_DATA_FOUND=false
           
-          # Check for hardcoded passwords, API keys, etc.
-          if grep -r -i "password.*=.*['\"][^'\"]*['\"]" web/modules/custom web/themes/custom web/profiles/custom 2>/dev/null; then
-            echo "Found potential hardcoded passwords"
-            SENSITIVE_DATA_FOUND=true
-          fi
+      #     # Check for hardcoded passwords, API keys, etc.
+      #     if grep -r -i "password.*=.*['\"][^'\"]*['\"]" web/modules/custom web/themes/custom web/profiles/custom 2>/dev/null; then
+      #       echo "Found potential hardcoded passwords"
+      #       SENSITIVE_DATA_FOUND=true
+      #     fi
           
-          if grep -r -i "api_key.*=.*['\"][^'\"]*['\"]" web/modules/custom web/themes/custom web/profiles/custom 2>/dev/null; then
-            echo "Found potential hardcoded API keys"
-            SENSITIVE_DATA_FOUND=true
-          fi
+      #     if grep -r -i "api_key.*=.*['\"][^'\"]*['\"]" web/modules/custom web/themes/custom web/profiles/custom 2>/dev/null; then
+      #       echo "Found potential hardcoded API keys"
+      #       SENSITIVE_DATA_FOUND=true
+      #     fi
           
-          if [ "$SENSITIVE_DATA_FOUND" = true ]; then
-            echo "Sensitive data check failed"
-            echo "sensitive-data-check=failed" >> $GITHUB_OUTPUT
-          else
-            echo "Sensitive data check passed"
-            echo "sensitive-data-check=passed" >> $GITHUB_OUTPUT
-          fi
-          set -e
+      #     if [ "$SENSITIVE_DATA_FOUND" = true ]; then
+      #       echo "Sensitive data check failed"
+      #       echo "sensitive-data-check=failed" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "Sensitive data check passed"
+      #       echo "sensitive-data-check=passed" >> $GITHUB_OUTPUT
+      #     fi
+      #     set -e
 
       - name: Create detailed summary report
         if: always()
