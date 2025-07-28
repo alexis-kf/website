@@ -1,0 +1,426 @@
+name: Advanced Code Review
+
+on:
+  pull_request:
+    branches: [ main, develop, master ]
+  push:
+    branches: [ main, develop, master ]
+
+env:
+  PHP_VERSION: '8.2'
+  NODE_VERSION: '18'
+
+jobs:
+  code-review:
+    name: Advanced Code Review Checks
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: drupal
+          MYSQL_USER: drupal
+          MYSQL_PASSWORD: drupal
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo, pdo_sqlite, phar, tokenizer, xml, xmlreader, xmlwriter, zip, curl, fileinfo, gd, iconv, intl, json, mbstring, pdo, pdo_mysql, pdo_sqlite, phar, tokenizer, xml, xmlreader, xmlwriter, zip
+          coverage: none
+          tools: composer:v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install Composer dependencies
+        run: |
+          composer install --prefer-dist --no-progress --no-interaction
+          composer dump-autoload --optimize
+
+      - name: Cache Node.js dependencies
+        if: hashFiles('web/themes/custom/kodffe_theme/package-lock.json') != ''
+        uses: actions/cache@v3
+        with:
+          path: web/themes/custom/kodffe_theme/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('web/themes/custom/kodffe_theme/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Node.js dependencies
+        run: |
+          if [ -f "web/themes/custom/kodffe_theme/package.json" ]; then
+            cd web/themes/custom/kodffe_theme
+            if [ -f "package-lock.json" ]; then
+              npm ci
+            else
+              npm install
+            fi
+          else
+            echo "No package.json found in theme directory, skipping Node.js dependencies"
+          fi
+
+      - name: Run PHP Lint
+        id: php-lint
+        run: |
+          echo "Running PHP lint for all PHP files..."
+          set +e
+          find . -name "*.php" -not -path "./vendor/*" -not -path "./web/core/*" -not -path "./web/modules/contrib/*" -not -path "./web/themes/contrib/*" -not -path "./web/profiles/contrib/*" -not -path "./node_modules/*" -print0 | xargs -0 -n1 -P8 php -l
+          LINT_EXIT_CODE=$?
+          if [ $LINT_EXIT_CODE -eq 0 ]; then
+            echo "PHP lint passed"
+            echo "php-lint=passed" >> $GITHUB_OUTPUT
+          else
+            echo "PHP lint failed"
+            echo "php-lint=failed" >> $GITHUB_OUTPUT
+          fi
+          set -e
+
+      - name: Run Drupal Check
+        id: drupal-check
+        run: |
+          echo "Running drupal-check for custom code..."
+          set +e
+          DRUPAL_CHECK_FAILED=false
+          
+          if [ -d "web/modules/custom" ]; then
+            ./vendor/bin/drupal-check web/modules/custom || DRUPAL_CHECK_FAILED=true
+          fi
+          if [ -d "web/profiles/custom" ]; then
+            ./vendor/bin/drupal-check web/profiles/custom || DRUPAL_CHECK_FAILED=true
+          fi
+          if [ -d "web/themes/custom" ]; then
+            ./vendor/bin/drupal-check web/themes/custom || DRUPAL_CHECK_FAILED=true
+          fi
+          
+          if [ "$DRUPAL_CHECK_FAILED" = true ]; then
+            echo "Drupal check failed"
+            echo "drupal-check=failed" >> $GITHUB_OUTPUT
+          else
+            echo "Drupal check passed"
+            echo "drupal-check=passed" >> $GITHUB_OUTPUT
+          fi
+          set -e
+
+      - name: Run Code Standards Check
+        id: code-standards
+        run: |
+          echo "Running coding standards check..."
+          set +e
+          CODE_STANDARDS_FAILED=false
+          
+          if [ -d "web/modules/custom" ]; then
+            ./vendor/bin/phpcs --standard=./vendor/drupal/coder/coder_sniffer/Drupal --extensions=php,module,inc,install,test,profile,theme,info,txt,md,yml web/modules/custom || CODE_STANDARDS_FAILED=true
+          fi
+          if [ -d "web/profiles/custom" ]; then
+            ./vendor/bin/phpcs --standard=./vendor/drupal/coder/coder_sniffer/Drupal --extensions=php,module,inc,install,test,profile,theme,info,txt,md,yml web/profiles/custom || CODE_STANDARDS_FAILED=true
+          fi
+          if [ -d "web/themes/custom" ]; then
+            ./vendor/bin/phpcs --standard=./vendor/drupal/coder/coder_sniffer/Drupal --ignore=*/node_modules/,*/src/styleguide/,*/storybook-static/ --extensions=php,module,inc,install,test,profile,theme,info,txt,md,yml web/themes/custom || CODE_STANDARDS_FAILED=true
+          fi
+          
+          if [ "$CODE_STANDARDS_FAILED" = true ]; then
+            echo "Code standards check failed"
+            echo "code-standards=failed" >> $GITHUB_OUTPUT
+          else
+            echo "Code standards check passed"
+            echo "code-standards=passed" >> $GITHUB_OUTPUT
+          fi
+          set -e
+
+      - name: Run Security Check
+        id: security-check
+        run: |
+          echo "Running security check..."
+          set +e
+          ./vendor/bin/security-checker security:check composer.lock
+          SECURITY_EXIT_CODE=$?
+          if [ $SECURITY_EXIT_CODE -eq 0 ]; then
+            echo "Security check passed"
+            echo "security-check=passed" >> $GITHUB_OUTPUT
+          else
+            echo "Security check failed"
+            echo "security-check=failed" >> $GITHUB_OUTPUT
+          fi
+          set -e
+
+      - name: Check for deprecated functions
+        id: deprecated-check
+        run: |
+          echo "Checking for deprecated functions..."
+          set +e
+          DEPRECATED_FOUND=false
+          
+          if [ -d "web/modules/custom" ]; then
+            DEPRECATED_FILES=$(find web/modules/custom -name "*.php" -exec grep -l "deprecated\|Deprecated" {} \;)
+            if [ ! -z "$DEPRECATED_FILES" ]; then
+              echo "Found deprecated functions in:"
+              echo "$DEPRECATED_FILES"
+              DEPRECATED_FOUND=true
+            fi
+          fi
+          
+          if [ "$DEPRECATED_FOUND" = true ]; then
+            echo "Deprecated functions found"
+            echo "deprecated-check=failed" >> $GITHUB_OUTPUT
+          else
+            echo "No deprecated functions found"
+            echo "deprecated-check=passed" >> $GITHUB_OUTPUT
+          fi
+          set -e
+
+      # - name: Validate composer.json
+      #   id: composer-validate
+      #   run: |
+      #     echo "Validating composer.json..."
+      #     set +e
+      #     composer validate --strict
+      #     COMPOSER_EXIT_CODE=$?
+      #     if [ $COMPOSER_EXIT_CODE -eq 0 ]; then
+      #       echo "Composer validation passed"
+      #       echo "composer-validate=passed" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "Composer validation failed"
+      #       echo "composer-validate=failed" >> $GITHUB_OUTPUT
+      #     fi
+      #     set -e
+
+      # - name: Check for syntax errors in Twig templates
+      #   id: twig-check
+      #   run: |
+      #     echo "Checking Twig templates for syntax errors..."
+      #     set +e
+      #     TWIG_ERRORS=false
+          
+      #     if [ -d "web/themes/custom" ]; then
+      #       TWIG_FILES=$(find web/themes/custom -name "*.twig")
+      #       for file in $TWIG_FILES; do
+      #         if ! php -r "
+      #           \$file = \$argv[1];
+      #           \$content = file_get_contents(\$file);
+      #           if (preg_match('/\{\{[^}]*\}\}/', \$content) || preg_match('/\{\%[^%]*\%\}/', \$content)) {
+      #             echo \"Found Twig syntax in: \$file\n\";
+      #           }
+      #         " "$file" > /dev/null 2>&1; then
+      #           echo "Error checking Twig file: $file"
+      #           TWIG_ERRORS=true
+      #         fi
+      #       done
+      #     fi
+          
+      #     if [ "$TWIG_ERRORS" = true ]; then
+      #       echo "Twig check failed"
+      #       echo "twig-check=failed" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "Twig check passed"
+      #       echo "twig-check=passed" >> $GITHUB_OUTPUT
+      #     fi
+      #     set -e
+
+      # - name: Run ESLint (if applicable)
+      #   id: eslint-check
+      #   run: |
+      #     set +e
+      #     if [ -f "web/themes/custom/kodffe_theme/package.json" ]; then
+      #       cd web/themes/custom/kodffe_theme
+      #       if npm run lint 2>/dev/null; then
+      #         echo "ESLint check passed"
+      #         echo "eslint-check=passed" >> $GITHUB_OUTPUT
+      #       else
+      #         echo "ESLint check failed or not configured"
+      #         echo "eslint-check=skipped" >> $GITHUB_OUTPUT
+      #       fi
+      #     else
+      #       echo "No package.json found, skipping ESLint"
+      #       echo "eslint-check=skipped" >> $GITHUB_OUTPUT
+      #     fi
+      #     set -e
+
+      # - name: Check file permissions
+      #   run: |
+      #     echo "Checking file permissions..."
+      #     find . -type f -name "*.sh" -exec chmod +x {} \;
+      #     if [ -f "tests/code-sniffer.sh" ]; then
+      #       chmod +x tests/code-sniffer.sh
+      #     fi
+      #     if [ -f "tests/drupal-check.sh" ]; then
+      #       chmod +x tests/drupal-check.sh
+      #     fi
+
+      # - name: Check for sensitive data
+      #   id: sensitive-data-check
+      #   run: |
+      #     echo "Checking for sensitive data in code..."
+      #     set +e
+      #     SENSITIVE_DATA_FOUND=false
+          
+      #     # Check for hardcoded passwords, API keys, etc.
+      #     if grep -r -i "password.*=.*['\"][^'\"]*['\"]" web/modules/custom web/themes/custom web/profiles/custom 2>/dev/null; then
+      #       echo "Found potential hardcoded passwords"
+      #       SENSITIVE_DATA_FOUND=true
+      #     fi
+          
+      #     if grep -r -i "api_key.*=.*['\"][^'\"]*['\"]" web/modules/custom web/themes/custom web/profiles/custom 2>/dev/null; then
+      #       echo "Found potential hardcoded API keys"
+      #       SENSITIVE_DATA_FOUND=true
+      #     fi
+          
+      #     if [ "$SENSITIVE_DATA_FOUND" = true ]; then
+      #       echo "Sensitive data check failed"
+      #       echo "sensitive-data-check=failed" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "Sensitive data check passed"
+      #       echo "sensitive-data-check=passed" >> $GITHUB_OUTPUT
+      #     fi
+      #     set -e
+
+      - name: Create detailed summary report
+        if: always()
+        run: |
+          echo "## Advanced Code Review Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Check Results:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # PHP Lint
+          if [ "${{ steps.php-lint.outputs.php-lint }}" = "passed" ]; then
+            echo "✅ **PHP Lint**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **PHP Lint**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Drupal Check
+          if [ "${{ steps.drupal-check.outputs.drupal-check }}" = "passed" ]; then
+            echo "✅ **Drupal Check**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Drupal Check**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Code Standards
+          if [ "${{ steps.code-standards.outputs.code-standards }}" = "passed" ]; then
+            echo "✅ **Code Standards**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Code Standards**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Security Check
+          if [ "${{ steps.security-check.outputs.security-check }}" = "passed" ]; then
+            echo "✅ **Security Check**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Security Check**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Deprecated Functions
+          if [ "${{ steps.deprecated-check.outputs.deprecated-check }}" = "passed" ]; then
+            echo "✅ **Deprecated Functions**: None found" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ **Deprecated Functions**: Found" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Composer Validation
+          if [ "${{ steps.composer-validate.outputs.composer-validate }}" = "passed" ]; then
+            echo "✅ **Composer Validation**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Composer Validation**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Twig Check
+          if [ "${{ steps.twig-check.outputs.twig-check }}" = "passed" ]; then
+            echo "✅ **Twig Templates**: Passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Twig Templates**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # ESLint
+          if [ "${{ steps.eslint-check.outputs.eslint-check }}" = "passed" ]; then
+            echo "✅ **ESLint**: Passed" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ steps.eslint-check.outputs.eslint-check }}" = "skipped" ]; then
+            echo "⏭️ **ESLint**: Skipped" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **ESLint**: Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Sensitive Data
+          if [ "${{ steps.sensitive-data-check.outputs.sensitive-data-check }}" = "passed" ]; then
+            echo "✅ **Sensitive Data**: None found" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ **Sensitive Data**: Found potential issues" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Total Checks**: 9" >> $GITHUB_STEP_SUMMARY
+          echo "**Passed**: $(echo "${{ steps.php-lint.outputs.php-lint }},${{ steps.drupal-check.outputs.drupal-check }},${{ steps.code-standards.outputs.code-standards }},${{ steps.security-check.outputs.security-check }},${{ steps.deprecated-check.outputs.deprecated-check }},${{ steps.composer-validate.outputs.composer-validate }},${{ steps.twig-check.outputs.twig-check }},${{ steps.eslint-check.outputs.eslint-check }},${{ steps.sensitive-data-check.outputs.sensitive-data-check }}" | tr ',' '\n' | grep -c "passed" || echo "0")" >> $GITHUB_STEP_SUMMARY
+          echo "**Failed**: $(echo "${{ steps.php-lint.outputs.php-lint }},${{ steps.drupal-check.outputs.drupal-check }},${{ steps.code-standards.outputs.code-standards }},${{ steps.security-check.outputs.security-check }},${{ steps.deprecated-check.outputs.deprecated-check }},${{ steps.composer-validate.outputs.composer-validate }},${{ steps.twig-check.outputs.twig-check }},${{ steps.eslint-check.outputs.eslint-check }},${{ steps.sensitive-data-check.outputs.sensitive-data-check }}" | tr ',' '\n' | grep -c "failed" || echo "0")" >> $GITHUB_STEP_SUMMARY
+
+      # - name: Comment on PR
+      #   if: github.event_name == 'pull_request' && always()
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       const { data: comments } = await github.rest.issues.listComments({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #       });
+            
+      #       const botComment = comments.find(comment => 
+      #         comment.user.type === 'Bot' && 
+      #         comment.body.includes('Code Review Results')
+      #       );
+            
+      #       const summary = `## Code Review Results
+            
+      #       **Status**: ${job.status === 'success' ? '✅ All checks passed' : '❌ Some checks failed'}
+            
+      #       **Checks Completed**:
+      #       - PHP Lint: ${steps.php-lint.outputs.php-lint === 'passed' ? '✅' : '❌'}
+      #       - Drupal Check: ${steps.drupal-check.outputs.drupal-check === 'passed' ? '✅' : '❌'}
+      #       - Code Standards: ${steps.code-standards.outputs.code-standards === 'passed' ? '✅' : '❌'}
+      #       - Security Check: ${steps.security-check.outputs.security-check === 'passed' ? '✅' : '❌'}
+      #       - Composer Validation: ${steps.composer-validate.outputs.composer-validate === 'passed' ? '✅' : '❌'}
+            
+      #       **Review**: Please review the detailed results in the Actions tab.`;
+            
+      #       if (botComment) {
+      #         await github.rest.issues.updateComment({
+      #           comment_id: botComment.id,
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           body: summary
+      #         });
+      #       } else {
+      #         await github.rest.issues.createComment({
+      #           issue_number: context.issue.number,
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           body: summary
+      #         });
+      #       } 
+      
