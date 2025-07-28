@@ -40,7 +40,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
 
       - name: Install Composer dependencies
         run: |
@@ -51,7 +50,13 @@ jobs:
         run: |
           if [ -f "web/themes/custom/kodffe_theme/package.json" ]; then
             cd web/themes/custom/kodffe_theme
-            npm ci
+            if [ -f "package-lock.json" ]; then
+              npm ci
+            else
+              npm install
+            fi
+          else
+            echo "No package.json found in theme directory, skipping Node.js dependencies"
           fi
 
       - name: Run PHP Lint
@@ -117,7 +122,13 @@ jobs:
         run: |
           if [ -f "web/themes/custom/kodffe_theme/package.json" ]; then
             cd web/themes/custom/kodffe_theme
-            npm run lint || echo "ESLint check completed"
+            if npm run lint 2>/dev/null; then
+              echo "ESLint check passed"
+            else
+              echo "ESLint check failed or not configured"
+            fi
+          else
+            echo "No package.json found, skipping ESLint"
           fi
 
       - name: Check file permissions
