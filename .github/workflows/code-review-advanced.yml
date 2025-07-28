@@ -379,47 +379,48 @@ jobs:
           echo "**Passed**: $(echo "${{ steps.php-lint.outputs.php-lint }},${{ steps.drupal-check.outputs.drupal-check }},${{ steps.code-standards.outputs.code-standards }},${{ steps.security-check.outputs.security-check }},${{ steps.deprecated-check.outputs.deprecated-check }},${{ steps.composer-validate.outputs.composer-validate }},${{ steps.twig-check.outputs.twig-check }},${{ steps.eslint-check.outputs.eslint-check }},${{ steps.sensitive-data-check.outputs.sensitive-data-check }}" | tr ',' '\n' | grep -c "passed" || echo "0")" >> $GITHUB_STEP_SUMMARY
           echo "**Failed**: $(echo "${{ steps.php-lint.outputs.php-lint }},${{ steps.drupal-check.outputs.drupal-check }},${{ steps.code-standards.outputs.code-standards }},${{ steps.security-check.outputs.security-check }},${{ steps.deprecated-check.outputs.deprecated-check }},${{ steps.composer-validate.outputs.composer-validate }},${{ steps.twig-check.outputs.twig-check }},${{ steps.eslint-check.outputs.eslint-check }},${{ steps.sensitive-data-check.outputs.sensitive-data-check }}" | tr ',' '\n' | grep -c "failed" || echo "0")" >> $GITHUB_STEP_SUMMARY
 
-      - name: Comment on PR
-        if: github.event_name == 'pull_request' && always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: comments } = await github.rest.issues.listComments({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            });
+      # - name: Comment on PR
+      #   if: github.event_name == 'pull_request' && always()
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       const { data: comments } = await github.rest.issues.listComments({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #       });
             
-            const botComment = comments.find(comment => 
-              comment.user.type === 'Bot' && 
-              comment.body.includes('Code Review Results')
-            );
+      #       const botComment = comments.find(comment => 
+      #         comment.user.type === 'Bot' && 
+      #         comment.body.includes('Code Review Results')
+      #       );
             
-            const summary = `## Code Review Results
+      #       const summary = `## Code Review Results
             
-            **Status**: ${job.status === 'success' ? '✅ All checks passed' : '❌ Some checks failed'}
+      #       **Status**: ${job.status === 'success' ? '✅ All checks passed' : '❌ Some checks failed'}
             
-            **Checks Completed**:
-            - PHP Lint: ${steps.php-lint.outputs.php-lint === 'passed' ? '✅' : '❌'}
-            - Drupal Check: ${steps.drupal-check.outputs.drupal-check === 'passed' ? '✅' : '❌'}
-            - Code Standards: ${steps.code-standards.outputs.code-standards === 'passed' ? '✅' : '❌'}
-            - Security Check: ${steps.security-check.outputs.security-check === 'passed' ? '✅' : '❌'}
-            - Composer Validation: ${steps.composer-validate.outputs.composer-validate === 'passed' ? '✅' : '❌'}
+      #       **Checks Completed**:
+      #       - PHP Lint: ${steps.php-lint.outputs.php-lint === 'passed' ? '✅' : '❌'}
+      #       - Drupal Check: ${steps.drupal-check.outputs.drupal-check === 'passed' ? '✅' : '❌'}
+      #       - Code Standards: ${steps.code-standards.outputs.code-standards === 'passed' ? '✅' : '❌'}
+      #       - Security Check: ${steps.security-check.outputs.security-check === 'passed' ? '✅' : '❌'}
+      #       - Composer Validation: ${steps.composer-validate.outputs.composer-validate === 'passed' ? '✅' : '❌'}
             
-            **Review**: Please review the detailed results in the Actions tab.`;
+      #       **Review**: Please review the detailed results in the Actions tab.`;
             
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                comment_id: botComment.id,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: summary
-              });
-            } else {
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: summary
-              });
-            } 
+      #       if (botComment) {
+      #         await github.rest.issues.updateComment({
+      #           comment_id: botComment.id,
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           body: summary
+      #         });
+      #       } else {
+      #         await github.rest.issues.createComment({
+      #           issue_number: context.issue.number,
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           body: summary
+      #         });
+      #       } 
+      
