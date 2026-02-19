@@ -36,9 +36,6 @@ module:
   geolocation: 0
   geolocation_address: 0
   geolocation_leaflet: 0
-  gin_lb: 0
-  gin_login: 0
-  gin_toolbar: 0
   help: 0
   history: 0
   honeypot: 0
@@ -110,7 +107,5 @@ module:
 theme:
   stable9: 0
   claro: 0
-  gin: 0
-  ignite_theme: 0
   kodffe_theme: 0
 profile: null

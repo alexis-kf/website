@@ -21,6 +21,7 @@ dependencies:
     - block_content.type.teaser
     - block_content.type.text
     - block_content.type.views
+    - core.entity_view_display.node.layout.default
     - filter.format.basic_html
     - filter.format.email_html
     - filter.format.full_html
@@ -78,6 +79,8 @@ permissions:
   - 'bulk delete aliases'
   - 'bulk update aliases'
   - 'change own username'
+  - 'configure any layout'
+  - 'configure editable layout node layout overrides'
   - 'create accordion block content'
   - 'create and edit custom blocks'
   - 'create any term'

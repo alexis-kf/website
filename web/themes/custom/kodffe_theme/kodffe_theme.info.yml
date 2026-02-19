@@ -15,7 +15,7 @@ description: Drupal 9/10 theme for Kodffe website.
 package: Other
 core_version_requirement: ^9 || ^10
 # Classy vs. Stable as a base theme: https://www.lullabot.com/articles/a-tale-of-two-base-themes-in-drupal-8-core
-base theme: ignite_theme
+base theme: stable9
 
 # This section controls the libraries for your theme. For full documentation,
 # see https://www.drupal.org/node/2216195
