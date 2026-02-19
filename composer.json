@@ -75,7 +75,7 @@
         "drupal/token": "^1.17",
         "drupal/twig_field_value": "^2.0",
         "drupal/twig_tweak": "^3.4",
-        "drupal/viewsreference": "2.x-dev",
+        "drupal/viewsreference": "^2.0",
         "drupal/webform": "^6.2",
         "drupal/webp": "^1.0@RC",
         "drush/drush": "^12.5",

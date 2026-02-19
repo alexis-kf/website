@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b990dab896a6f38bacdbd4737ebd798a",
+    "content-hash": "68b6c197b12eb16c731fb924f258bc22",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5975,14 +5975,20 @@
         },
         {
             "name": "drupal/viewsreference",
-            "version": "dev-2.x",
+            "version": "2.0.0-beta10",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/viewsreference.git",
-                "reference": "e1c0a141138582a4b51ec63cb702979e3478da8a"
+                "reference": "8.x-2.0-beta10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/viewsreference-8.x-2.0-beta10.zip",
+                "reference": "8.x-2.0-beta10",
+                "shasum": "699c3f790d3dbe6ebcd890916409c66562a04eb4"
             },
             "require": {
-                "drupal/core": "^10 || ^11 || ^12"
+                "drupal/core": "^10 || ^11"
             },
             "conflict": {
                 "drupal/viewsreferennce": "*"
@@ -5992,15 +5998,12 @@
             },
             "type": "drupal-module",
             "extra": {
-                "branch-alias": {
-                    "dev-2.x": "2.x-dev"
-                },
                 "drupal": {
-                    "version": "8.x-2.0-beta10+13-dev",
-                    "datestamp": "1764399188",
+                    "version": "8.x-2.0-beta10",
+                    "datestamp": "1725510905",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
+                        "message": "Beta releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -18753,7 +18756,6 @@
         "drupal/claro_media_library_theme": 15,
         "drupal/node_revision_delete": 5,
         "drupal/pwa": 10,
-        "drupal/viewsreference": 20,
         "drupal/webp": 5
     },
     "prefer-stable": true,
